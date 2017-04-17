@@ -1,0 +1,96 @@
+using System.Collections.Generic;
+using SwinGameSDK;
+using System;
+
+namespace Escapade
+{
+  class Game
+  {
+    /// <summary>
+    /// The currently existing game objects
+    /// </summary>
+    private List<GameObject> objects = new List<GameObject>();
+
+    public List<GameObject> Objects { get => objects; set => objects = value; }
+
+    /// <summary>
+    /// The current game map
+    /// </summary>
+    private Map map;
+
+    public Map Map { get => map; set => map = value; }
+
+    /// <summary>
+    /// Configuration settings used to initialise the game
+    /// </summary>
+    private static Dictionary<string, dynamic> _config = new Dictionary<string, dynamic>();
+
+    public static Dictionary<string, dynamic> Config { get => _config; set => _config = value; }
+
+    public Game (Dictionary<string, dynamic> c)
+    {
+      Config = c;
+    }
+
+    /// <summary>
+    /// Run initialisation for all game objects
+    /// </summary>
+    public void Init ()
+    {
+      SwinGame.OpenGraphicsWindow (Config["title"], Config ["width"], Config ["height"]);
+
+      Map = new Map(Config["width"], Config["height"]);
+
+      Console.WriteLine(Map.CoordToCell(34));
+
+      RunLoop ();
+    }
+
+    /// <summary>
+    /// Run the loop
+    /// </summary>
+    public void RunLoop ()
+    {
+      while (!SwinGame.WindowCloseRequested())
+      {
+        // Process the UI interaction
+        SwinGame.ProcessEvents ();
+
+        // Clear the screen and start a new frame
+        SwinGame.ClearScreen (Color.Black);
+
+        // Update and draw the game objects
+        Update ();
+        Draw ();
+
+        // Draw the frame
+        if (Config ["fps"]) SwinGame.DrawFramerate (0, 0);
+        SwinGame.RefreshScreen (30);
+      }
+    }
+
+    /// <summary>
+    /// Run updates of all game objects
+    /// </summary>
+    public void Update ()
+    {
+      
+    }
+
+    /// <summary>
+    /// Run drawing of all game objects
+    /// </summary>
+    public void Draw ()
+    {
+
+    }
+
+    /// <summary>
+    /// Clean all game objects (eg. for shutdown)
+    /// </summary>
+    public void Clean ()
+    {
+        
+    }
+  }
+}
