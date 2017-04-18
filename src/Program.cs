@@ -9,10 +9,8 @@ namespace Escapade
 
     public static Dictionary<string, dynamic> settings = new Dictionary<string, dynamic>
     {
-      { "title", nameof(Escapade)},
-      {"width", 400},
-      {"height", 400},
-      {"cellsize", 10},
+      {"width", 40},
+      {"height", 40},
       {"fps", false}
     };
 

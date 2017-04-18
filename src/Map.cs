@@ -11,7 +11,9 @@ namespace Escapade
       AIR = 0,
       WALL = 1,
       ROCK = 2,
-      WATER = 3
+      WATER = 3,
+      ORE = 4,
+      CRATE = 5
     }
 
     private Tile[,] _grid;
@@ -26,13 +28,23 @@ namespace Escapade
     }
 
     /// <summary>
-    /// Converts a coordinate in the region [0,h] to a cell in the region [0,h/cellsize]
+    /// Converts a coordinate in the region [0,10h] to a cell in the region [0,h]
     /// </summary>
-    /// <param name="c">The dimension to convert</param>
+    /// <param name="c">The coordinate to convert</param>
     /// <returns></returns>
-    public static int CoordToCell(int c)
+    public static int ToCell(int c)
     {
-      return c / Game.Config["cellsize"];
+      return c / 10;
+    }
+
+    /// <summary>
+    /// Converts a cell in the region [0,h] to a coordinate in the region [0,10h]
+    /// </summary>
+    /// <param name="c">The coordinate to convert</param>
+    /// <returns></returns>
+    public static int ToCoord(int c)
+    {
+      return 10 * c;
     }
 
     /// <summary>
@@ -40,8 +52,8 @@ namespace Escapade
     /// </summary>
     public void Clear()
     {
-      for (int x = 0; x < CoordToCell(Game.Config["width"]); x++)
-        for (int y = 0; y < CoordToCell(Game.Config["height"]); y++)
+      for (int x = 0; x < Game.Config["width"]; x++)
+        for (int y = 0; y < Game.Config["height"]; y++)
           Grid[x, y] = Tile.EMPTY;
     }
 
@@ -61,17 +73,17 @@ namespace Escapade
     public void RandomFill()
     {
       Random r = new Random();
-      for (int x = 0; x < CoordToCell(Game.Config["width"]); x++)
+      for (int x = 0; x < Game.Config["width"]; x++)
       {
-        for (int y = 0; y < CoordToCell(Game.Config["height"]); y++)
+        for (int y = 0; y < Game.Config["height"]; y++)
         {
-          if(x == 0 || x == CoordToCell(Game.Config["width"]) - 1 || y == 0 || y >= CoordToCell(Game.Config["height"]) - 1)
+          if(x == 0 || x == Game.Config["width"] - 1 || y == 0 || y >= Game.Config["height"] - 1)
           {
             Grid[x, y] = Tile.WALL;
             continue;
           }
           double rand = r.NextDouble();
-          Grid[x, y] = rand < 0.4 ? Tile.AIR : Tile.WALL; // Chance for tile to be air
+          Grid[x, y] = rand < 0.6 ? Tile.AIR : Tile.WALL; // Chance for tile to be air
         }
       }
     }
@@ -81,18 +93,45 @@ namespace Escapade
     /// </summary>
     public void Evolve()
     {
-      for (int i = 0; i < 4; i++) // Number of times to evolve
+      Tile[,] newMap;
+
+
+      for (int i = 0; i < 5; i++) // Number of times to evolve
       {
-        for (int x = 0; x < CoordToCell(Game.Config["width"]); x++) // Loop through columns
+        newMap = new Tile[Game.Config["width"], Game.Config["height"]];
+
+        for (int x = 0; x < Game.Config["width"]; x++) // Loop through columns
         {
-          for (int y = 0; y < CoordToCell(Game.Config["height"]); y++) // Loop through rows
+          for (int y = 0; y < Game.Config["height"]; y++) // Loop through rows
           {
-            int neighbours = GetAliveNeighbours(x, y);
-            Console.Write(neighbours + ",");
+            int neighbours = GetNeighbours(x, y);
+            switch (Grid[x, y])
+            {
+              case Tile.WALL:
+                newMap[x, y] = neighbours >= 4 ? Tile.WALL : (neighbours < 2 ? Tile.WALL : Tile.AIR);
+                break;
+              case Tile.AIR:
+                newMap[x, y] = neighbours >= 5 ? Tile.WALL : Tile.AIR;
+                break;
+            }
           }
         }
+        Grid = newMap;
       }
     }
+
+    /// <summary>
+    /// Removes most stray single tiles from the map, and converts the remaining ones to ore
+    /// </summary>
+    public void RemoveStrays()
+    {
+      for (int x = 0; x < Game.Config["width"]; x++) // Loop through columns
+      {
+        for (int y = 0; y < Game.Config["height"]; y++) // Loop through rows
+        {
+        }
+      }
+        }
 
     /// <summary>
     /// Gets the number of alive tiles within a 1 tile radius of the specified cell
@@ -101,16 +140,17 @@ namespace Escapade
     /// <param name="xP">The x coordinate of the cell</param>
     /// <param name="yP">The y coordinate of the cell</param>
     /// <returns>The number of alive neighbours (including non-existent tiles outside the map)</returns>
-    public int GetAliveNeighbours(int xP, int yP)
+    public int GetNeighbours(int xP, int yP)
     {
-      int res = 0;
-      int cellsize = Game.Config["cellsize"];
+      int res = 8;
       for (int x = -1; x <= 1 ; x++) // Loop through columns
       {
         for (int y = -1; y <= 1 ; y++) // Loop through rows
         {
-          if (Grid[xP + (x * cellsize), yP + (y * cellsize)] == Tile.WALL)
-            res++;
+          if (xP + x < 0 || xP + x >= Game.Config["width"] || yP + y < 0 || yP + y >= Game.Config["height"] || (x == 0 && y == 0)) // If the tile is out of bounds, don't decrement
+            continue;
+          if (Grid[xP + x, yP + y] == Tile.AIR) // If the neighbour is air, decrement the number of neighbours by 1
+            res--;
         }
       }
       return res;
@@ -118,20 +158,19 @@ namespace Escapade
 
     public void Draw()
     {
-      for (int x = 0; x < CoordToCell(Game.Config["width"]); x++)
+      for (int x = 0; x < Game.Config["width"]; x++)
       {
-        for (int y = 0; y < CoordToCell(Game.Config["height"]); y++)
+        for (int y = 0; y < Game.Config["height"]; y++)
         {
-          int cellsize = Game.Config["cellsize"];
           switch (Grid[x,y])
           {
             case Tile.AIR:
-              SwinGame.FillRectangle(Color.LightGoldenrodYellow, cellsize * x, cellsize * y, cellsize, cellsize);
-              SwinGame.DrawRectangle(Color.White, cellsize * x, cellsize * y, cellsize, cellsize);
+              SwinGame.FillRectangle(Color.LightGoldenrodYellow, 10 * x, 10 * y, 10, 10);
+              SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
               break;
             case Tile.WALL:
-              SwinGame.FillRectangle(Color.DarkSlateGray, cellsize * x, cellsize * y, cellsize, cellsize);
-              SwinGame.DrawRectangle(Color.White, cellsize * x, cellsize * y, cellsize, cellsize);
+              SwinGame.FillRectangle(Color.DarkSlateGray, 10 * x, 10 * y, 10, 10);
+              SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
               break;
             default:
               break;

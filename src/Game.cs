@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using SwinGameSDK;
 using System;
+using System.IO;
 
 namespace Escapade
 {
@@ -37,11 +38,9 @@ namespace Escapade
     /// </summary>
     public void Init ()
     {
-      SwinGame.OpenGraphicsWindow (Config["title"], Config ["width"], Config ["height"]);
+      SwinGame.OpenGraphicsWindow("Escapade", Config["width"] * 10, Config["height"] * 10);
 
       Map = new Map(Config["width"], Config["height"]);
-
-      Console.WriteLine(Map.CoordToCell(34));
 
       RunLoop ();
     }
@@ -77,12 +76,21 @@ namespace Escapade
 
     }
 
+    bool saved = false;
+
     /// <summary>
     /// Run drawing of all game objects
     /// </summary>
     public void Draw ()
     {
       Map.Draw();
+      Directory.CreateDirectory("map-out");
+      
+      if (!saved)
+      {
+        saved = true;
+        SwinGame.SaveScreenshot(SwinGame.WindowNamed("Escapade"), "map-out/" + System.DateTime.Now.ToFileTimeUtc() + ".png");
+      }
     }
 
     /// <summary>
