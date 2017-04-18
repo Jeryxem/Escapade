@@ -74,7 +74,7 @@ namespace Escapade
     /// </summary>
     public void Update ()
     {
-      
+
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ namespace Escapade
     /// </summary>
     public void Draw ()
     {
-
+      Map.Draw();
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ namespace Escapade
     /// </summary>
     public void Clean ()
     {
-        
+
     }
   }
 }
