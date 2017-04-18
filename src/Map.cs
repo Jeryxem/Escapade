@@ -16,6 +16,8 @@ namespace Escapade
       CRATE = 5
     }
 
+    private Random r = new Random();
+
     private Tile[,] _grid;
 
     public Tile[,] Grid { get => _grid; set => _grid = value; }
@@ -65,6 +67,7 @@ namespace Escapade
       Clear();
       RandomFill();
       Evolve();
+      GenOres();
     }
 
     /// <summary>
@@ -72,7 +75,6 @@ namespace Escapade
     /// </summary>
     public void RandomFill()
     {
-      Random r = new Random();
       for (int x = 0; x < Game.Config["width"]; x++)
       {
         for (int y = 0; y < Game.Config["height"]; y++)
@@ -123,15 +125,36 @@ namespace Escapade
     /// <summary>
     /// Removes most stray single tiles from the map, and converts the remaining ones to ore
     /// </summary>
-    public void RemoveStrays()
+    public void GenOres()
     {
+      // Populate map with ores
       for (int x = 0; x < Game.Config["width"]; x++) // Loop through columns
       {
         for (int y = 0; y < Game.Config["height"]; y++) // Loop through rows
         {
+          if (Grid[x, y] == Tile.WALL && GetNeighbours(x, y) >= 0 && GetNeighbours(x, y) <= 3)
+            Grid[x, y] = r.NextDouble() < 0.8 ? Tile.AIR : Tile.ORE;
         }
       }
+
+      // Cover ores in layer of rock
+      for (int x = 0; x < Game.Config["width"]; x++) // Loop through columns
+      {
+        for (int y = 0; y < Game.Config["height"]; y++) // Loop through rows
+        {
+          if (Grid[x, y] == Tile.ORE)
+          {
+            for (int x2 = -1; x <= 1; x++) // Loop through columns
+            {
+              for (int y2 = -1; y <= 1; y++) // Loop through rows
+              {
+                Grid[x + x2, y + y2] = (Grid[x + x2, y + y2] == Tile.AIR) ? Tile.ROCK : Tile.WALL;
+              }
+            }
+          }
         }
+      }
+    }
 
     /// <summary>
     /// Gets the number of alive tiles within a 1 tile radius of the specified cell
@@ -170,6 +193,14 @@ namespace Escapade
               break;
             case Tile.WALL:
               SwinGame.FillRectangle(Color.DarkSlateGray, 10 * x, 10 * y, 10, 10);
+              SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
+              break;
+            case Tile.ORE:
+              SwinGame.FillRectangle(Color.RoyalBlue, 10 * x, 10 * y, 10, 10);
+              SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
+              break;
+            case Tile.ROCK:
+              SwinGame.FillRectangle(Color.SandyBrown, 10 * x, 10 * y, 10, 10);
               SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
               break;
             default:
