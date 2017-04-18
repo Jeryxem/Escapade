@@ -87,7 +87,8 @@ namespace Escapade
         {
           for (int y = 0; y < CoordToCell(Game.Config["height"]); y++) // Loop through rows
           {
-
+            int neighbours = GetAliveNeighbours(x, y);
+            Console.Write(neighbours + ",");
           }
         }
       }
@@ -97,10 +98,22 @@ namespace Escapade
     /// Gets the number of alive tiles within a 1 tile radius of the specified cell
     /// This also counts non-existent tiles (tiles outside the map) as alive
     /// </summary>
+    /// <param name="xP">The x coordinate of the cell</param>
+    /// <param name="yP">The y coordinate of the cell</param>
     /// <returns>The number of alive neighbours (including non-existent tiles outside the map)</returns>
-    public int GetAliveNeighbours()
+    public int GetAliveNeighbours(int xP, int yP)
     {
-      return 0;
+      int res = 0;
+      int cellsize = Game.Config["cellsize"];
+      for (int x = -1; x <= 1 ; x++) // Loop through columns
+      {
+        for (int y = -1; y <= 1 ; y++) // Loop through rows
+        {
+          if (Grid[xP + (x * cellsize), yP + (y * cellsize)] == Tile.WALL)
+            res++;
+        }
+      }
+      return res;
     }
 
     public void Draw()
