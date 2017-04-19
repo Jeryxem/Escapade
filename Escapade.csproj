@@ -43,6 +43,7 @@
     <Compile Include="src\GameObject.cs" />
     <Compile Include="src\MovableObject.cs" />
     <Compile Include="src\Map.cs" />
+    <Compile Include="src\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">

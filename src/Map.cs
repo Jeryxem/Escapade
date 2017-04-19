@@ -5,24 +5,18 @@ namespace Escapade
   public class Map
   {
 
-    public enum Tile
-    {
-      EMPTY = -1,
-      AIR = 0,
-      WALL = 1,
-      ROCK = 2,
-      WATER = 3,
-      ORE = 4,
-      CRATE = 5
-    }
-
     private Random r = new Random();
 
     private Tile[,] _grid;
 
     public Tile[,] Grid { get => _grid; set => _grid = value; }
 
-    public Map (int w, int h)
+    /// <summary>
+    /// Constructor for a new map
+    /// </summary>
+    /// <param name="w">The width of the map</param>
+    /// <param name="h">The height of the map</param>
+    public Map(int w, int h)
     {
       _grid = new Tile[w, h];
 
@@ -67,7 +61,7 @@ namespace Escapade
       Clear();
       RandomFill();
       Evolve();
-      GenOres();
+      Clean();
     }
 
     /// <summary>
@@ -79,7 +73,7 @@ namespace Escapade
       {
         for (int y = 0; y < Game.Config["height"]; y++)
         {
-          if(x == 0 || x == Game.Config["width"] - 1 || y == 0 || y >= Game.Config["height"] - 1)
+          if (x <= 1 || x == Game.Config["width"] - 2 || y <= 1 || y >= Game.Config["height"] - 2)
           {
             Grid[x, y] = Tile.WALL;
             continue;
@@ -97,8 +91,7 @@ namespace Escapade
     {
       Tile[,] newMap;
 
-
-      for (int i = 0; i < 5; i++) // Number of times to evolve
+      for (int i = 0; i < 8; i++) // Number of times to evolve
       {
         newMap = new Tile[Game.Config["width"], Game.Config["height"]];
 
@@ -123,35 +116,15 @@ namespace Escapade
     }
 
     /// <summary>
-    /// Removes most stray single tiles from the map, and converts the remaining ones to ore
+    /// Clean the map of stray tiles
     /// </summary>
-    public void GenOres()
+    public void Clean()
     {
-      // Populate map with ores
       for (int x = 0; x < Game.Config["width"]; x++) // Loop through columns
       {
         for (int y = 0; y < Game.Config["height"]; y++) // Loop through rows
         {
-          if (Grid[x, y] == Tile.WALL && GetNeighbours(x, y) >= 0 && GetNeighbours(x, y) <= 3)
-            Grid[x, y] = r.NextDouble() < 0.8 ? Tile.AIR : Tile.ORE;
-        }
-      }
-
-      // Cover ores in layer of rock
-      for (int x = 0; x < Game.Config["width"]; x++) // Loop through columns
-      {
-        for (int y = 0; y < Game.Config["height"]; y++) // Loop through rows
-        {
-          if (Grid[x, y] == Tile.ORE)
-          {
-            for (int x2 = -1; x <= 1; x++) // Loop through columns
-            {
-              for (int y2 = -1; y <= 1; y++) // Loop through rows
-              {
-                Grid[x + x2, y + y2] = (Grid[x + x2, y + y2] == Tile.AIR) ? Tile.ROCK : Tile.WALL;
-              }
-            }
-          }
+          if (GetNeighbours(x, y) <= 2) Grid[x, y] = Tile.AIR;
         }
       }
     }
@@ -179,6 +152,9 @@ namespace Escapade
       return res;
     }
 
+    /// <summary>
+    /// Draw the map to the screen
+    /// </summary>
     public void Draw()
     {
       for (int x = 0; x < Game.Config["width"]; x++)
@@ -194,16 +170,6 @@ namespace Escapade
             case Tile.WALL:
               SwinGame.FillRectangle(Color.DarkSlateGray, 10 * x, 10 * y, 10, 10);
               SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
-              break;
-            case Tile.ORE:
-              SwinGame.FillRectangle(Color.RoyalBlue, 10 * x, 10 * y, 10, 10);
-              SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
-              break;
-            case Tile.ROCK:
-              SwinGame.FillRectangle(Color.SandyBrown, 10 * x, 10 * y, 10, 10);
-              SwinGame.DrawRectangle(Color.White, 10 * x, 10 * y, 10, 10);
-              break;
-            default:
               break;
           }
         }
