@@ -153,6 +153,21 @@ namespace Escapade
     }
 
     /// <summary>
+    /// Returns a random empty tile in the map
+    /// </summary>
+    /// <returns></returns>
+    public Coordinate RandomEmpty()
+    {
+      while (true)
+      {
+        int x = (int) Math.Floor(r.NextDouble() * Game.Config["width"]);
+        int y = (int) Math.Floor(r.NextDouble() * Game.Config["height"]);
+        if (Grid[x, y] == Tile.AIR)
+          return new Coordinate(x, y);
+      }
+    }
+
+    /// <summary>
     /// Draw the map to the screen
     /// </summary>
     public void Draw()

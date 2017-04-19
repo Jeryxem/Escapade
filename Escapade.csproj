@@ -38,11 +38,14 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="src\Coordinate.cs" />
+    <Compile Include="src\Player.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="src\Game.cs" />
     <Compile Include="src\GameObject.cs" />
     <Compile Include="src\MovableObject.cs" />
     <Compile Include="src\Map.cs" />
+    <Compile Include="src\Pathfinding.cs" />
     <Compile Include="src\Tile.cs" />
   </ItemGroup>
   <ItemGroup>

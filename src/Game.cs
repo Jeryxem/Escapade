@@ -21,6 +21,10 @@ namespace Escapade
 
     public Map Map { get => map; set => map = value; }
 
+    private Player player;
+
+    public Player Player { get => player; set => player = value; }
+
     /// <summary>
     /// Configuration settings used to initialise the game
     /// </summary>
@@ -41,6 +45,7 @@ namespace Escapade
       SwinGame.OpenGraphicsWindow("Escapade", Config["width"] * 10, Config["height"] * 10);
 
       Map = new Map(Config["width"], Config["height"]);
+      Player = new Player(this, Objects.Count);
 
       RunLoop ();
     }
@@ -50,6 +55,8 @@ namespace Escapade
     /// </summary>
     public void RunLoop ()
     {
+
+      SwinGame.ToggleFullScreen();
       while (!SwinGame.WindowCloseRequested())
       {
         // Process the UI interaction
@@ -84,6 +91,7 @@ namespace Escapade
     public void Draw ()
     {
       Map.Draw();
+      Player.Draw();
       Directory.CreateDirectory("map-out");
       
       if (!saved)
