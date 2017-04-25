@@ -45,7 +45,7 @@
     <Compile Include="src\GameObject.cs" />
     <Compile Include="src\MovableObject.cs" />
     <Compile Include="src\Map.cs" />
-    <Compile Include="src\Pathfinding.cs" />
+    <Compile Include="src\Pathfinder.cs" />
     <Compile Include="src\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
