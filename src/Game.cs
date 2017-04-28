@@ -126,6 +126,10 @@ namespace Escapade
 		{
 			if (SwinGame.KeyTyped(KeyCode.DKey)) player.TileModify(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())), 0);
 			if (SwinGame.KeyTyped(KeyCode.PKey)) player.TileModify(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())), 1);
+
+			//
+			if(SwinGame.MouseClicked(MouseButton.RightButton)) Player.StartMove(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())));
+			Player.Move();
 		}
 
 		bool saved = false;
