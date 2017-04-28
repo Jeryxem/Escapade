@@ -23,10 +23,13 @@ namespace Escapade
 
     public FACING F { get; set; }
 
+		private Game game;
+
     public Player(Game g, int id) : base(id, "Player", g.Map.RandomEmpty())
     {
       Array facings = Enum.GetValues(typeof(FACING));
       F = (FACING)facings.GetValue(new Random().Next(facings.Length));
+			game = g;
     }
 
     public void Draw()
@@ -60,7 +63,26 @@ namespace Escapade
           SwinGame.DrawCircle(Color.DarkRed, (X + 0.25F) * 10, (Y + 0.25F) * 10, 2);
           break;
       }
-      Console.WriteLine(F.ToString());
     }
+
+		public void TileModify(Coordinate c, int type)
+		{
+			double dist = Math.Abs(X - c.X) + Math.Abs(Y - c.Y);
+			Console.WriteLine("Modify: " + type + " Location:" + c.X + "," + c.Y + " Distance: " + dist);
+			if(dist <= 2)
+			{
+				switch (type)
+				{
+					case 0:
+						game.Map.Grid[c.X, c.Y] = Tile.AIR;
+						break;
+					case 1:
+						game.Map.Grid[c.X, c.Y] = Tile.WALL;
+						break;
+					default:
+						break;
+				}
+			}
+		}
   }
 }

@@ -9,7 +9,17 @@ namespace Escapade
 
     private Tile[,] _grid;
 
-    public Tile[,] Grid { get => _grid; set => _grid = value; }
+    public Tile[,] Grid
+		{
+			get
+			{
+				return _grid;
+			}
+			set
+			{
+				_grid = value;
+			}
+		}
 
     /// <summary>
     /// Constructor for a new map
@@ -28,9 +38,9 @@ namespace Escapade
     /// </summary>
     /// <param name="c">The coordinate to convert</param>
     /// <returns></returns>
-    public static int ToCell(int c)
+    public static int ToCell(dynamic c)
     {
-      return c / 10;
+      return (int) c / 10;
     }
 
     /// <summary>
