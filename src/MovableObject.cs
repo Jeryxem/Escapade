@@ -5,7 +5,7 @@ namespace Escapade
     private int _xDest;
     private int _yDest;
 
-    public int XDest { get => _xDest; set => _xDest = value; }
-    public int YDest { get => _yDest; set => _yDest = value; }
-  }
+    public int XDest { get { return _xDest; } set { _xDest = value; } }
+    public int YDest { get { return _yDest; } set { _yDest = value; } }
+	}
 }

@@ -5,108 +5,153 @@ using System.IO;
 
 namespace Escapade
 {
-  class Game
-  {
-    /// <summary>
-    /// The currently existing game objects
-    /// </summary>
-    private List<GameObject> objects = new List<GameObject>();
+	class Game
+	{
+		/// <summary>
+		/// The currently existing game objects
+		/// </summary>
+		private List<GameObject> objects = new List<GameObject>();
 
-    public List<GameObject> Objects { get => objects; set => objects = value; }
+		public List<GameObject> Objects
+		{
+			get
+			{
+				return objects;
+			}
+			set
+			{
+				objects = value;
+			}
+		}
 
-    /// <summary>
-    /// The current game map
-    /// </summary>
-    private Map map;
+		/// <summary>
+		/// The current game map
+		/// </summary>
+		private Map map;
 
-    public Map Map { get => map; set => map = value; }
+		public Map Map
+		{
+			get
+			{
+				return map;
+			}
+			set
+			{
+				map = value;
+			}
+		}
 
-    private Player player;
 
-    public Player Player { get => player; set => player = value; }
 
-    /// <summary>
-    /// Configuration settings used to initialise the game
-    /// </summary>
-    private static Dictionary<string, dynamic> _config = new Dictionary<string, dynamic>();
+		private Player player;
 
-    public static Dictionary<string, dynamic> Config { get => _config; set => _config = value; }
+		public Player Player
+		{
+			get
+			{
+				return player;
+			}
+			set
+			{
+				player = value;
+			}
+		}
 
-    public Game (Dictionary<string, dynamic> c)
-    {
-      Config = c;
-    }
+		/// <summary>
+		/// Configuration settings used to initialise the game
+		/// </summary>
+		private static Dictionary<string, dynamic> _config = new Dictionary<string, dynamic>();
 
-    /// <summary>
-    /// Run initialisation for all game objects
-    /// </summary>
-    public void Init ()
-    {
-      SwinGame.OpenGraphicsWindow("Escapade", Config["width"] * 10, Config["height"] * 10);
+		public static Dictionary<string, dynamic> Config
+		{
+			get
+			{
+				return _config;
+			}
+			set
+			{
+				_config = value;
+			}
+		}
 
-      Map = new Map(Config["width"], Config["height"]);
-      Player = new Player(this, Objects.Count);
 
-      RunLoop ();
-    }
+		public Game(Dictionary<string, dynamic> c)
+		{
+			Config = c;
+		}
 
-    /// <summary>
-    /// Run the loop
-    /// </summary>
-    public void RunLoop ()
-    {
+		/// <summary>
+		/// Run initialisation for all game objects
+		/// </summary>
+		public void Init()
+		{
+			SwinGame.OpenGraphicsWindow("Escapade", Config["width"] * 10, Config["height"] * 10);
 
-      SwinGame.ToggleFullScreen();
-      while (!SwinGame.WindowCloseRequested())
-      {
-        // Process the UI interaction
-        SwinGame.ProcessEvents ();
+			Map = new Map(Config["width"], Config["height"]);
+			Player = new Player(this, Objects.Count);
 
-        // Clear the screen and start a new frame
-        SwinGame.ClearScreen (Color.Black);
+			SwinGame.ToggleFullScreen();
 
-        // Update and draw the game objects
-        Update ();
-        Draw ();
+			RunLoop();
+		}
 
-        // Draw the frame
-        if (Config ["fps"]) SwinGame.DrawFramerate (0, 0);
-        SwinGame.RefreshScreen (30);
-      }
-    }
+		/// <summary>
+		/// Run the loop
+		/// </summary>
+		public void RunLoop()
+		{
+		
+			while (!SwinGame.WindowCloseRequested())
+			{
+				// Process the UI interaction
+				SwinGame.ProcessEvents();
 
-    /// <summary>
-    /// Run updates of all game objects
-    /// </summary>
-    public void Update ()
-    {
+				// Clear the screen and start a new frame
+				SwinGame.ClearScreen(Color.Black);
 
-    }
+				// Update and draw the game objects
+				Update();
+				Draw();
 
-    bool saved = false;
+				// Draw the frame
+				if (Config["fps"]) SwinGame.DrawFramerate(0, 0);
+				SwinGame.RefreshScreen(30);
+			}
+		}
 
-    /// <summary>
-    /// Run drawing of all game objects
-    /// </summary>
-    public void Draw ()
-    {
-      Map.Draw();
-      Player.Draw();
-      Directory.CreateDirectory("map-out");
-      
-      if (!saved)
-      {
-        saved = true;
-        SwinGame.SaveScreenshot(SwinGame.WindowNamed("Escapade"), "map-out/" + System.DateTime.Now.ToFileTimeUtc() + ".png");
-      }
-    }
+		/// <summary>
+		/// Run updates of all game objects
+		/// </summary>
+		public void Update()
+		{
+			if (SwinGame.KeyTyped(KeyCode.DKey)) player.TileModify(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())), 0);
+			if (SwinGame.KeyTyped(KeyCode.PKey)) player.TileModify(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())), 1);
+		}
 
-    /// <summary>
-    /// Clean all game objects (eg. for shutdown)
-    /// </summary>
-    public void Clean ()
-    {
+		bool saved = false;
 
-    }
-  }
+		/// <summary>
+		/// Run drawing of all game objects
+		/// </summary>
+		public void Draw()
+		{
+			Map.Draw();
+			Player.Draw();
+			Directory.CreateDirectory("map-out");
+
+			if (!saved)
+			{
+				saved = true;
+				SwinGame.SaveScreenshot(SwinGame.WindowNamed("Escapade"), "map-out/" + System.DateTime.Now.ToFileTimeUtc() + ".png");
+			}
+		}
+
+		/// <summary>
+		/// Clean all game objects (eg. for shutdown)
+		/// </summary>
+		public void Clean()
+		{
+
+		}
+	}
 }
