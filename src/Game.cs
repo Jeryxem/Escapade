@@ -46,7 +46,6 @@ namespace Escapade
 
       Map = new Map(Config["width"], Config["height"]);
       Player = new Player(this, Objects.Count);
-      Objects.Add(Player);
 
       RunLoop ();
     }
@@ -56,6 +55,8 @@ namespace Escapade
     /// </summary>
     public void RunLoop ()
     {
+
+      SwinGame.ToggleFullScreen();
       while (!SwinGame.WindowCloseRequested())
       {
         // Process the UI interaction
@@ -79,15 +80,7 @@ namespace Escapade
     /// </summary>
     public void Update ()
     {
-      if(SwinGame.MouseClicked(MouseButton.RightButton))
-      {
-        int mouseX = Map.ToCell((int)SwinGame.MouseX());
-        int mouseY = Map.ToCell((int)SwinGame.MouseY());
-        if (map.Grid[mouseX, mouseY] == Tile.AIR)
-        {
-          Player.Move(new Coordinate(mouseX, mouseY));
-        }
-      }
+
     }
 
     bool saved = false;
