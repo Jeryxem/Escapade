@@ -90,6 +90,8 @@ namespace Escapade
 			Map = new Map(Config["width"], Config["height"]);
 			Player = new Player(this, Objects.Count);
 
+			SwinGame.ToggleFullScreen();
+
 			RunLoop();
 		}
 
