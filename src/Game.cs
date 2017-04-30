@@ -90,8 +90,6 @@ namespace Escapade
 			Map = new Map(Config["width"], Config["height"]);
 			Player = new Player(this, Objects.Count);
 
-			SwinGame.ToggleFullScreen();
-
 			RunLoop();
 		}
 
@@ -127,8 +125,8 @@ namespace Escapade
 			if (SwinGame.KeyTyped(KeyCode.DKey)) player.TileModify(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())), 0);
 			if (SwinGame.KeyTyped(KeyCode.PKey)) player.TileModify(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())), 1);
 
-			//
-			if(SwinGame.MouseClicked(MouseButton.RightButton)) Player.StartMove(new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY())));
+			//if the right mouse button is clicked, let'sset the player's location to that square
+			if(SwinGame.MouseClicked(MouseButton.RightButton)) Player.target = new Coordinate(Map.ToCell(SwinGame.MouseX()), Map.ToCell(SwinGame.MouseY()));
 			Player.Move();
 		}
 

@@ -27,14 +27,16 @@ namespace Escapade
 
 		private List<Coordinate> movePath;
 
-		private AStarPathfinder aspf;
+		private Pathfinder aspf;
+
+    public Coordinate target = null;
 
 		public Player(Game g, int id) : base(id, "Player", g.Map.RandomEmpty())
 		{
 			Array facings = Enum.GetValues(typeof(FACING));
 			F = (FACING)facings.GetValue(new Random().Next(facings.Length));
 			game = g;
-			aspf = new AStarPathfinder(game.Map);
+			aspf = new Pathfinder(game);
 			movePath = new List<Coordinate>();
 		}
 
@@ -93,11 +95,6 @@ namespace Escapade
 			}
 		}
 
-		public void StartMove(Coordinate target)
-		{
-			movePath = aspf.GetPath(new Escapade.Coordinate(X, Y), target);
-		}
-
 		public void Move()
 		{
 			if (movePath.Count > 0)
@@ -106,7 +103,13 @@ namespace Escapade
 				movePath.Remove(movePath.Last());
 				X = next.X;
 				Y = next.Y;
-			}
+        if (movePath.Count == 0)
+          target = null;
+			} else
+      {
+        if (target != null)
+          movePath = aspf.GetPath(new Coordinate(X, Y), target);
+      }
 		}
 
 		public void DrawPath()

@@ -39,6 +39,7 @@
   <ItemGroup />
   <ItemGroup>
     <Compile Include="src\Coordinate.cs" />
+    <Compile Include="src\Pathfinder.cs" />
     <Compile Include="src\Player.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="src\Game.cs" />

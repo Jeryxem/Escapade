@@ -70,7 +70,10 @@ namespace Escapade
 						int newX = current.X + x;
 						int newY = current.Y + y;
 
-						Console.WriteLine("New Coord: " + current.X + "," + current.Y);
+            if (newX == target.X && newY == target.Y)
+              found = true;
+
+            Console.WriteLine("New Coord: " + current.X + "," + current.Y);
 						SwinGame.FillCircle(Color.Black, current.X, current.Y, 2);
 
 						//new PathLocation for the location we are checking
@@ -92,16 +95,12 @@ namespace Escapade
 					}
 				}
 				#endregion AddNeighbours
-
-				//we've added the target PathLocation to the open list, we've found our target
-				if (open.Contains(target))
-					found = true;
 			}
 
 			//add correct path from start to target, looping back through each parent
 			#region CreatePath
 
-			PathLocation pl = target;
+			PathLocation pl = new PathLocation(t, s, t);
 
 			while (pl.X != start.X && pl.Y != start.Y)
 			{
