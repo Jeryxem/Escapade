@@ -7,22 +7,6 @@ namespace Escapade
 {
 	class Game
 	{
-		/// <summary>
-		/// The currently existing game objects
-		/// </summary>
-		private List<GameObject> objects = new List<GameObject>();
-
-		public List<GameObject> Objects
-		{
-			get
-			{
-				return objects;
-			}
-			set
-			{
-				objects = value;
-			}
-		}
 
 		/// <summary>
 		/// The current game map
@@ -88,7 +72,7 @@ namespace Escapade
 			SwinGame.OpenGraphicsWindow("Escapade", Config["width"] * 10, Config["height"] * 10);
 
 			Map = new Map(Config["width"], Config["height"]);
-			Player = new Player(this, Objects.Count);
+			Player = new Player(this, 1);
 
 			RunLoop();
 		}
@@ -130,8 +114,6 @@ namespace Escapade
 			Player.Move();
 		}
 
-		bool saved = false;
-
 		/// <summary>
 		/// Run drawing of all game objects
 		/// </summary>
@@ -139,21 +121,6 @@ namespace Escapade
 		{
 			Map.Draw();
 			Player.Draw();
-			Directory.CreateDirectory("map-out");
-
-			if (!saved)
-			{
-				saved = true;
-				SwinGame.SaveScreenshot(SwinGame.WindowNamed("Escapade"), "map-out/" + System.DateTime.Now.ToFileTimeUtc() + ".png");
-			}
-		}
-
-		/// <summary>
-		/// Clean all game objects (eg. for shutdown)
-		/// </summary>
-		public void Clean()
-		{
-
 		}
 	}
 }
