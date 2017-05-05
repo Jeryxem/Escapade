@@ -38,16 +38,15 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="src\Coordinate.cs" />
-    <Compile Include="src\Pathfinder.cs" />
-    <Compile Include="src\Player.cs" />
-    <Compile Include="src\Program.cs" />
-    <Compile Include="src\Game.cs" />
-    <Compile Include="src\GameObject.cs" />
-    <Compile Include="src\MovableObject.cs" />
-    <Compile Include="src\Map.cs" />
-    <Compile Include="src\Pathfinding.cs" />
-    <Compile Include="src\Tile.cs" />
+    <Compile Include="src\Escapade.cs" />
+    <Compile Include="src\player\Direction.cs" />
+    <Compile Include="src\player\Player.cs" />
+    <Compile Include="src\world\World.cs" />
+    <Compile Include="src\world\Location.cs" />
+    <Compile Include="src\Object.cs" />
+    <Compile Include="src\path\Path.cs" />
+    <Compile Include="src\path\Node.cs" />
+    <Compile Include="src\world\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">
