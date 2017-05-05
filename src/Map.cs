@@ -44,6 +44,16 @@ namespace Escapade
     }
 
     /// <summary>
+    /// Converts a cell in the region [0,h] to a coordinate in the region [0,10h]
+    /// </summary>
+    /// <param name="c">The coordinate to convert</param>
+    /// <returns></returns>
+    public static int ToCoord(int c)
+    {
+      return 10 * c;
+    }
+
+    /// <summary>
     /// Clears all tiles and replaces them with an empty map
     /// </summary>
     public void Clear()

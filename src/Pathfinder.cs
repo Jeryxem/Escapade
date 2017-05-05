@@ -90,7 +90,7 @@ namespace Escapade
             //if it's not on the open list, add it
             if(!open.Contains(n))
             {
-              n.Parent = current;
+              n.parent = current;
               open.Add(n);
             }
 
@@ -113,9 +113,9 @@ namespace Escapade
 
       AStarLoc pl = foundPath[0];
 
-      while (pl.X != Start.X && pl.Y != Start.Y)
+      while (pl.X != start.X && pl.Y != start.Y)
       {
-        foundPath.Add(pl);
+        foundPath.Add(new Coordinate(pl.X, pl.Y));
         pl = pl.Parent;
       }
 
@@ -124,7 +124,7 @@ namespace Escapade
 	  List<Coordinate> foundCoords = new List<Coordinate>();
 
 	  foreach (AStarLoc a in foundPath)
-			foundCoords.Add(a);
+		foundCoords.Add(a);
 
 	  return foundCoords;
     }
@@ -146,13 +146,11 @@ namespace Escapade
     private float g;
     private float h;
 
-    private float f;
-		public float F { get { return f; } set { f = value; } }
+    public float f;
 
-    private AStarLoc parent;
-		public AStarLoc Parent { get { return parent; } set { parent = value; } }
+    public AStarLoc parent;
 
-		public AStarLoc(int x, int y, Coordinate s, Coordinate t) : base(x, y)
+    public AStarLoc(int x, int y, Coordinate s, Coordinate t) : base(x, y)
     {
       CalcScores(s, t);
     }
