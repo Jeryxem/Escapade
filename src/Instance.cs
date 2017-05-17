@@ -74,12 +74,12 @@ namespace Escapade
 
     public void Init ()
     {
-
+      Player player = new Player(0, "Player", World.RandomEmpty(), this);
+      Objects.Add(player);
     }
 
     public void PostInit ()
     {
-
     }
 
     public void Run ()
@@ -99,14 +99,23 @@ namespace Escapade
     {
       World.Update ();
       foreach (Object obj in Objects)
-        obj.Update (this);
+      {
+        obj.Update();
+        if(obj.GetType() == typeof(Player))
+        {
+          if (SwinGame.MouseClicked(MouseButton.LeftButton))
+          {
+            ((Player) obj).NewPath(new Location((int) (SwinGame.MouseX() / Size), (int) (SwinGame.MouseY() / Size)));
+          }
+        }
+      }
     }
 
     public void Draw ()
     {
       World.Draw ();
       foreach (Object obj in Objects)
-        obj.Draw (this);
+        obj.Draw ();
     }
 
   }

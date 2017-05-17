@@ -51,9 +51,9 @@ namespace Escapade
       Instance = instance;
     }
 
-    public abstract void Update (Instance instance);
+    public abstract void Update ();
 
-    public abstract void Draw (Instance instance);
+    public abstract void Draw ();
 
   }
 }

@@ -51,9 +51,7 @@
     </None>
     <WinLibs Include="lib\win32\*.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="src\Entry.cs" />
     <Compile Include="src\Instance.cs" />
@@ -61,6 +59,8 @@
     <Compile Include="src\MovableObject.cs" />
     <Compile Include="src\Object.cs" />
     <Compile Include="src\Path.cs" />
+    <Compile Include="src\PathNode.cs" />
+    <Compile Include="src\Player.cs" />
     <Compile Include="src\Tile.cs" />
     <Compile Include="src\TileType.cs" />
     <Compile Include="src\World.cs" />
