@@ -44,7 +44,7 @@ namespace Escapade
 
     void GenerateMap ()
     {
-      FillMap ();
+      FillMap();
       RandomFill ();
       EvolveMap ();
       CleanMap ();
