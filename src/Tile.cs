@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 namespace Escapade
 {
   public class Tile
   {
     TileType _type = TileType.Air;
+    List<Mineral> _minerals = new List<Mineral>();
 
     #region Properties
     public TileType Type {

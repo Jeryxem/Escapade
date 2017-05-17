@@ -56,6 +56,7 @@
     <Compile Include="src\Entry.cs" />
     <Compile Include="src\Instance.cs" />
     <Compile Include="src\Location.cs" />
+    <Compile Include="src\Mineral.cs" />
     <Compile Include="src\MovableObject.cs" />
     <Compile Include="src\Object.cs" />
     <Compile Include="src\Path.cs" />
