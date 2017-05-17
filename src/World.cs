@@ -44,17 +44,17 @@ namespace Escapade
 
     void GenerateMap ()
     {
-      FillEmpty ();
+      FillMap ();
       RandomFill ();
       EvolveMap ();
       CleanMap ();
     }
 
-    void FillEmpty ()
+    void FillMap ()
     {
       for (int x = 0; x < Width; x++) {
         for (int y = 0; y < Height; y++) {
-          Map [x, y] = new Tile (TileType.Air);
+          Map [x, y] = new Tile (TileType.Rock);
         }
       }
     }
@@ -78,6 +78,7 @@ namespace Escapade
         for (int x = 0; x < Width; x++) {
           for (int y = 0; y < Height; y++) {
             int neighbours = GetNeighbours (x, y);
+            newMap[x, y] = new Tile();
             switch (Map [x, y].Type) {
             case TileType.Rock:
               newMap [x, y].Type = neighbours >= 4 ? TileType.Rock : (neighbours < 2 ? TileType.Rock : TileType.Air);

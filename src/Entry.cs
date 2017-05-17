@@ -4,11 +4,7 @@ namespace Escapade
   {
     public static void Main ()
     {
-      Instance instance = new Instance {
-        Width = 450,
-        Height = 450,
-        Size = 15
-      };
+      Instance instance = new Instance ();
     }
   }
 }

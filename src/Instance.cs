@@ -6,13 +6,38 @@ namespace Escapade
   public class Instance
   {
 
+    int _width;
+    int _height;
+    int _size;
     World _world;
 
     public List<Object> Objects;
-    
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public int Size { get; set; }
+
+    #region Properties
+    public int Width {
+      get {
+        return _width;
+      }
+      set {
+        _width = value;
+      }
+    }
+    public int Height {
+      get {
+        return _height;
+      }
+      set {
+        _height = value;
+      }
+    }
+    public int Size {
+      get {
+        return _size;
+      }
+      set {
+        _size = value;
+      }
+    }
     public World World {
       get {
         return _world;
@@ -21,10 +46,13 @@ namespace Escapade
         _world = value;
       }
     }
-
+    #endregion Properties
 
     public Instance ()
     {
+      Width = 450;
+      Height = 450;
+      Size = 15;
       Start ();
     }
 
@@ -56,8 +84,7 @@ namespace Escapade
 
     public void Run ()
     {
-      while (!SwinGame.WindowCloseRequested ())
-      {
+      while (!SwinGame.WindowCloseRequested ()) {
         SwinGame.ClearScreen (Color.White);
         SwinGame.ProcessEvents ();
 

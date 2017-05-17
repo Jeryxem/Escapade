@@ -4,7 +4,7 @@ namespace Escapade
 {
   public class Tile
   {
-    TileType _type;
+    TileType _type = TileType.Air;
 
     #region Properties
     public TileType Type {
@@ -17,9 +17,11 @@ namespace Escapade
     }
     #endregion Properties
 
-    public Tile (TileType type)
+    public Tile(TileType type)
     {
       Type = type;
     }
+
+    public Tile() : this(TileType.Air) { }
   }
 }

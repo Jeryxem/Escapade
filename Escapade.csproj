@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug-Windows</Configuration>
     <ProjectGuid>{A9DCAC72-BC77-4C33-BE70-BBFD31D7C798}</ProjectGuid>
@@ -38,17 +38,6 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="src\Escapade.cs" />
-    <Compile Include="src\player\Direction.cs" />
-    <Compile Include="src\player\Player.cs" />
-    <Compile Include="src\world\World.cs" />
-    <Compile Include="src\world\Location.cs" />
-    <Compile Include="src\Object.cs" />
-    <Compile Include="src\path\Path.cs" />
-    <Compile Include="src\path\Node.cs" />
-    <Compile Include="src\world\Tile.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="SwinGame">
       <HintPath>lib\SwinGame.dll</HintPath>
     </Reference>
@@ -61,6 +50,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <WinLibs Include="lib\win32\*.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Entry.cs" />
+    <Compile Include="src\Instance.cs" />
+    <Compile Include="src\Location.cs" />
+    <Compile Include="src\MovableObject.cs" />
+    <Compile Include="src\Object.cs" />
+    <Compile Include="src\Path.cs" />
+    <Compile Include="src\Tile.cs" />
+    <Compile Include="src\TileType.cs" />
+    <Compile Include="src\World.cs" />
   </ItemGroup>
   <Target Name="CopyLibsToOut">
     <Copy SourceFiles="@(WinLibs)" DestinationFolder="$(OutDir)" />
