@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SwinGameSDK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Escapade.src.mineral.gemstone
 {
   class Emerald : Gemstone
   {
-    public Emerald() : base("Emerald", new Random().Next(70, 81) / 100)
+    public Emerald() : base("Emerald", new Random().Next(70, 81) / 100, Color.DarkOliveGreen)
     {
     }
   }

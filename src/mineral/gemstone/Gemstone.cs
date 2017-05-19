@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SwinGameSDK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,10 @@ namespace Escapade.src.mineral
       }
     }
 
-    public Gemstone(string name, float clarity) : base(name)
+    public Gemstone(string name, float clarity, Color colour) : base(name, colour)
     {
       Clarity = clarity;
-      Value = (int) (((new Random().NextDouble() - 0.5) * 100) + (int) (1000 * Clarity));
+      Value = (int) (((new Random().NextDouble() - 0.5) * 100) + (int) (3000 * Clarity));
     }
   }
 }

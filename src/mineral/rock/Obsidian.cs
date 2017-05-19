@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Escapade.src.mineral.gemstone
+namespace Escapade.src.mineral.rock
 {
-  class Diamond : Gemstone
+  class Obsidian : Rock
   {
-    public Diamond() : base("Diamond", new Random().Next(85, 96) / 100, Color.Aquamarine)
+    public Obsidian() : base("Obsidian", new Random().Next(85, 96) / 100, Color.DarkViolet)
     {
     }
   }

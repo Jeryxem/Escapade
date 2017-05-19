@@ -1,5 +1,7 @@
 using System;
 using SwinGameSDK;
+using Escapade.src.mineral.gemstone;
+using Escapade.src.mineral.rock;
 
 namespace Escapade
 {
@@ -123,7 +125,34 @@ namespace Escapade
         for (int y = 0; y < Height; y++) {
           if (Map [x, y].Type == TileType.Rock) {
             double rand = random.NextDouble ();
-            Map [x, y].Mineral = rand < 0.02 ? new Mineral(MineralType.Diamond) : rand < 0.05 ? new Mineral(MineralType.Ruby) : rand < 0.09 ? new Mineral(MineralType.Emerald) : rand < 0.14 ? new Mineral(MineralType.Sapphire) : null;
+            Mineral mineral;
+            if (rand < 0.1) //gemstone
+            {
+              rand = random.NextDouble();
+              if (rand < 0.15)
+                mineral = new Diamond();
+              else
+                if (rand < 0.35)
+                  mineral = new Emerald();
+                else
+                  if (rand < 0.65)
+                    mineral = new Ruby();
+                  else
+                    mineral = new Sapphire();
+            } else
+            { //rock
+              rand = random.NextDouble();
+              if (rand < 0.15)
+                mineral = new Obsidian();
+              else
+                if (rand < 0.35)
+                  mineral = new Marble();
+                else
+                  if (rand < 0.65)
+                    mineral = new Feldspar();
+                  else
+                    mineral = new Quartz();
+            }
           }
         }
       }

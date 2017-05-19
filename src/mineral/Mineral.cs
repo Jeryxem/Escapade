@@ -6,6 +6,7 @@ namespace Escapade
   {
     string _name;
     int _value;
+    Color _colour;
 
     #region Properties
     public string Name {
@@ -24,11 +25,20 @@ namespace Escapade
         _value = value;
       }
     }
+    public Color Colour {
+      get {
+        return _colour;
+      }
+      set {
+        _colour = value;
+      }
+    }
     #endregion Properties
 
-    public Mineral(string name)
+    public Mineral(string name, Color colour)
     {
       Name = name;
+      Colour = colour;
     }
   }
 }
