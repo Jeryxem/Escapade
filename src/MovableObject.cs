@@ -1,4 +1,6 @@
-﻿namespace Escapade
+﻿using SwinGameSDK;
+
+namespace Escapade
 {
   public abstract class MoveableObject : Object
   {
@@ -36,6 +38,7 @@
       {
         Path.TargetPath.Reverse();
         Location = Path.TargetPath[0];
+        SwinGame.Delay (500);
         Path.TargetPath.RemoveAt(0);
         if (Path.TargetPath.Count == 0) Target = null;
       }

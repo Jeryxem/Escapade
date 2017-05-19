@@ -52,6 +52,7 @@ namespace Escapade
 
   public enum MineralType
   {
+    None,
     Diamond,
     Emerald,
     Ruby,

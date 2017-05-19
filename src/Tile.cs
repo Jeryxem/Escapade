@@ -1,12 +1,13 @@
-using System;
+using SwinGameSDK;
 using System.Collections.Generic;
 
 namespace Escapade
 {
   public class Tile
   {
+    
     TileType _type = TileType.Air;
-    List<Mineral> _minerals = new List<Mineral>();
+    Mineral _mineral = null;
 
     #region Properties
     public TileType Type {
@@ -17,6 +18,14 @@ namespace Escapade
         _type = value;
       }
     }
+    public Mineral Mineral {
+      get {
+        return _mineral;
+      }
+      set {
+        _mineral = value;
+      }
+    }
     #endregion Properties
 
     public Tile(TileType type)
@@ -25,5 +34,10 @@ namespace Escapade
     }
 
     public Tile() : this(TileType.Air) { }
+
+    public void DrawMinerals ()
+    {
+      
+    }
   }
 }

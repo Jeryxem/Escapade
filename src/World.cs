@@ -44,7 +44,7 @@ namespace Escapade
 
     void GenerateMap ()
     {
-      FillMap();
+      FillMap ();
       RandomFill ();
       EvolveMap ();
       CleanMap ();
@@ -78,7 +78,7 @@ namespace Escapade
         for (int x = 0; x < Width; x++) {
           for (int y = 0; y < Height; y++) {
             int neighbours = GetNeighbours (x, y);
-            newMap[x, y] = new Tile();
+            newMap [x, y] = new Tile ();
             switch (Map [x, y].Type) {
             case TileType.Rock:
               newMap [x, y].Type = neighbours >= 4 ? TileType.Rock : (neighbours < 2 ? TileType.Rock : TileType.Air);
@@ -95,10 +95,8 @@ namespace Escapade
 
     void CleanMap ()
     {
-      for (int x = 0; x<Width; x++)
-      {
-        for (int y = 0; y<Height; y++)
-        {
+      for (int x = 0; x < Width; x++) {
+        for (int y = 0; y < Height; y++) {
           if (GetNeighbours (x, y) <= 2) Map [x, y].Type = TileType.Air;
         }
       }
@@ -118,11 +116,24 @@ namespace Escapade
       return res;
     }
 
+    public void PutMinerals ()
+    {
+      for (int x = 0; x < Width; x++) {
+        for (int y = 0; y < Height; y++) {
+          if (Map [x, y].Type == TileType.Rock) {
+            double rand = random.NextDouble ();
+            Map [x, y].Mineral = rand < 0.05 ? new Mineral(MineralType.Diamond) : rand < 0.15 ? new Mineral(MineralType.Ruby) :
+              rand < 0.25 ? new Mineral(MineralType.Emerald) : rand < 0.4 ? new Mineral(MineralType.Sapphire) : new Mineral(MineralType.None);
+          }
+        }
+      }
+    }
+
     public Location RandomEmpty ()
     {
       while (true) {
-        int x = (int) Math.Floor (random.NextDouble () * Width);
-        int y = (int) Math.Floor (random.NextDouble () * Height);
+        int x = (int)Math.Floor (random.NextDouble () * Width);
+        int y = (int)Math.Floor (random.NextDouble () * Height);
         if (Map [x, y].Type == TileType.Air)
           return new Location (x, y);
       }
