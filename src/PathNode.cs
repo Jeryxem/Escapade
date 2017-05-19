@@ -84,7 +84,7 @@ namespace Escapade
         sum += pn.F;
         pn = pn.Parent;
       }
-      //H = (float)Math.Sqrt(Math.Pow(Math.Abs(X - Target.X), 2) + Math.Pow(Math.Abs(Y - Target.Y), 2));
+      G = sum;
       H = Math.Abs (X - Target.X) + Math.Abs (Y - Target.Y);
       F = H;
     }

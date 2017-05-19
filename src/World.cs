@@ -48,6 +48,7 @@ namespace Escapade
       RandomFill ();
       EvolveMap ();
       CleanMap ();
+      PutMinerals ();
     }
 
     void FillMap ()
@@ -122,8 +123,7 @@ namespace Escapade
         for (int y = 0; y < Height; y++) {
           if (Map [x, y].Type == TileType.Rock) {
             double rand = random.NextDouble ();
-            Map [x, y].Mineral = rand < 0.05 ? new Mineral(MineralType.Diamond) : rand < 0.15 ? new Mineral(MineralType.Ruby) :
-              rand < 0.25 ? new Mineral(MineralType.Emerald) : rand < 0.4 ? new Mineral(MineralType.Sapphire) : new Mineral(MineralType.None);
+            Map [x, y].Mineral = rand < 0.02 ? new Mineral(MineralType.Diamond) : rand < 0.05 ? new Mineral(MineralType.Ruby) : rand < 0.09 ? new Mineral(MineralType.Emerald) : rand < 0.14 ? new Mineral(MineralType.Sapphire) : null;
           }
         }
       }
@@ -152,6 +152,8 @@ namespace Escapade
           Color color = Map [x, y].Type == TileType.Air ? Color.LightGoldenrodYellow : Color.SlateGray;
           SwinGame.FillRectangle (color, size * x, size * y, size, size);
           SwinGame.DrawRectangle (Color.White, size * x, size * y, size, size);
+          if (Map [x, y].Mineral != null)
+            SwinGame.FillCircle (Map [x, y].Mineral.Colour, (size * x) + (float) (size / 2), (size * y) + (float) (size / 2), size / 7);
         }
       }
     }

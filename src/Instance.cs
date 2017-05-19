@@ -11,7 +11,7 @@ namespace Escapade
     int _size;
     World _world;
 
-    public List<Object> Objects;
+    public List<Entity> Objects;
 
     #region Properties
     public int Width {
@@ -68,7 +68,7 @@ namespace Escapade
 
     public void PreInit ()
     {
-      Objects = new List<Object> ();
+      Objects = new List<Entity> ();
       World = new World (Width, Height, Size, this);
     }
 
@@ -98,14 +98,15 @@ namespace Escapade
     public void Update ()
     {
       World.Update ();
-      foreach (Object obj in Objects)
+      foreach (Entity obj in Objects)
       {
         obj.Update();
         if(obj.GetType() == typeof(Player))
         {
           if (SwinGame.MouseClicked(MouseButton.LeftButton))
           {
-            ((Player) obj).NewPath(new Location((int) (SwinGame.MouseX() / Size), (int) (SwinGame.MouseY() / Size)));
+            if(World.Map [(int)(SwinGame.MouseX() / Size), (int) (SwinGame.MouseY() / Size)].Type == TileType.Air)
+              ((Player) obj).NewPath(new Location((int) (SwinGame.MouseX() / Size), (int) (SwinGame.MouseY() / Size)));
           }
         }
       }
@@ -114,7 +115,7 @@ namespace Escapade
     public void Draw ()
     {
       World.Draw ();
-      foreach (Object obj in Objects)
+      foreach (Entity obj in Objects)
         obj.Draw ();
     }
 

@@ -18,6 +18,12 @@ namespace Escapade
     {
       SwinGame.FillRectangle(Color.MediumVioletRed, Location.X * Instance.Size, Location.Y * Instance.Size, Instance.Size, Instance.Size);
       SwinGame.DrawRectangle(Color.White, Location.X * Instance.Size, Location.Y * Instance.Size, Instance.Size, Instance.Size);
+      if (Path.TargetPath.Count > 0) {
+        foreach (Location loc in Path.TargetPath) {
+          SwinGame.FillCircle(Color.LightPink, (loc.X * Instance.Size) + (Instance.Size / 2), (loc.Y * Instance.Size) + (Instance.Size / 2), Instance.Size / 3);
+          SwinGame.DrawRectangle(Color.White, loc.X* Instance.Size, loc.Y* Instance.Size, Instance.Size, Instance.Size);
+        }
+      }
     }
 
     public override void Update()

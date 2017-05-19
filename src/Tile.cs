@@ -35,9 +35,5 @@ namespace Escapade
 
     public Tile() : this(TileType.Air) { }
 
-    public void DrawMinerals ()
-    {
-      
-    }
   }
 }

@@ -27,7 +27,7 @@ namespace Escapade
         _type = value;
         switch (Type) {
         case MineralType.Diamond: Colour = Color.Aquamarine; break;
-        case MineralType.Emerald: Colour = Color.ForestGreen; break;
+        case MineralType.Emerald: Colour = Color.LawnGreen; break;
         case MineralType.Ruby: Colour = Color.IndianRed; break;
         case MineralType.Sapphire: Colour = Color.RoyalBlue; break;
         }
@@ -52,7 +52,6 @@ namespace Escapade
 
   public enum MineralType
   {
-    None,
     Diamond,
     Emerald,
     Ruby,

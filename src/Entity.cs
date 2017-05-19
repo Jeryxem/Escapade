@@ -1,6 +1,6 @@
 namespace Escapade
 {
-  public abstract class Object
+  public abstract class Entity
   {
 
     int _id;
@@ -43,7 +43,7 @@ namespace Escapade
     }
     #endregion Properties
 
-    protected Object (int id, string name, Location location, Instance instance)
+    protected Entity (int id, string name, Location location, Instance instance)
     {
       Id = id;
       Name = name;

@@ -2,9 +2,9 @@
 
 namespace Escapade
 {
-  public abstract class MoveableObject : Object
+  public abstract class MoveableObject : Entity
   {
-
+    
     public Location _target;
     public Path _path;
 
@@ -36,9 +36,8 @@ namespace Escapade
     {
       if (Path.TargetPath.Count > 0)
       {
-        Path.TargetPath.Reverse();
         Location = Path.TargetPath[0];
-        SwinGame.Delay (500);
+        SwinGame.Delay (100);
         Path.TargetPath.RemoveAt(0);
         if (Path.TargetPath.Count == 0) Target = null;
       }

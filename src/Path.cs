@@ -59,8 +59,12 @@ namespace Escapade
       // While the current location isn't our target
       while(!(current.X == target.X && current.Y == target.Y))
       {
-        open.OrderByDescending(Node => Node.F);
+        open = open.OrderBy (x => x.H).ToList();
 
+        Console.WriteLine ("HEY MAN IM SORTIN HERE");
+        foreach (PathNode n in open)
+          Console.WriteLine (n.F.ToString ());
+        Console.WriteLine ("~~~~Thanks Matt :)~~~~");
 
         current = open[0];
 
@@ -81,7 +85,7 @@ namespace Escapade
             PathNode node = new PathNode(newX, newY, start, target);
             node.CalculateScores ();
 
-            if (Instance.World.Map[newX - 1, newY - 1].Type != TileType.Air) continue;
+            if (Instance.World.Map[newX, newY].Type != TileType.Air) continue;
 
             //If it's in the closed list, skip it
             if (closed.Any(Node => Node.X == newX && Node.Y == newY)) continue;
@@ -94,52 +98,17 @@ namespace Escapade
           }
         }
         #endregion AddNeighbours
-
-        SwinGame.ClearScreen(Color.White);
-
-        foreach (PathNode c in open)
-        {
-          SwinGame.FillCircle(Color.Red, c.X * 15 + 7.5F, c.Y * 15 + 7.5F, 5F);
-
-          if (c.F != 0) {
-            int x = 5;
-          }
-          SwinGame.DrawText((c.F).ToString(), Color.Black, c.X * 15 + 7.5F, c.Y * 15 + 7.5F);
-        }
-
-        foreach (PathNode c in closed)
-        {
-          SwinGame.FillCircle(Color.Green, c.X * 15 + 7.5F, c.Y * 15 + 7.5F, 7.5F);
-        }
-
-        SwinGame.FillCircle(Color.Blue, current.X * 15 + 7.5F, current.Y * 15 + 7.5F, 7.5F);
-
-        SwinGame.DrawText(open.Count().ToString(), Color.Black, 15, 15);
-
-        SwinGame.DrawText(closed.Count().ToString(), Color.Black, 45, 45);
-
-        SwinGame.RefreshScreen(30);
-        SwinGame.Delay(50);
       }
       #endregion FindingPath
 
       PathNode pn = current;
 
-      while (pn.Parent != null)
-      {
-        found.Add(pn);
+      while (pn.Parent != null) {
+        found.Add (pn);
         pn = pn.Parent;
       }
-
-      foreach (Location l in found) {
-        SwinGame.FillCircle(Color.Blue, l.X * 15 + 7.5F, l.Y * 15 + 7.5F, 7.5F);
-
-        SwinGame.RefreshScreen(30);
-        SwinGame.Delay(250);
-      }
-
+      found.Reverse();
       TargetPath = found;
-
     }
   }
 }
