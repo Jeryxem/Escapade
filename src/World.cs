@@ -125,10 +125,10 @@ namespace Escapade
         for (int y = 0; y < Height; y++) {
           if (Map [x, y].Type == TileType.Rock) {
             double rand = random.NextDouble ();
-            Mineral mineral;
-            if (rand < 0.1) //gemstone
+            Mineral mineral = null;
+            switch (random.Next(1, 11))
             {
-              rand = random.NextDouble();
+              case 1:
               if (rand < 0.15)
                 mineral = new Diamond();
               else
@@ -139,20 +139,22 @@ namespace Escapade
                     mineral = new Ruby();
                   else
                     mineral = new Sapphire();
-            } else
-            { //rock
-              rand = random.NextDouble();
-              if (rand < 0.15)
-                mineral = new Obsidian();
-              else
-                if (rand < 0.35)
-                  mineral = new Marble();
+              break;
+              case 2:
+              case 3:
+                if (rand < 0.15)
+                  mineral = new Obsidian();
                 else
-                  if (rand < 0.65)
-                    mineral = new Feldspar();
+                  if (rand < 0.35)
+                    mineral = new Marble();
                   else
-                    mineral = new Quartz();
+                    if (rand < 0.65)
+                      mineral = new Feldspar();
+                    else
+                      mineral = new Quartz();
+              break;
             }
+            Map[x, y].Mineral = mineral;
           }
         }
       }
