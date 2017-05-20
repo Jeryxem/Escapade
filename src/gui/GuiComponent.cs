@@ -1,11 +1,15 @@
-﻿namespace Escapade.gui
+﻿using SwinGameSDK;
+
+namespace Escapade.gui
 {
-  public class Frame
+  public class GuiComponent
   {
     int _x;
     int _y;
     int _w;
     int _h;
+    Color _color;
+    GuiComponent _content;
 
     #region Properties
     public int X {
@@ -40,14 +44,36 @@
         _w = value;
       }
     }
+    public Color Color {
+      get {
+        return _color;
+      }
+      set {
+        _color = value;
+      }
+    }
+    public GuiComponent Content {
+      get {
+        return _content;
+      }
+     private set {
+        _content = value;
+      }
+    }
     #endregion Properties
 
-    public Frame (int x, int y, int w, int h)
+    public GuiComponent (int x, int y, int w, int h, Color c)
     {
       X = x;
       Y = y;
       Width = w;
       Height = h;
+      Color = c;
+    }
+
+    public void SetContent (GuiComponent component)
+    {
+      Content = component;
     }
   }
 }

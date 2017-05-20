@@ -160,10 +160,10 @@ namespace Escapade
       Map [loc.X, loc.Y] = new Tile (TileType.Air);
       if (tile.Mineral != null) {
         player.Inventory.AddItem (tile.Mineral);
-        string list = "wd";
+        string list = "";
         foreach (Item i in player.Inventory.ItemList)
           list += i.Id + " | " + i.Meta + " | " + i.Name + "\n";
-        Console.Write (list + "awdawd");
+        Console.WriteLine (list);
       }
     }
 

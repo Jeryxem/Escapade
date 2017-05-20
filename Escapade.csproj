@@ -72,8 +72,10 @@
     <Compile Include="src\World.cs" />
     <Compile Include="src\Item.cs" />
     <Compile Include="src\Inventory.cs" />
-    <Compile Include="src\gui\Frame.cs" />
+    <Compile Include="src\gui\GuiComponent.cs" />
     <Compile Include="src\gui\NamedFrame.cs" />
+    <Compile Include="src\gui\Container.cs" />
+    <Compile Include="src\gui\Renderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\gui\" />
