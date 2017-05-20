@@ -75,6 +75,7 @@
     <Compile Include="src\Tile.cs" />
     <Compile Include="src\TileType.cs" />
     <Compile Include="src\World.cs" />
+    <Compile Include="src\Item.cs" />
   </ItemGroup>
   <Target Name="CopyLibsToOut">
     <Copy SourceFiles="@(WinLibs)" DestinationFolder="$(OutDir)" />
