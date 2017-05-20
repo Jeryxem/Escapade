@@ -33,7 +33,7 @@
 		}
 		#endregion Properties
 
-		public Item (int id, int meta, string name)
+		protected Item (int id, int meta, string name)
 		{
 			Id = id;
 			Meta = meta;

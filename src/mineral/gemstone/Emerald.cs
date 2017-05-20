@@ -9,7 +9,7 @@ namespace Escapade.src.mineral.gemstone
 {
   class Emerald : Gemstone
   {
-    public Emerald() : base("Emerald", new Random().Next(70, 81) / 100, Color.DarkOliveGreen)
+    public Emerald() : base("Emerald", 2, new Random().Next(70, 81) / 100, Color.DarkOliveGreen)
     {
     }
   }

@@ -1,22 +1,14 @@
-﻿using SwinGameSDK;
+﻿using Escapade.item;
+using SwinGameSDK;
 
 namespace Escapade
 {
-  public abstract class Mineral
+  public abstract class Mineral : Item
   {
-    string _name;
     int _value;
     Color _colour;
 
     #region Properties
-    public string Name {
-      get {
-        return _name;
-      }
-      set {
-        _name = value;
-      }
-    }
     public int Value {
       get {
         return _value;
@@ -35,9 +27,8 @@ namespace Escapade
     }
     #endregion Properties
 
-    public Mineral(string name, Color colour)
+    protected Mineral(string name, int meta, Color colour) : base(10, meta, name)
     {
-      Name = name;
       Colour = colour;
     }
   }

@@ -9,7 +9,7 @@ namespace Escapade.src.mineral.gemstone
 {
   class Diamond : Gemstone
   {
-    public Diamond() : base("Diamond", new Random().Next(85, 96) / 100, Color.Aquamarine)
+    public Diamond() : base("Diamond", 1, new Random().Next(85, 96) / 100, Color.Aquamarine)
     {
     }
   }

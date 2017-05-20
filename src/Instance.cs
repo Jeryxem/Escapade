@@ -97,7 +97,6 @@ namespace Escapade
 
     public void Update ()
     {
-      World.Update ();
       foreach (Entity obj in Objects)
       {
         obj.Update();
@@ -105,8 +104,18 @@ namespace Escapade
         {
           if (SwinGame.MouseClicked(MouseButton.LeftButton))
           {
-            if(World.Map [(int)(SwinGame.MouseX() / Size), (int) (SwinGame.MouseY() / Size)].Type == TileType.Air)
-              ((Player) obj).NewPath(new Location((int) (SwinGame.MouseX() / Size), (int) (SwinGame.MouseY() / Size)));
+            int x = (int)(SwinGame.MouseX () / Size);
+            int y = (int)(SwinGame.MouseY () / Size);
+            if(World.Map [x, y].Type == TileType.Air)
+              ((Player) obj).NewPath(new Location(x, y));
+          }
+          if (SwinGame.MouseClicked(MouseButton.RightButton))
+          {
+            int x = (int)(SwinGame.MouseX () / Size);
+            int y = (int)(SwinGame.MouseY () / Size);
+            if (x < 2 || x > Width - 2 || y < 2 || y > Height - 2) continue;
+            if (World.Map [x, y].Type == TileType.Rock)
+              World.ModifyTile ((Player) obj, new Location(x, y)); 
           }
         }
       }

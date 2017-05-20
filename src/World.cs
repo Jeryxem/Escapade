@@ -1,7 +1,7 @@
 using System;
 using SwinGameSDK;
 using Escapade.src.mineral.gemstone;
-using Escapade.src.mineral.rock;
+using Escapade.item;
 
 namespace Escapade
 {
@@ -104,7 +104,6 @@ namespace Escapade
         }
       }
     }
-
     int GetNeighbours (int p1, int p2)
     {
       int res = 8;
@@ -126,33 +125,18 @@ namespace Escapade
           if (Map [x, y].Type == TileType.Rock) {
             double rand = random.NextDouble ();
             Mineral mineral = null;
-            switch (random.Next(1, 11))
-            {
-              case 1:
+            if (rand < 0.05) {
+              rand = random.NextDouble ();
               if (rand < 0.15)
-                mineral = new Diamond();
+                mineral = new Diamond ();
               else
                 if (rand < 0.35)
-                  mineral = new Emerald();
-                else
+                mineral = new Emerald ();
+              else
                   if (rand < 0.65)
-                    mineral = new Ruby();
-                  else
-                    mineral = new Sapphire();
-              break;
-              case 2:
-              case 3:
-                if (rand < 0.15)
-                  mineral = new Obsidian();
-                else
-                  if (rand < 0.35)
-                    mineral = new Marble();
-                  else
-                    if (rand < 0.65)
-                      mineral = new Feldspar();
-                    else
-                      mineral = new Quartz();
-              break;
+                mineral = new Ruby ();
+              else
+                mineral = new Sapphire ();
             }
             Map[x, y].Mineral = mineral;
           }
@@ -170,9 +154,17 @@ namespace Escapade
       }
     }
 
-    public void Update ()
+    public void ModifyTile (Player player, Location loc)
     {
-      //TODO World Update Method
+      Tile tile = Map [loc.X, loc.Y];
+      Map [loc.X, loc.Y] = new Tile (TileType.Air);
+      if (tile.Mineral != null) {
+        player.Inventory.AddItem (tile.Mineral);
+        string list = "wd";
+        foreach (Item i in player.Inventory.ItemList)
+          list += i.Id + " | " + i.Meta + " | " + i.Name + "\n";
+        Console.Write (list + "awdawd");
+      }
     }
 
     public void Draw ()

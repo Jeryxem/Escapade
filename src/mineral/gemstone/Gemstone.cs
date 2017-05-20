@@ -20,7 +20,7 @@ namespace Escapade.src.mineral
       }
     }
 
-    public Gemstone(string name, float clarity, Color colour) : base(name, colour)
+    public Gemstone(string name, int meta, float clarity, Color colour) : base(name, meta, colour)
     {
       Clarity = clarity;
       Value = (int) (((new Random().NextDouble() - 0.5) * 100) + (int) (3000 * Clarity));

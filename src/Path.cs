@@ -61,10 +61,10 @@ namespace Escapade
       {
         open = open.OrderBy (x => x.H).ToList();
 
-        Console.WriteLine ("HEY MAN IM SORTIN HERE");
-        foreach (PathNode n in open)
-          Console.WriteLine (n.F.ToString ());
-        Console.WriteLine ("~~~~Thanks Matt :)~~~~");
+        //Console.WriteLine ("HEY MAN IM SORTIN HERE");
+        //foreach (PathNode n in open)
+        //  Console.WriteLine (n.F.ToString ());
+        //Console.WriteLine ("~~~~Thanks Matt :)~~~~");
 
         current = open[0];
 

@@ -62,11 +62,6 @@
     <Compile Include="src\mineral\gemstone\Diamond.cs" />
     <Compile Include="src\mineral\gemstone\Gemstone.cs" />
     <Compile Include="src\mineral\Mineral.cs" />
-    <Compile Include="src\mineral\rock\Feldspar.cs" />
-    <Compile Include="src\mineral\rock\Marble.cs" />
-    <Compile Include="src\mineral\rock\Obsidian.cs" />
-    <Compile Include="src\mineral\rock\Quartz.cs" />
-    <Compile Include="src\mineral\rock\Rock.cs" />
     <Compile Include="src\MovableObject.cs" />
     <Compile Include="src\Entity.cs" />
     <Compile Include="src\Path.cs" />
@@ -77,6 +72,11 @@
     <Compile Include="src\World.cs" />
     <Compile Include="src\Item.cs" />
     <Compile Include="src\Inventory.cs" />
+    <Compile Include="src\gui\Frame.cs" />
+    <Compile Include="src\gui\NamedFrame.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\gui\" />
   </ItemGroup>
   <Target Name="CopyLibsToOut">
     <Copy SourceFiles="@(WinLibs)" DestinationFolder="$(OutDir)" />
