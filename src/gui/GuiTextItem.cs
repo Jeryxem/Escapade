@@ -26,7 +26,9 @@ namespace Escapade.gui
       int fontSize = 20;
       Font font;
       while (true) {
-        font = new Font ("Arial", fontSize);
+        font = new Font ("Arial", fontSize) {
+          FontStyle = FontStyle.BoldFont
+        };
         int fontHeight = font.TextHeight (text);
         int fontWidth = font.TextWidth (text);
         if (fontWidth < Width && fontHeight < Height)

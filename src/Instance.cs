@@ -83,9 +83,9 @@ namespace Escapade
     public void PostInit ()
     {
       GuiFrame Inventory = new GuiFrame (450, 0, 250, 450, Color.Black, Color.Azure, null, true);
-      GuiFrame InventoryTextArea = new GuiFrame (5, 5, 240, 15, Color.Azure, Color.Azure, Inventory, true);
+      GuiFrame InventoryTextArea = new GuiFrame (5, 5, 240, 20, Inventory.BackgroundColor, Inventory.BackgroundColor, Inventory, true);
       GuiTextItem InventoryText = new GuiTextItem ("Inventory", Color.DarkRed, InventoryTextArea, true);
-      GuiFrame InventoryArea = new GuiFrame (5, 25, 240, 420, Color.Black, Color.LightSkyBlue, Inventory, true);
+      GuiFrame InventoryArea = new GuiFrame (5, 30, 240, 415, Color.Black, Color.LightSkyBlue, Inventory, true);
 
       GuiEnvironment.GetInstance ().Base = Inventory;
     }
