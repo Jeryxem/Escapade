@@ -1,4 +1,5 @@
-﻿using SwinGameSDK;
+﻿using System;
+using SwinGameSDK;
 
 namespace Escapade
 {
@@ -46,7 +47,12 @@ namespace Escapade
     public void NewPath(Location target)
     {
       Target = target;
-      Path.GetPath(Location, Target);
+      try {
+        Path.GetPath (Location, Target);
+      } catch {
+        Console.WriteLine ("Could not move player to target.");
+        Target = null;
+      }
     }
 
   }

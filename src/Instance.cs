@@ -12,7 +12,6 @@ namespace Escapade
     int _height;
     int _size;
     World _world;
-    Container _container;
 
     public List<Entity> Objects;
 
@@ -49,14 +48,6 @@ namespace Escapade
         _world = value;
       }
     }
-    public Container Container {
-      get {
-        return _container;
-      }
-      set {
-        _container = value;
-      }
-    }
     #endregion Properties
 
     public Instance ()
@@ -91,10 +82,12 @@ namespace Escapade
 
     public void PostInit ()
     {
-      Container = new Container ();
-      Container.AddComponent (new NamedFrame ("Inventory", Color.Black, 460, 0, 240, 450));
-      Container.AddComponent (new NamedFrame ("Hello", Color.Black, 10, 10, 100, 100));
-      Container.AddComponent (new NamedFrame ("I Am A Container", Color.Black, 250, 250, 150, 150));
+      GuiFrame Inventory = new GuiFrame (450, 0, 250, 450, Color.Black, Color.Azure, null, true);
+      GuiFrame InventoryTextArea = new GuiFrame (5, 5, 240, 15, Color.Azure, Color.Azure, Inventory, true);
+      GuiTextItem InventoryText = new GuiTextItem ("Inventory", Color.DarkRed, InventoryTextArea, true);
+      GuiFrame InventoryArea = new GuiFrame (5, 25, 240, 420, Color.Black, Color.LightSkyBlue, Inventory, true);
+
+      GuiEnvironment.GetInstance ().Base = Inventory;
     }
 
     public void Run ()
@@ -108,6 +101,7 @@ namespace Escapade
 
         SwinGame.RefreshScreen (30);
       }
+      SwinGame.ReleaseAllBitmaps ();
     }
 
     public void Update ()
@@ -126,7 +120,7 @@ namespace Escapade
             if (SwinGame.MouseX () > 450) continue;
             int x = (int)(SwinGame.MouseX () / Size);
             int y = (int)(SwinGame.MouseY () / Size);
-            if (x < 2 || x > Width - 2 || y < 2 || y > Height - 2) continue;
+            if (x < 2 || x > (Width / Size) - 3 || y < 2 || y > (Height / Size) - 3) continue;
             if (World.Map [x, y].Type == TileType.Rock)
               World.ModifyTile ((Player)obj, new Location (x, y));
           }
@@ -141,8 +135,7 @@ namespace Escapade
       World.Draw ();
       foreach (Entity obj in Objects)
         obj.Draw ();
-      Container.Draw ();
+      GuiEnvironment.GetInstance ().Base.Render ();
     }
-
   }
 }

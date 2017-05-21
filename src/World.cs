@@ -2,6 +2,7 @@ using System;
 using SwinGameSDK;
 using Escapade.src.mineral.gemstone;
 using Escapade.item;
+using System.Collections.Generic;
 
 namespace Escapade
 {
@@ -9,8 +10,10 @@ namespace Escapade
   {
 
     Tile [,] _map;
+    Dictionary<string, Bitmap> _sprites;
     Instance _instance;
     Random random;
+    Bitmap b1, b2, b3;
 
     #region Properties
     public int Width { get; set; }
@@ -32,6 +35,14 @@ namespace Escapade
         _map = value;
       }
     }
+    public Dictionary<string, Bitmap> Sprites {
+      get {
+        return _sprites;
+      }
+      set {
+        _sprites = value;
+      }
+    }
     #endregion Properties
 
     public World (int width, int height, int size, Instance instance)
@@ -42,6 +53,9 @@ namespace Escapade
       random = new Random ();
       Map = new Tile [Width, Height];
       GenerateMap ();
+      b1 = new Bitmap ("tiles\\rock_inner_1.png");
+      b2 = new Bitmap ("tiles\\rock_inner_2.png");
+      b3 = new Bitmap ("tiles\\rock_inner_3.png");
     }
 
     void GenerateMap ()
@@ -104,6 +118,7 @@ namespace Escapade
         }
       }
     }
+
     int GetNeighbours (int p1, int p2)
     {
       int res = 8;
@@ -138,7 +153,7 @@ namespace Escapade
               else
                 mineral = new Sapphire ();
             }
-            Map[x, y].Mineral = mineral;
+            Map [x, y].Mineral = mineral;
           }
         }
       }
@@ -157,13 +172,12 @@ namespace Escapade
     public void ModifyTile (Player player, Location loc)
     {
       Tile tile = Map [loc.X, loc.Y];
-      Map [loc.X, loc.Y] = new Tile (TileType.Air);
-      if (tile.Mineral != null) {
-        player.Inventory.AddItem (tile.Mineral);
-        string list = "";
-        foreach (Item i in player.Inventory.ItemList)
-          list += i.Id + " | " + i.Meta + " | " + i.Name + "\n";
-        Console.WriteLine (list);
+      if (tile.Type == TileType.Rock) {
+        Map [loc.X, loc.Y] = new Tile (TileType.Air);
+        if (tile.Mineral != null)
+          player.Inventory.AddItem (tile.Mineral);
+      } else {
+        Map [loc.X, loc.Y] = new Tile (TileType.Rock);
       }
     }
 
@@ -172,14 +186,17 @@ namespace Escapade
       for (int x = 0; x < Width; x++) {
         for (int y = 0; y < Height; y++) {
           int size = Instance.Size;
-          Color color = Map [x, y].Type == TileType.Air ? Color.LightGoldenrodYellow : Color.SlateGray;
-          SwinGame.FillRectangle (color, size * x, size * y, size, size);
-          SwinGame.DrawRectangle (Color.White, size * x, size * y, size, size);
+          if (Map [x, y].Type == TileType.Air) {
+            SwinGame.FillRectangle (Color.LightGoldenrodYellow, size * x, size * y, size, size);
+            SwinGame.DrawRectangle (Color.White, size * x, size * y, size, size);
+          } else {
+            SwinGame.FillRectangle (Color.Grey, size* x, size * y, size, size);
+            SwinGame.DrawRectangle (Color.White, size* x, size * y, size, size);
+          }
           if (Map [x, y].Mineral != null)
-            SwinGame.FillCircle (Map [x, y].Mineral.Colour, (size * x) + (float) (size / 2), (size * y) + (float) (size / 2), size / 7);
+            SwinGame.FillCircle (Map [x, y].Mineral.Colour, (size * x) + (float)(size / 2), (size * y) + (float)(size / 2), size / 7);
         }
       }
     }
-
   }
 }
