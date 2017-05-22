@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Escapade.gui;
 using SwinGameSDK;
 
 namespace Escapade
@@ -60,7 +59,7 @@ namespace Escapade
 
     public void Start ()
     {
-      SwinGame.OpenGraphicsWindow ("Escapade", Width + 250, Height);
+      SwinGame.OpenGraphicsWindow ("Escapade", Width, Height);
 
       PreInit ();
       Init ();
@@ -82,12 +81,6 @@ namespace Escapade
 
     public void PostInit ()
     {
-      GuiFrame Inventory = new GuiFrame (450, 0, 250, 450, Color.Black, Color.Azure, null, true);
-      GuiFrame InventoryTextArea = new GuiFrame (5, 5, 240, 20, Inventory.BackgroundColor, Inventory.BackgroundColor, Inventory, true);
-      GuiTextItem InventoryText = new GuiTextItem ("Inventory", Color.DarkRed, InventoryTextArea, true);
-      GuiFrame InventoryArea = new GuiFrame (5, 30, 240, 415, Color.Black, Color.LightSkyBlue, Inventory, true);
-
-      GuiEnvironment.GetInstance ().Base = Inventory;
     }
 
     public void Run ()
@@ -111,10 +104,7 @@ namespace Escapade
         if (obj.GetType () == typeof (Player)) {
           if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
             if (SwinGame.MouseX () > 450) continue;
-            int x = (int)(SwinGame.MouseX () / Size);
-            int y = (int)(SwinGame.MouseY () / Size);
-            if (World.Map [x, y].Type == TileType.Air)
-              ((Player)obj).NewPath (new Location (x, y));
+
           }
           if (SwinGame.MouseClicked (MouseButton.RightButton)) {
             if (SwinGame.MouseX () > 450) continue;
@@ -135,7 +125,6 @@ namespace Escapade
       World.Draw ();
       foreach (Entity obj in Objects)
         obj.Draw ();
-      GuiEnvironment.GetInstance ().Base.Render ();
     }
   }
 }

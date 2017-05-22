@@ -193,10 +193,9 @@
     <Compile Include="src\Item.cs" />
     <Compile Include="src\Inventory.cs" />
     <Compile Include="src\gui\GuiEnvironment.cs" />
-    <Compile Include="src\gui\GuiContainer.cs" />
-    <Compile Include="src\gui\GuiFrame.cs" />
-    <Compile Include="src\gui\GuiElement.cs" />
-    <Compile Include="src\gui\GuiTextItem.cs" />
+    <Compile Include="src\gui\Renderer.cs" />
+    <Compile Include="src\gui\Frame.cs" />
+    <Compile Include="src\gui\GuiEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\gui\" />
