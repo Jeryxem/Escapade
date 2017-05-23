@@ -11,22 +11,13 @@ namespace Escapade
 
     Tile [,] _map;
     Dictionary<string, Bitmap> _sprites;
-    Instance _instance;
     Random random;
-    Bitmap b1, b2, b3;
 
     #region Properties
     public int Width { get; set; }
     public int Height { get; set; }
+    public int Size { get; set; }
 
-    public Instance Instance {
-      get {
-        return _instance;
-      }
-      set {
-        _instance = value;
-      }
-    }
     public Tile [,] Map {
       get {
         return _map;
@@ -45,17 +36,14 @@ namespace Escapade
     }
     #endregion Properties
 
-    public World (int width, int height, int size, Instance instance)
+    public World (int width, int height, int size)
     {
       Width = width / size;
       Height = height / size;
-      Instance = instance;
+      Size = size;
       random = new Random ();
       Map = new Tile [Width, Height];
       GenerateMap ();
-      b1 = new Bitmap ("tiles\\rock_inner_1.png");
-      b2 = new Bitmap ("tiles\\rock_inner_2.png");
-      b3 = new Bitmap ("tiles\\rock_inner_3.png");
     }
 
     void GenerateMap ()
@@ -67,6 +55,9 @@ namespace Escapade
       PutMinerals ();
     }
 
+    /// <summary>
+    /// Fill the map with rock tiles
+    /// </summary>
     void FillMap ()
     {
       for (int x = 0; x < Width; x++) {
@@ -76,6 +67,10 @@ namespace Escapade
       }
     }
 
+    /// <summary>
+    /// Randomly fill the map with air and rock tiles
+    /// leaving a 2 tile border around the map
+    /// </summary>
     void RandomFill ()
     {
       for (int x = 2; x < Width - 2; x++) {
@@ -85,6 +80,9 @@ namespace Escapade
       }
     }
 
+    /// <summary>
+    /// Evolve the map with cellular automata rules
+    /// </summary>
     void EvolveMap ()
     {
       Tile [,] newMap;
@@ -110,6 +108,10 @@ namespace Escapade
       }
     }
 
+    /// <summary>
+    /// Cleans the map and removes isolated groups of 1-2
+    /// tiles to make the map look much cleaner
+    /// </summary>
     void CleanMap ()
     {
       for (int x = 0; x < Width; x++) {
@@ -119,6 +121,12 @@ namespace Escapade
       }
     }
 
+    /// <summary>
+    /// Gets the number of rock tiles around the current location
+    /// </summary>
+    /// <returns>The number of rock tile neighbours</returns>
+    /// <param name="p1">X coordinate</param>
+    /// <param name="p2">Y coordinate</param>
     int GetNeighbours (int p1, int p2)
     {
       int res = 8;
@@ -133,6 +141,9 @@ namespace Escapade
       return res;
     }
 
+    /// <summary>
+    /// Randomly place some minerals in our world
+    /// </summary>
     public void PutMinerals ()
     {
       for (int x = 0; x < Width; x++) {
@@ -159,6 +170,10 @@ namespace Escapade
       }
     }
 
+    /// <summary>
+    /// Finds a random air tile we can use to place an entity
+    /// </summary>
+    /// <returns>The empty.</returns>
     public Location RandomEmpty ()
     {
       while (true) {
@@ -169,32 +184,40 @@ namespace Escapade
       }
     }
 
-    public void ModifyTile (Player player, Location loc)
+    /// <summary>
+    /// Modifies a tile at a specific location
+    /// </summary>
+    /// <param name="loc">The location of the tile being modified</param>
+    public void ModifyTile (Location loc)
     {
+      if (loc.X < 2 || loc.X >= Width - 2 || loc.Y < 2 || loc.Y >= Height - 2) return;
       Tile tile = Map [loc.X, loc.Y];
       if (tile.Type == TileType.Rock) {
         Map [loc.X, loc.Y] = new Tile (TileType.Air);
         if (tile.Mineral != null)
-          player.Inventory.AddItem (tile.Mineral);
+          Escapade.GetPlayer().Inventory.AddItem (tile.Mineral);
       } else {
         Map [loc.X, loc.Y] = new Tile (TileType.Rock);
       }
     }
 
+    /// <summary>
+    /// Draws the map - called by the renderer - in a later version all
+    /// drawing code will be handled by the renderer
+    /// </summary>
     public void Draw ()
     {
       for (int x = 0; x < Width; x++) {
         for (int y = 0; y < Height; y++) {
-          int size = Instance.Size;
           if (Map [x, y].Type == TileType.Air) {
-            SwinGame.FillRectangle (Color.LightGoldenrodYellow, size * x, size * y, size, size);
-            SwinGame.DrawRectangle (Color.White, size * x, size * y, size, size);
+            SwinGame.FillRectangle (Color.LightGoldenrodYellow, Size * x, Size * y, Size, Size);
+            SwinGame.DrawRectangle (Color.White, Size * x, Size * y, Size, Size);
           } else {
-            SwinGame.FillRectangle (Color.Grey, size* x, size * y, size, size);
-            SwinGame.DrawRectangle (Color.White, size* x, size * y, size, size);
+            SwinGame.FillRectangle (Color.Grey, Size * x, Size * y, Size, Size);
+            SwinGame.DrawRectangle (Color.White, Size * x, Size * y, Size, Size);
           }
           if (Map [x, y].Mineral != null)
-            SwinGame.FillCircle (Map [x, y].Mineral.Colour, (size * x) + (float)(size / 2), (size * y) + (float)(size / 2), size / 7);
+            SwinGame.FillCircle (Map [x, y].Mineral.Colour, (Size * x) + (float)(Size / 2), (Size * y) + (float)(Size / 2), Size / 7);
         }
       }
     }

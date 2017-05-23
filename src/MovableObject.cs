@@ -28,11 +28,21 @@ namespace Escapade
     }
     #endregion Properties
 
-    protected MoveableObject (int id, string name, Location location, Instance instance) : base (id, name, location, instance)
+    /// <summary>
+    /// Initializes a new <see cref="T:Escapade.MoveableObject"/>
+    /// </summary>
+    /// <param name="id">Unique id</param>
+    /// <param name="name">Name</param>
+    /// <param name="location">Location</param>
+    protected MoveableObject (int id, string name, Location location) : base (id, name, location)
     {
-      Path = new Path(instance);
+      Path = new Path();
     }
 
+    /// <summary>
+    /// Move on the path towards the target location - if we have reached
+    /// our destination, set the target location to null
+    /// </summary>
     public void Move ()
     {
       if (Path.TargetPath.Count > 0)
@@ -44,13 +54,19 @@ namespace Escapade
       }
     }
 
+    /// <summary>
+    /// Gets the pathfinder to find a path between the current location
+    /// and the target location - if a path cannot be found (the target
+    /// is in a disconnected cave, set this object's target to null
+    /// so it stops trying to move on the path.
+    /// </summary>
+    /// <param name="target">Target.</param>
     public void NewPath(Location target)
     {
       Target = target;
       try {
         Path.GetPath (Location, Target);
       } catch {
-        Console.WriteLine ("Could not move player to target.");
         Target = null;
       }
     }

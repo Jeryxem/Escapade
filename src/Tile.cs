@@ -7,7 +7,7 @@ namespace Escapade
   {
     
     TileType _type = TileType.Air;
-    Mineral _mineral = null;
+    Mineral _mineral;
 
     #region Properties
     public TileType Type {

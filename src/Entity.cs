@@ -6,7 +6,6 @@ namespace Escapade
     int _id;
     string _name;
     Location _location;
-    Instance _instance;
 
     #region Properties
     public int Id {
@@ -33,22 +32,13 @@ namespace Escapade
         _location = value;
       }
     }
-    public Instance Instance {
-      get {
-        return _instance;
-      }
-      set {
-        _instance = value;
-      }
-    }
     #endregion Properties
 
-    protected Entity (int id, string name, Location location, Instance instance)
+    protected Entity (int id, string name, Location location)
     {
       Id = id;
       Name = name;
       Location = location;
-      Instance = instance;
     }
 
     public abstract void Update ();

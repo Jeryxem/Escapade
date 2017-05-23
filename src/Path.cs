@@ -8,7 +8,6 @@ namespace Escapade
   public class Path
   {
     List<Location> _targetpath = new List<Location> ();
-    Instance _instance;
 
     #region Properties
     public List<Location> TargetPath {
@@ -19,20 +18,7 @@ namespace Escapade
         _targetpath = value;
       }
     }
-    public Instance Instance {
-      get {
-        return _instance;
-      }
-      set {
-        _instance = value;
-      }
-    }
     #endregion Properties
-
-    public Path (Instance instance)
-    {
-      Instance = instance;
-    }
 
     public void GetPath (Location start, Location target)
     {
@@ -85,7 +71,7 @@ namespace Escapade
             PathNode node = new PathNode(newX, newY, start, target);
             node.CalculateScores ();
 
-            if (Instance.World.Map[newX, newY].Type != TileType.Air) continue;
+            if (Escapade.GetWorld().Map[newX, newY].Type != TileType.Air) continue;
 
             //If it's in the closed list, skip it
             if (closed.Any(Node => Node.X == newX && Node.Y == newY)) continue;

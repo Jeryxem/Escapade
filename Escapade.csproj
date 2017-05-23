@@ -174,7 +174,6 @@
   <ItemGroup />
   <ItemGroup>
     <Compile Include="src\Entry.cs" />
-    <Compile Include="src\Instance.cs" />
     <Compile Include="src\Location.cs" />
     <Compile Include="src\mineral\gemstone\Sapphire.cs" />
     <Compile Include="src\mineral\gemstone\Ruby.cs" />
@@ -196,6 +195,7 @@
     <Compile Include="src\gui\Renderer.cs" />
     <Compile Include="src\gui\Frame.cs" />
     <Compile Include="src\gui\GuiEvent.cs" />
+    <Compile Include="src\Escapade.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\gui\" />
