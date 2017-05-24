@@ -10,7 +10,6 @@ namespace Escapade
   {
 
     Tile [,] _map;
-    Dictionary<string, Bitmap> _sprites;
     Random random;
 
     #region Properties
@@ -26,14 +25,6 @@ namespace Escapade
         _map = value;
       }
     }
-    public Dictionary<string, Bitmap> Sprites {
-      get {
-        return _sprites;
-      }
-      set {
-        _sprites = value;
-      }
-    }
     #endregion Properties
 
     public World (int width, int height, int size)
@@ -46,13 +37,17 @@ namespace Escapade
       GenerateMap ();
     }
 
-    void GenerateMap ()
+    /// <summary>
+    /// Generate a new map with generation methods
+    /// </summary>
+    public void GenerateMap ()
     {
       FillMap ();
       RandomFill ();
       EvolveMap ();
       CleanMap ();
       PutMinerals ();
+      CalcTileMasks ();
     }
 
     /// <summary>
@@ -69,12 +64,12 @@ namespace Escapade
 
     /// <summary>
     /// Randomly fill the map with air and rock tiles
-    /// leaving a 2 tile border around the map
+    /// leaving a 1 tile border around the map
     /// </summary>
     void RandomFill ()
     {
-      for (int x = 2; x < Width - 2; x++) {
-        for (int y = 2; y < Height - 2; y++) {
+      for (int x = 1; x < Width - 1; x++) {
+        for (int y = 1; y < Height - 1; y++) {
           Map [x, y].Type = random.NextDouble () < 0.6 ? TileType.Air : TileType.Rock;
         }
       }
@@ -119,6 +114,10 @@ namespace Escapade
           if (GetNeighbours (x, y) <= 2) Map [x, y].Type = TileType.Air;
         }
       }
+      Location l = Escapade.GetPlayer ().Location;
+      if (l != null) {
+        Map [l.X, l.Y].Type = TileType.Air;
+      }
     }
 
     /// <summary>
@@ -148,7 +147,7 @@ namespace Escapade
     {
       for (int x = 0; x < Width; x++) {
         for (int y = 0; y < Height; y++) {
-          if (Map [x, y].Type == TileType.Rock) {
+          if (Map [x, y].Type == TileType.Rock && Map [x, y].Mineral == null) {
             double rand = random.NextDouble ();
             Mineral mineral = null;
             if (rand < 0.05) {
@@ -190,7 +189,7 @@ namespace Escapade
     /// <param name="loc">The location of the tile being modified</param>
     public void ModifyTile (Location loc)
     {
-      if (loc.X < 2 || loc.X >= Width - 2 || loc.Y < 2 || loc.Y >= Height - 2) return;
+      if (loc.X < 1 || loc.X >= Width - 1 || loc.Y < 1 || loc.Y >= Height - 1) return;
       Tile tile = Map [loc.X, loc.Y];
       if (tile.Type == TileType.Rock) {
         Map [loc.X, loc.Y] = new Tile (TileType.Air);
@@ -213,11 +212,32 @@ namespace Escapade
             SwinGame.FillRectangle (Color.LightGoldenrodYellow, Size * x, Size * y, Size, Size);
             SwinGame.DrawRectangle (Color.White, Size * x, Size * y, Size, Size);
           } else {
-            SwinGame.FillRectangle (Color.Grey, Size * x, Size * y, Size, Size);
+            Color rockColour = null;
+            if (x < 1 || x >= Width - 1 || y < 1 || y >= Height - 1) rockColour = Color.DarkRed;
+            SwinGame.FillRectangle (rockColour ?? Color.Grey, Size * x, Size * y, Size, Size);
             SwinGame.DrawRectangle (Color.White, Size * x, Size * y, Size, Size);
           }
           if (Map [x, y].Mineral != null)
             SwinGame.FillCircle (Map [x, y].Mineral.Colour, (Size * x) + (float)(Size / 2), (Size * y) + (float)(Size / 2), Size / 7);
+        }
+      }
+    }
+
+    public void CalcTileMasks ()
+    {
+      for (int x = 0; x < Width; x++) {
+        for (int y = 0; y < Height; y++) {
+          BitmapMask mask = BitmapMask.None;
+          Tile t = Map [x, y];
+          if (x == 0 || x == Width - 1 || y == 0 || y == Height - 1) {
+            mask &= BitmapMask.None;
+            continue;
+          }
+          if (Map [x, y - 1].Type == TileType.Air) mask |= BitmapMask.North;
+          if (Map [x + 1, y].Type == TileType.Air) mask |= BitmapMask.East;
+          if (Map [x, y + 1].Type == TileType.Air) mask |= BitmapMask.South;
+          if (Map [x - 1, y].Type == TileType.Air) mask |= BitmapMask.West;
+          t.Mask = mask;
         }
       }
     }

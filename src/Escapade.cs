@@ -55,7 +55,8 @@ namespace Escapade
     public static Player GetPlayer ()
     {
       if (_player == null) {
-        _player = new Player (0, "Player", GetWorld ().RandomEmpty ());
+        Location l = new Location (20, 20);
+        _player = new Player (0, "Player", l);
       }
       return _player;
     }
@@ -150,6 +151,10 @@ namespace Escapade
 
       if (SwinGame.KeyTyped (KeyCode.IKey)) {
         GuiEnvironment.GetRenderer ().ToggleFrame ("inventory");
+      }
+
+      if (SwinGame.KeyTyped (KeyCode.OKey)) {
+        GetWorld ().PutMinerals ();
       }
 
       if (SwinGame.KeyDown (KeyCode.EscapeKey)) {

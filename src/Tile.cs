@@ -8,6 +8,7 @@ namespace Escapade
     
     TileType _type = TileType.Air;
     Mineral _mineral;
+    BitmapMask _mask;
 
     #region Properties
     public TileType Type {
@@ -26,11 +27,20 @@ namespace Escapade
         _mineral = value;
       }
     }
+    public BitmapMask Mask {
+      get {
+        return _mask;
+      }
+      set {
+        _mask = value;
+      }
+    }
     #endregion Properties
 
     public Tile(TileType type)
     {
       Type = type;
+      Mask = BitmapMask.None;
     }
 
     public Tile() : this(TileType.Air) { }

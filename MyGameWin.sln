@@ -168,6 +168,8 @@ Global
 		$26.NamingStyle = PascalCase
 		$26.IncludeInstanceMembers = True
 		$26.IncludeStaticEntities = True
+		$0.VersionControlPolicy = $28
+		$28.inheritsSet = Mono
 		StartupItem = MyGameMac.csproj
 	EndGlobalSection
 EndGlobal

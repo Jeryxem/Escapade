@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Escapade.gui
 {
@@ -54,7 +55,17 @@ namespace Escapade.gui
             Escapade.GetWorld ().ModifyTile (new Location (x, y));
             Frame inv = GetRenderer ().GetFrame ("inventory");
             if (inv != null) {
-              inv.Content = Escapade.GetPlayer ().Inventory.ItemList.Select (i => i.Name).ToList ();
+              List<string> minerals = Escapade.GetPlayer ().Inventory.ItemList.Select (i => i.Name).ToList ();
+              Dictionary<string, int> mineralCount = new Dictionary<string, int> ();
+              foreach (string s in minerals) {
+                if (mineralCount.ContainsKey (s)) {
+                  mineralCount [s]++;
+                } else {
+                  mineralCount [s] = 1;
+                }
+              }
+              minerals = mineralCount.Select (kvp => kvp.Key + " - " + kvp.Value).ToList ();
+              inv.Content = minerals;
             }
           }
         }

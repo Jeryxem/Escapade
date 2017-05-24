@@ -170,6 +170,18 @@
     <None Include="Resources\SwinGame.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\images\tiles\rock_pointnorth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\images\tiles\rock_pointsouth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\images\tiles\rock_pointwest.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\images\tiles\rock_pointeast.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -196,6 +208,7 @@
     <Compile Include="src\gui\Frame.cs" />
     <Compile Include="src\gui\GuiEvent.cs" />
     <Compile Include="src\Escapade.cs" />
+    <Compile Include="src\BitmapMask.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\gui\" />
