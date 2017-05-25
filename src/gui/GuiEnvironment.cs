@@ -51,22 +51,20 @@ namespace Escapade.gui
             Escapade.GetPlayer ().NewPath (new Location (x, y));
         }
         if (e == GuiEvent.MouseRight) {
-          if (Escapade.GetWorld ().Map [x, y].Type == TileType.Rock) {
-            Escapade.GetWorld ().ModifyTile (new Location (x, y));
-            Frame inv = GetRenderer ().GetFrame ("inventory");
-            if (inv != null) {
-              List<string> minerals = Escapade.GetPlayer ().Inventory.ItemList.Select (i => i.Name).ToList ();
-              Dictionary<string, int> mineralCount = new Dictionary<string, int> ();
-              foreach (string s in minerals) {
-                if (mineralCount.ContainsKey (s)) {
-                  mineralCount [s]++;
-                } else {
-                  mineralCount [s] = 1;
-                }
+          Escapade.GetWorld ().ModifyTile (new Location (x, y));
+          Frame inv = GetRenderer ().GetFrame ("inventory");
+          if (inv != null) {
+            List<string> minerals = Escapade.GetPlayer ().Inventory.ItemList.Select (i => i.Name).ToList ();
+            Dictionary<string, int> mineralCount = new Dictionary<string, int> ();
+            foreach (string s in minerals) {
+              if (mineralCount.ContainsKey (s)) {
+                mineralCount [s]++;
+              } else {
+                mineralCount [s] = 1;
               }
-              minerals = mineralCount.Select (kvp => kvp.Key + " - " + kvp.Value).ToList ();
-              inv.Content = minerals;
             }
+            minerals = mineralCount.Select (kvp => kvp.Key + " - " + kvp.Value).ToList ();
+            inv.Content = minerals;
           }
         }
       } else {

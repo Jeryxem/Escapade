@@ -189,14 +189,22 @@ namespace Escapade
     /// <param name="loc">The location of the tile being modified</param>
     public void ModifyTile (Location loc)
     {
+      if (SwinGame.PointPointDistance (new Point2D { X = loc.X, Y = loc.Y }, new Point2D { X = Escapade.GetPlayer ().Location.X, Y = Escapade.GetPlayer ().Location.Y }) > 2) return;
       if (loc.X < 1 || loc.X >= Width - 1 || loc.Y < 1 || loc.Y >= Height - 1) return;
       Tile tile = Map [loc.X, loc.Y];
       if (tile.Type == TileType.Rock) {
         Map [loc.X, loc.Y] = new Tile (TileType.Air);
         if (tile.Mineral != null)
-          Escapade.GetPlayer().Inventory.AddItem (tile.Mineral);
-      } else {
+          Escapade.GetPlayer ().Inventory.AddItem (tile.Mineral);
+      }
+      if(tile.Type == TileType.Air) {
         Map [loc.X, loc.Y] = new Tile (TileType.Rock);
+      }
+      for (int x = -1; x <= 1; x++) {
+        for (int y = -1; y <= 1; y++) {
+          if (loc.X + x < 0 || loc.Y + y < 0 || loc.X + x > Width - 1 || loc.Y + y > Height - 1) continue;
+          Map [loc.X + x, loc.Y + y].Mask = GetTileMask (loc.X + x, loc.Y + y);
+        }
       }
     }
 
@@ -227,19 +235,28 @@ namespace Escapade
     {
       for (int x = 0; x < Width; x++) {
         for (int y = 0; y < Height; y++) {
-          BitmapMask mask = BitmapMask.None;
-          Tile t = Map [x, y];
-          if (x == 0 || x == Width - 1 || y == 0 || y == Height - 1) {
-            mask &= BitmapMask.None;
-            continue;
-          }
-          if (Map [x, y - 1].Type == TileType.Air) mask |= BitmapMask.North;
-          if (Map [x + 1, y].Type == TileType.Air) mask |= BitmapMask.East;
-          if (Map [x, y + 1].Type == TileType.Air) mask |= BitmapMask.South;
-          if (Map [x - 1, y].Type == TileType.Air) mask |= BitmapMask.West;
-          t.Mask = mask;
+          Map [x, y].Mask = GetTileMask (x, y);
         }
       }
+    }
+
+    public BitmapMask GetTileMask (int x, int y)
+    {
+      BitmapMask mask =  BitmapMask.None;
+      if (x < 0 || x >= Width || y < 0 || y >= Height) return BitmapMask.None;
+      if (y > 0) {
+        if (Map [x, y - 1].Type == TileType.Air) mask |= BitmapMask.North;
+      }
+      if (x<Width - 1) {
+        if (Map [x + 1, y].Type == TileType.Air) mask |= BitmapMask.East;
+      }
+      if (y<Height - 1) {
+        if (Map [x, y + 1].Type == TileType.Air) mask |= BitmapMask.South;
+      }
+      if (x > 0) {
+        if (Map [x - 1, y].Type == TileType.Air) mask |= BitmapMask.West;
+      }
+      return mask;
     }
   }
 }

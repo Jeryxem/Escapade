@@ -129,12 +129,13 @@ namespace Escapade.gui
       _bitmaps ["rock_east"] = new Bitmap ("tiles\\rock_east.png");
       _bitmaps ["rock_south"] = new Bitmap ("tiles\\rock_south.png");
       _bitmaps ["rock_west"] = new Bitmap ("tiles\\rock_west.png");
-      Bitmap b = new Bitmap ("tiles\\rock_pointeast.png");
+
+      _bitmaps ["rock_single"] = new Bitmap ("tiles\\rock_single.png");
 
       _bitmaps ["rock_pointnorth"] = new Bitmap ("tiles\\rock_pointnorth.png");
-      _bitmaps ["rock_pointeast"] = new Bitmap ("tiles\\rock_pointeast.png");
       _bitmaps ["rock_pointsouth"] = new Bitmap ("tiles\\rock_pointsouth.png");
       _bitmaps ["rock_pointwest"] = new Bitmap ("tiles\\rock_pointwest.png");
+      _bitmaps ["rock_pointeast"] = new Bitmap ("tiles\\rock_pointeast.png");
 
       _bitmaps ["rock_northwest"] = new Bitmap ("tiles\\rock_northwest.png");
       _bitmaps ["rock_northeast"] = new Bitmap ("tiles\\rock_northeast.png");
@@ -167,15 +168,16 @@ namespace Escapade.gui
       _maskmap.Add (BitmapMask.South | BitmapMask.East, _bitmaps ["rock_vertex_southeast"]);
       _maskmap.Add (BitmapMask.South | BitmapMask.West, _bitmaps ["rock_vertex_southwest"]);
 
-      _maskmap.Add (BitmapMask.North | BitmapMask.East | BitmapMask.South, _bitmaps ["rock_point_north"]);
-      _maskmap.Add (BitmapMask.North | BitmapMask.West | BitmapMask.South, _bitmaps ["rock_point_north"]);
-      _maskmap.Add (BitmapMask.South | BitmapMask.East | BitmapMask.West, _bitmaps ["rock_point_north"]);
-      _maskmap.Add (BitmapMask.North | BitmapMask.West | BitmapMask.East, _bitmaps ["rock_point_north"]);
+      _maskmap.Add (BitmapMask.North | BitmapMask.East | BitmapMask.South, _bitmaps ["rock_pointeast"]);
+      _maskmap.Add (BitmapMask.North | BitmapMask.West | BitmapMask.South, _bitmaps ["rock_pointwest"]);
+      _maskmap.Add (BitmapMask.South | BitmapMask.East | BitmapMask.West, _bitmaps ["rock_pointsouth"]);
+      _maskmap.Add (BitmapMask.North | BitmapMask.West | BitmapMask.East, _bitmaps ["rock_pointnorth"]);
 
       _maskmap.Add (BitmapMask.North | BitmapMask.South, _bitmaps ["rock_wall_horiz"]);
       _maskmap.Add (BitmapMask.East | BitmapMask.West, _bitmaps ["rock_wall_vert"]);
 
       _maskmap.Add (BitmapMask.None, _bitmaps ["rock_inner_1"]);
+      _maskmap.Add (BitmapMask.North | BitmapMask.West | BitmapMask.East | BitmapMask.South, _bitmaps ["rock_single"]);
     }
 
     /// <summary>
@@ -184,10 +186,15 @@ namespace Escapade.gui
     public void DrawWorldBitmaps ()
     {
       int size = Escapade.GetWorld ().Size;
-      for (int x = 0; x < Escapade.GetWorld().Width; x++) {
-        for (int y = 0; y < Escapade.GetWorld().Height; y++) {
+      for (int x = 0; x < Escapade.GetWorld ().Width; x++) {
+        for (int y = 0; y < Escapade.GetWorld ().Height; y++) {
           if (Escapade.GetWorld ().Map [x, y].Type == TileType.Rock) {
             SwinGame.DrawBitmap (_maskmap [Escapade.GetWorld ().Map [x, y].Mask], x * size, y * size);
+            Mineral m = Escapade.GetWorld ().Map [x, y].Mineral;
+            if (m != null) {
+              string mineralBitmap = "overlay_" + m.GetType ().ToString ().ToLower ().Split ('.').Last ();
+              SwinGame.DrawBitmap (_bitmaps [mineralBitmap], x * size, y * size);
+            }
           }
         }
       }
