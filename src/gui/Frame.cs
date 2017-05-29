@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SwinGameSDK;
 
 namespace Escapade.gui
@@ -10,12 +11,13 @@ namespace Escapade.gui
     string _identifier;
     string _title;
     Rectangle _titlebar;
-    Rectangle _hideicon;
     Rectangle _contentarea;
+
+    //Rectangle _hideicon;
+    List<Button> _buttons;
+
     bool _visible;
     List<string> _content;
-
-    Font _font = new Font ("Arial", 9);
 
     public string Id {
       get {
@@ -52,12 +54,12 @@ namespace Escapade.gui
         Width = width,
         Height = 15
       };
-      _hideicon = new Rectangle {
+      /*_hideicon = new Rectangle {
         Width = 10,
         Height = 10,
         X = _position.X + width - (10 + (_titlebar.Width / 25)),
         Y = _position.Y + 2.5F
-      };
+      };*/
       _contentarea = new Rectangle {
         X = _position.X,
         Y = _position.Y + _titlebar.Height,
@@ -66,6 +68,7 @@ namespace Escapade.gui
       };
       _visible = false;
       _content = new List<string> ();
+      _buttons = new List<Button> ();
     }
 
     /// <summary>
@@ -77,26 +80,38 @@ namespace Escapade.gui
     }
 
     /// <summary>
-    /// GuiAction enumeration. Used to determine what action to take on a gui
+    /// Adds a button to the frame
     /// </summary>
-    public enum GuiAction
+    /// <param name="b">The button to be added</param>
+    public void AddButton (Color f, Color b, Action a)
     {
-      Content,
-      Title,
-      Icon
+      float x = _buttons.Count == 0 ? _position.X + _titlebar.Width - 12.5F : _buttons.Last().X - 12.5F;
+      float y = _position.Y + 2.5F;
+      Button button = new Button (f, b, this, a);
+      button.X = x;
+      button.Y = y;
+      _buttons.Add (button);
     }
 
+    /// <summary>
+    /// Adds a pre-existing button to the frame
+    /// </summary>
+    /// <param name="b">The button to add</param>
+    public void AddButton (Button b)
+    {
+      _buttons.Add (b);
+    }
 
     /// <summary>
-    /// Gets the relative action based on where in the frame the location of the event occurs
+    /// Gets the button the event occured at, returns null if it wasn't a button
     /// </summary>
-    /// <returns>The appropriate action to take</returns>
+    /// <returns>The button clicked | null</returns>
     /// <param name="l">The location of the event (e.g. mouse click)</param>
-    public GuiAction? GetAction (Location l)
+    public Button GetButton (Location l)
     {
-      if (SwinGame.PointInRect (l.X, l.Y, _hideicon)) return GuiAction.Icon;
-      if (SwinGame.PointInRect (l.X, l.Y, _titlebar)) return GuiAction.Title;
-      if (SwinGame.PointInRect (l.X, l.Y, _contentarea)) return GuiAction.Content;
+      foreach (Button b in _buttons) {
+        if (SwinGame.PointInRect (l.X, l.Y, b.Area)) return b;
+      }
       return null;
     }
 
@@ -126,24 +141,21 @@ namespace Escapade.gui
         SwinGame.FillRectangle (Color.Azure, _titlebar);
         SwinGame.DrawRectangle (Color.Black, _titlebar);
 
-        //draw hide icon
-        SwinGame.FillRectangle (Color.Azure, _hideicon);
-        SwinGame.DrawRectangle (Color.Black, _hideicon);
-        SwinGame.DrawLine (Color.DarkRed, _hideicon.X + (_hideicon.Width / 4), _hideicon.Y + (_hideicon.Height / 4),
-                           (_hideicon.X + _hideicon.Width) - (_hideicon.Width / 4), (_hideicon.Y + _hideicon.Height) - (_hideicon.Height / 4));
-        SwinGame.DrawLine (Color.DarkRed, _hideicon.X + _hideicon.Width - (_hideicon.Width / 4), _hideicon.Y + (_hideicon.Height / 4),
-                           _hideicon.X + (_hideicon.Width / 4), (_hideicon.Y + _hideicon.Height) - (_hideicon.Height / 4));
+        //draw buttons
+        foreach (Button b in _buttons) {
+          b.Draw ();
+        }
 
         //draw content area
         SwinGame.FillRectangle (Color.Azure, _contentarea);
         SwinGame.DrawRectangle (Color.Black, _contentarea);
 
         //draw title string
-        int fontWidth = _font.TextWidth (_title);
-        int fontHeight = _font.TextHeight (_title);
+        int fontWidth = GuiEnvironment.ArialFont.TextWidth (_title);
+        int fontHeight = GuiEnvironment.ArialFont.TextHeight (_title);
         float txtXPos = _position.X + ((_titlebar.Height - fontHeight) / 2);
         float txtYPos = _position.Y + ((_titlebar.Height - fontHeight) / 2);
-        SwinGame.DrawText (_title, Color.Black, _font, txtXPos, txtYPos);
+        SwinGame.DrawText (_title, Color.Black, GuiEnvironment.ArialFont, txtXPos, txtYPos);
 
         //draw the content in the content area
         DrawContent ();
@@ -158,7 +170,7 @@ namespace Escapade.gui
       float xPos = _contentarea.Left + 2.5F;
       float yPos = _contentarea.Top + 2.5F;
       foreach (string str in _content) {
-        SwinGame.DrawText (str, Color.Black, _font, xPos, yPos);
+        SwinGame.DrawText (str, Color.Black, GuiEnvironment.ArialFont, xPos, yPos);
         yPos += 12;
         if (yPos > _contentarea.Bottom - 12)
           break;

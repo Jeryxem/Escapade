@@ -209,6 +209,7 @@
     <Compile Include="src\gui\GuiEvent.cs" />
     <Compile Include="src\Escapade.cs" />
     <Compile Include="src\BitmapMask.cs" />
+    <Compile Include="src\gui\Button.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\gui\" />

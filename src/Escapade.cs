@@ -100,6 +100,15 @@ namespace Escapade
     public void Init ()
     {
       Objects.Add (GetPlayer ());
+
+      Frame inventory = new Frame ("inventory", "Inventory", new Location (10, 10), 150, 150);
+      inventory.AddButton (Color.DarkRed, Color.Red, inventory.Close);
+      GuiEnvironment.GetRenderer ().RegisterFrame (inventory);
+
+      Frame help = new Frame ("help", "Help and Controls", new Location (250, 10), 150, 250);
+      help.AddButton (Color.DarkRed, Color.Red, help.Close);
+      help.AddButton (Color.DarkBlue, Color.RoyalBlue, inventory.Toggle);
+      GuiEnvironment.GetRenderer ().RegisterFrame (help);
     }
 
     /// <summary>
@@ -107,8 +116,26 @@ namespace Escapade
     /// </summary>
     public void PostInit ()
     {
-      Frame inventory = new Frame ("inventory", "Inventory", new Location (10, 10), 150, 150);
-      GuiEnvironment.GetRenderer ().RegisterFrame (inventory);
+      Frame helpFrame = GuiEnvironment.GetRenderer ().GetFrame ("help");
+      List<string> helpList = new List<string> ();
+      helpList.Add("~ Frame help ~");
+      helpList.Add("- The red button closes a frame.");
+      helpList.Add("- The blue button toggles the");
+      helpList.Add("inventory frame");
+      helpList.Add (" ");
+      helpList.Add("~ Mouse Controls ~");
+      helpList.Add("Left: On air tile - move here");
+      helpList.Add("Right: On rock tile - dig rock");
+      helpList.Add("Right (+ Shift): On air - place rock");
+      helpList.Add (" ");
+      helpList.Add("~ Keyboard controls ~");
+      helpList.Add("O - Generate new minerals");
+      helpList.Add("M - Generate a new map");
+      helpList.Add("H - Toggle this frame");
+      helpList.Add("I - Toggle inventory frame");
+      helpList.Add("Esc - Quit game");
+        
+      helpFrame.Content = helpList;
     }
 
     /// <summary>
@@ -138,10 +165,6 @@ namespace Escapade
     		obj.Update ();
     	}
 
-      if (SwinGame.MouseDown (MouseButton.LeftButton)) {
-        GetEnvironment ().HandleGuiEvent (GuiEvent.LeftDown, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
-      }
-
       if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
         GetEnvironment ().HandleGuiEvent (GuiEvent.MouseLeft, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
       }
@@ -153,8 +176,16 @@ namespace Escapade
         GuiEnvironment.GetRenderer ().ToggleFrame ("inventory");
       }
 
+      if (SwinGame.KeyTyped(KeyCode.HKey)) {
+        GuiEnvironment.GetRenderer ().ToggleFrame ("help");
+      }
+
       if (SwinGame.KeyTyped (KeyCode.OKey)) {
         GetWorld ().PutMinerals ();
+      }
+
+      if (SwinGame.KeyTyped (KeyCode.MKey)) {
+        GetWorld ().GenerateMap ();
       }
 
       if (SwinGame.KeyDown (KeyCode.EscapeKey)) {

@@ -197,7 +197,7 @@ namespace Escapade
         if (tile.Mineral != null)
           Escapade.GetPlayer ().Inventory.AddItem (tile.Mineral);
       }
-      if(tile.Type == TileType.Air) {
+      if(tile.Type == TileType.Air && SwinGame.KeyDown(KeyCode.ShiftKey)) {
         Map [loc.X, loc.Y] = new Tile (TileType.Rock);
       }
       for (int x = -1; x <= 1; x++) {

@@ -41,8 +41,14 @@ namespace Escapade
       Location = location;
     }
 
+    /// <summary>
+    /// Update the entity - children should override this method
+    /// </summary>
     public abstract void Update ();
 
+    /// <summary>
+    /// Draw the entity at its current location - children should override this method
+    /// </summary>
     public abstract void Draw ();
 
   }

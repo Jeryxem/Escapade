@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using SwinGameSDK;
 
 namespace Escapade.gui
 {
@@ -7,6 +9,8 @@ namespace Escapade.gui
   {
     static GuiEnvironment _environment;
     static Renderer _renderer;
+
+    public static Font ArialFont = new Font ("Arial", 9);
 
     GuiEnvironment ()
     {
@@ -68,9 +72,10 @@ namespace Escapade.gui
           }
         }
       } else {
-        if (f.GetAction (l) == Frame.GuiAction.Icon) {
-          f.Close ();
-          return;
+        Console.WriteLine (f.Id);
+        Button b = f.GetButton (l);
+        if (b != null) {
+          b.Do ();
         }
       }
     }
