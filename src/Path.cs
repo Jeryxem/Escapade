@@ -20,12 +20,23 @@ namespace Escapade
     }
     #endregion Properties
 
+    /// <summary>
+    /// Get a path from the start location to the target location
+    /// </summary>
+    /// <param name="start">Start location</param>
+    /// <param name="target">Target location</param>
     public void GetPath (Location start, Location target)
     {
       TargetPath = new List<Location>();
       Pathfind (start, target);
     }
 
+    /// <summary>
+    /// Uses the A* algorithm to find a path from start to target in the shortest distance possible
+    /// Stores the found path in targetpath
+    /// </summary>
+    /// <param name="start">Start location</param>
+    /// <param name="target">Target location</param>
     void Pathfind (Location start, Location target)
     {
       #region NodeLists
