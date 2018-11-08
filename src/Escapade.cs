@@ -5,6 +5,7 @@ using SwinGameSDK;
 
 namespace Escapade
 {
+
   public class Escapade
   {
     static Escapade _instance;
@@ -42,7 +43,7 @@ namespace Escapade
     public static World GetWorld()
     {
       if (_world == null) {
-        _world = new World (450, 450, 15);
+        _world = new World (GlobalConstants.WORLD_WIDTH, GlobalConstants.WORLD_HEIGHT, 15);
       }
       return _world;
     }

@@ -210,6 +210,10 @@
     <Compile Include="src\Escapade.cs" />
     <Compile Include="src\BitmapMask.cs" />
     <Compile Include="src\gui\Button.cs" />
+    <Compile Include="Weapon.cs" />
+    <Compile Include="WeaponType.cs" />
+    <Compile Include="AttackDirection.cs" />
+    <Compile Include="GlobalConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\gui\" />
