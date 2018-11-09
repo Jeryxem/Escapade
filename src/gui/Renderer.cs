@@ -85,6 +85,7 @@ namespace Escapade.gui
       RenderWorld ();
       RenderObjects ();
       RenderFrames ();
+      
     }
 
     /// <summary>
