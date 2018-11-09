@@ -12,6 +12,7 @@ namespace Escapade
     static World _world;
     static Player _player;
     static GuiEnvironment _environment;
+	static Enemy _enemy;
 
     public List<Entity> Objects;
 
@@ -62,6 +63,27 @@ namespace Escapade
       return _player;
     }
 
+	/// <summary>
+	/// Create enemy object.
+	/// </summary>
+	/// <returns>The enemy.</returns> // by - Jeremy Toh
+	public static Enemy GetEnemy()
+	{
+		if (_enemy == null)
+		{
+			Location l = new Location(25, 20);
+			_enemy = new Enemy(0, "Enemy", l);
+
+				if (l.X > 0)
+			{
+				l.X += 1;
+				l.Y += 1;
+			}
+
+		}
+		return _enemy;
+	}
+
     /// <summary>
     /// Gets the current game GuiEnvironment - constructs a
     /// <see cref="T:Escapade.gui.GuiEnvironment"/> object if a current one doesn't exist
@@ -101,6 +123,7 @@ namespace Escapade
     public void Init ()
     {
       Objects.Add (GetPlayer ());
+	  Objects.Add(GetEnemy());
 
       Frame inventory = new Frame ("inventory", "Inventory", new Location (10, 10), 150, 150);
       inventory.AddButton (Color.DarkRed, Color.Red, inventory.Close);

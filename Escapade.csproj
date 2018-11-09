@@ -214,6 +214,7 @@
     <Compile Include="WeaponType.cs" />
     <Compile Include="AttackDirection.cs" />
     <Compile Include="GlobalConstants.cs" />
+    <Compile Include="Enemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\gui\" />

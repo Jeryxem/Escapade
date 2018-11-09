@@ -36,7 +36,7 @@ namespace Escapade
     public override void Draw()
     {
       int size = Escapade.GetWorld ().Size;
-      SwinGame.FillRectangle(Color.MediumVioletRed, Location.X * size, Location.Y * size, size, size);
+      SwinGame.FillRectangle(Color.MediumSlateBlue, Location.X * size, Location.Y * size, size, size);
       SwinGame.DrawRectangle(Color.White, Location.X * size, Location.Y * size, size, size);
       if (Path.TargetPath.Count > 0) {
         foreach (Location loc in Path.TargetPath) {
