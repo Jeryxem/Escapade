@@ -3,6 +3,7 @@ namespace Escapade
   public enum TileType
   {
     Air,
-    Rock
+    Rock,
+    Empty // IA - to be used as the default type
   }
 }

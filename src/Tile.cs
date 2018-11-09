@@ -6,7 +6,7 @@ namespace Escapade
   public class Tile
   {
     
-    TileType _type = TileType.Air;
+    TileType _type = TileType.Empty;
     Mineral _mineral;
     BitmapMask _mask;
 
@@ -43,7 +43,7 @@ namespace Escapade
       Mask = BitmapMask.None;
     }
 
-    public Tile() : this(TileType.Air) { }
+    public Tile() : this(TileType.Empty) { }
 
   }
 }

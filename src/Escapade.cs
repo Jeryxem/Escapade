@@ -102,7 +102,7 @@ namespace Escapade
     /// </summary>
     public void Start ()
     {
-      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size);
+      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 45);
   	  PreInit ();
   	  Init ();
   	  PostInit ();

@@ -185,7 +185,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Countdown.cs" />
+    <Compile Include="GameLevel.cs" />
     <Compile Include="src\Entry.cs" />
+    <Compile Include="src\gui\MetaHandler.cs" />
     <Compile Include="src\Location.cs" />
     <Compile Include="src\mineral\gemstone\Sapphire.cs" />
     <Compile Include="src\mineral\gemstone\Ruby.cs" />
@@ -216,10 +219,7 @@
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="Enemy.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\gui\" />
-    <Folder Include="Resources\images\tiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Target Name="CopyLibsToOut">
     <Copy SourceFiles="@(WinLibs)" DestinationFolder="$(OutDir)" />
   </Target>

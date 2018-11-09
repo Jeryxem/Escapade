@@ -48,12 +48,17 @@ namespace Escapade.gui
     {
       int x = (l.X / Escapade.GetWorld ().Size);
       int y = (l.Y / Escapade.GetWorld ().Size);
+            int accessibleHeight = 555 / Escapade.GetWorld().Size;
       Frame f = GetRenderer ().GetActiveFrame (l);
       if (f == null) {
-        if (e == GuiEvent.MouseLeft) {
-          if (Escapade.GetWorld ().Map [x, y].Type == TileType.Air)
-            Escapade.GetPlayer ().NewPath (new Location (x, y));
-        }
+                if (e == GuiEvent.MouseLeft)
+                {
+                    if (l.Y < GlobalConstants.WORLD_HEIGHT)
+                    {
+                        if (Escapade.GetWorld().Map[x, y].Type == TileType.Air)
+                            Escapade.GetPlayer().NewPath(new Location(x, y));
+                    }
+                }
         if (e == GuiEvent.MouseRight) {
           Escapade.GetWorld ().ModifyTile (new Location (x, y));
           Frame inv = GetRenderer ().GetFrame ("inventory");
