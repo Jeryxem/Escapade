@@ -48,12 +48,11 @@ namespace Escapade.gui
     {
       int x = (l.X / Escapade.GetWorld ().Size);
       int y = (l.Y / Escapade.GetWorld ().Size);
-            int accessibleHeight = 555 / Escapade.GetWorld().Size;
       Frame f = GetRenderer ().GetActiveFrame (l);
       if (f == null) {
                 if (e == GuiEvent.MouseLeft)
                 {
-                    if (l.Y < GlobalConstants.WORLD_HEIGHT)
+                    if (l.Y < GlobalConstants.WORLD_HEIGHT) // IA - Make sure that the user clicks within the world map first, and not outside, which is supposed to be the space reserved for the panel containing the timer and game level information.
                     {
                         if (Escapade.GetWorld().Map[x, y].Type == TileType.Air)
                             Escapade.GetPlayer().NewPath(new Location(x, y));

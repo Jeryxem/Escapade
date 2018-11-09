@@ -160,6 +160,8 @@ namespace Escapade
       helpList.Add("Esc - Quit game");
         
       helpFrame.Content = helpList;
+
+      // IA - Show the panel
     }
 
     /// <summary>

@@ -36,7 +36,9 @@
   <PropertyGroup>
     <PrepareForRunDependsOn>$(PrepareForRunDependsOn);CopyLibsToOut</PrepareForRunDependsOn>
   </PropertyGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\panels\meta.txt" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">
       <HintPath>lib\SwinGame.dll</HintPath>

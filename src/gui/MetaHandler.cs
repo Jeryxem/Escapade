@@ -10,8 +10,15 @@ using SwinGameSDK;
 /// </summary>
 namespace Escapade.src.gui
 {
-    class MetaHandler
+    public class MetaHandler
     {
-        private Panel bottomPanel;
+        static Panel bottomPanel = SwinGame.LoadPanel("meta.txt");
+
+        static void ShowBottomPanel()
+        {
+            SwinGame.ShowPanel(bottomPanel);
+            SwinGame.GUISetBackgroundColor(Color.Black);
+            SwinGame.DrawInterface();
+        }
     }
 }
