@@ -78,13 +78,6 @@ namespace Escapade
             {
                 Location l = new Location(25, 20);
                 _enemy = new Enemy(0, "Enemy", l);
-
-                if (l.X > 0)
-                {
-                    l.X += 1;
-                    l.Y += 1;
-                }
-
             }
             return _enemy;
         }
@@ -203,6 +196,8 @@ namespace Escapade
         /// </summary>
         public void Update()
         {
+			_enemy.enemyMovement(); //the enemy movement -Jeremy
+
             foreach (Entity obj in Objects)
             {
                 obj.Update();
@@ -241,6 +236,27 @@ namespace Escapade
             {
                 Environment.Exit(0);
             }
+
+			//changes player input using keyboard - jeremy
+			if (SwinGame.KeyDown(KeyCode.WKey) && _player.Location.Y != 0) 
+			{
+				_player.Location.Y -= 1;
+			}
+
+			if (SwinGame.KeyDown(KeyCode.SKey) && _player.Location.Y != 39) 
+			{
+				_player.Location.Y += 1;
+			}
+
+			if (SwinGame.KeyDown(KeyCode.AKey) && _player.Location.X != 0) 
+			{
+				_player.Location.X -= 1;
+			}
+
+			if (SwinGame.KeyDown(KeyCode.DKey) && _player.Location.X != 52) 
+			{
+				_player.Location.X += 1;
+			}
         }
 
         /// <summary>

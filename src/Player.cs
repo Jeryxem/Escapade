@@ -3,7 +3,7 @@ using SwinGameSDK;
 
 namespace Escapade
 {
-  public class Player : MoveableObject
+  public class Player : Entity
   {
     Inventory _inventory;
 
@@ -27,6 +27,8 @@ namespace Escapade
     public Player(int id, string name, Location location) : base(id, name, location)
     {
       Inventory = new Inventory ();
+			_location.X = 20;
+			_location.Y = 20;
     }
 
     /// <summary>
@@ -38,12 +40,12 @@ namespace Escapade
       int size = Escapade.GetWorld ().Size;
       SwinGame.FillRectangle(Color.MediumSlateBlue, Location.X * size, Location.Y * size, size, size);
       SwinGame.DrawRectangle(Color.White, Location.X * size, Location.Y * size, size, size);
-      if (Path.TargetPath.Count > 0) {
+    /*  if (Path.TargetPath.Count > 0) {
         foreach (Location loc in Path.TargetPath) {
           SwinGame.FillCircle(Color.LightPink, (loc.X * size) + (size / 2), (loc.Y * size) + (size / 2), size / 5);
           SwinGame.DrawRectangle(Color.White, loc.X* size, loc.Y* size, size, size);
         }
-      }
+      }*/
     }
 
     /// <summary>
@@ -51,7 +53,7 @@ namespace Escapade
     /// </summary>
     public override void Update()
     {
-      Move();
+     // Move();
     }
   }
 }

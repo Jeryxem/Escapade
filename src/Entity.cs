@@ -3,9 +3,9 @@ namespace Escapade
   public abstract class Entity
   {
 
-    int _id;
-    string _name;
-    Location _location;
+    protected int _id;
+	protected string _name;
+	protected Location _location;
 
     #region Properties
     public int Id {
