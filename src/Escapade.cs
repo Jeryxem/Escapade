@@ -141,6 +141,24 @@ namespace Escapade
             help.AddButton(Color.DarkBlue, Color.RoyalBlue, inventory.Toggle);
             GuiEnvironment.GetRenderer().RegisterFrame(help);
 
+
+			/*//testing
+			for (int x = 0; x<GlobalConstants.WORLD_WIDTH/GlobalConstants.SIZE; x++) 
+			{
+				for (int y = 0; y<GlobalConstants.WORLD_HEIGHT/GlobalConstants.SIZE; y++) 
+				{
+
+					if (_world.Map[x, y].Type == TileType.Rock)
+					{
+						_enemy.DirectionX = 1;
+					}
+					else 
+					{
+						_enemy.DirectionX = 2;
+					}
+
+		        }
+		     }*/
         }
 
         /// <summary>
@@ -195,7 +213,8 @@ namespace Escapade
     /// </summary>
     public void Update ()
     {
-      _enemy.enemyMovement (); //the enemy movement -Jeremy
+      		_enemy.enemyMovement (); //the enemy movement -Jeremy
+			_enemy.CheckCollision(); //check collision with rock -Jeremy
 
       foreach (Entity obj in Objects) {
         obj.Update ();
@@ -252,7 +271,7 @@ namespace Escapade
           Objects.Add (_player.Weapon.Projectile);
         }
       }
-      else if (SwinGame.KeyDown (KeyCode.SKey) && _player.Location.Y != 39) {
+			else if (SwinGame.KeyDown (KeyCode.SKey) && _player.Location.Y != GlobalConstants.WORLD_HEIGHT/GlobalConstants.SIZE - 1) {
         _player.Location.Y += 1;
       } 
 
@@ -274,7 +293,7 @@ namespace Escapade
           Objects.Add (_player.Weapon.Projectile);
         }
       }
-      else if (SwinGame.KeyDown (KeyCode.DKey) && _player.Location.X != 52) {
+			else if (SwinGame.KeyDown (KeyCode.DKey) && _player.Location.X != GlobalConstants.WORLD_WIDTH/GlobalConstants.SIZE - 1) {
         _player.Location.X += 1;
       }
 
