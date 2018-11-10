@@ -6,6 +6,7 @@ namespace Escapade
   public class Player : Entity
   {
     Inventory _inventory;
+    Weapon _weapon;
 
     #region Properties
     public Inventory Inventory {
@@ -29,6 +30,22 @@ namespace Escapade
       Inventory = new Inventory ();
 			_location.X = 20;
 			_location.Y = 20;
+    }
+
+    public Weapon Weapon 
+    {
+      get { return _weapon; }
+    }
+
+    public void BuyWeapon (Location location, WeaponType weaponType) //JY- player buys weapon
+    {
+      _weapon = new Weapon (_location,weaponType);
+    }
+
+    public void DeployWeapon (AttackDirection attackDirection) //JY- player uses weapon
+    {
+      if (_weapon != null)
+        _weapon.Attack (_location, attackDirection);
     }
 
     /// <summary>

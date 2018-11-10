@@ -4,8 +4,8 @@ namespace Escapade
   {
 
     protected int _id;
-	protected string _name;
-	protected Location _location;
+	  protected string _name;
+	  protected Location _location;
 
     #region Properties
     public int Id {

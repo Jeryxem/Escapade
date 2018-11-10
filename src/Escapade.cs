@@ -15,7 +15,6 @@ namespace Escapade
         static GuiEnvironment _environment;
         static Enemy _enemy;
         static MetaHandler meta;
-
         public List<Entity> Objects;
 
         /// <summary>
@@ -48,7 +47,7 @@ namespace Escapade
         {
             if (_world == null)
             {
-                _world = new World(GlobalConstants.WORLD_WIDTH, GlobalConstants.WORLD_HEIGHT, 15);
+                 _world = new World(GlobalConstants.WORLD_WIDTH, GlobalConstants.WORLD_HEIGHT, GlobalConstants.SIZE); //JY- Changed 15 to a global constant (size)
             }
             return _world;
         }
@@ -191,73 +190,107 @@ namespace Escapade
             SwinGame.ReleaseAllBitmaps();
         }
 
-        /// <summary>
-        /// Update the game based on events, objects and other things
-        /// </summary>
-        public void Update()
-        {
-			_enemy.enemyMovement(); //the enemy movement -Jeremy
+    /// <summary>
+    /// Update the game based on events, objects and other things
+    /// </summary>
+    public void Update ()
+    {
+      _enemy.enemyMovement (); //the enemy movement -Jeremy
 
-            foreach (Entity obj in Objects)
-            {
-                obj.Update();
-            }
+      foreach (Entity obj in Objects) {
+        obj.Update ();
+      }
 
-            if (SwinGame.MouseClicked(MouseButton.LeftButton))
-            {
-                GetEnvironment().HandleGuiEvent(GuiEvent.MouseLeft, new Location((int)SwinGame.MouseX(), (int)SwinGame.MouseY()));
-            }
-            if (SwinGame.MouseClicked(MouseButton.RightButton))
-            {
-                GetEnvironment().HandleGuiEvent(GuiEvent.MouseRight, new Location((int)SwinGame.MouseX(), (int)SwinGame.MouseY()));
-            }
+      if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
+        GetEnvironment ().HandleGuiEvent (GuiEvent.MouseLeft, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
+      }
+      if (SwinGame.MouseClicked (MouseButton.RightButton)) {
+        GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
+      }
 
-            if (SwinGame.KeyTyped(KeyCode.IKey))
-            {
-                GuiEnvironment.GetRenderer().ToggleFrame("inventory");
-            }
+      if (SwinGame.KeyTyped (KeyCode.IKey)) {
+        GuiEnvironment.GetRenderer ().ToggleFrame ("inventory");
+      }
 
-            if (SwinGame.KeyTyped(KeyCode.HKey))
-            {
-                GuiEnvironment.GetRenderer().ToggleFrame("help");
-            }
+      if (SwinGame.KeyTyped (KeyCode.HKey)) {
+        GuiEnvironment.GetRenderer ().ToggleFrame ("help");
+      }
 
-            if (SwinGame.KeyTyped(KeyCode.OKey))
-            {
-                GetWorld().PutMinerals();
-            }
+      if (SwinGame.KeyTyped (KeyCode.OKey)) {
+        GetWorld ().PutMinerals ();
+      }
 
-            if (SwinGame.KeyTyped(KeyCode.MKey))
-            {
-                GetWorld().GenerateMap();
-            }
+      if (SwinGame.KeyTyped (KeyCode.MKey)) {
+        GetWorld ().GenerateMap ();
+      }
 
-            if (SwinGame.KeyDown(KeyCode.EscapeKey))
-            {
-                Environment.Exit(0);
-            }
+      if (SwinGame.KeyDown (KeyCode.EscapeKey)) {
+        Environment.Exit (0);
+      }
 
-			//changes player input using keyboard - jeremy
-			if (SwinGame.KeyDown(KeyCode.WKey) && _player.Location.Y != 0) 
-			{
-				_player.Location.Y -= 1;
-			}
+      //changes player input using keyboard - jeremy
+      //Allowed player to attack,
+      //else if if used so that the player can spam attack and move at the same time - Jonathan
 
-			if (SwinGame.KeyDown(KeyCode.SKey) && _player.Location.Y != 39) 
-			{
-				_player.Location.Y += 1;
-			}
-
-			if (SwinGame.KeyDown(KeyCode.AKey) && _player.Location.X != 0) 
-			{
-				_player.Location.X -= 1;
-			}
-
-			if (SwinGame.KeyDown(KeyCode.DKey) && _player.Location.X != 52) 
-			{
-				_player.Location.X += 1;
-			}
+      //please test it, use b to buy or shift b (for super) and try attacking
+      //you have to buy a weapon first
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.WKey))
+      {
+        if (_player.Weapon != null) {
+          _player.DeployWeapon (AttackDirection.Up);
+          Objects.Add (_player.Weapon.Projectile);
         }
+      }
+      else if (SwinGame.KeyDown (KeyCode.WKey) && _player.Location.Y != 0) {
+        _player.Location.Y -= 1;
+      }
+
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.SKey))
+      {
+        if (_player.Weapon != null) {
+          _player.DeployWeapon (AttackDirection.Down);
+          Objects.Add (_player.Weapon.Projectile);
+        }
+      }
+      else if (SwinGame.KeyDown (KeyCode.SKey) && _player.Location.Y != 39) {
+        _player.Location.Y += 1;
+      } 
+
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.AKey))
+      {
+       if (_player.Weapon != null) {
+          _player.DeployWeapon (AttackDirection.Left);
+          Objects.Add (_player.Weapon.Projectile);
+        }
+      }
+      else if (SwinGame.KeyDown (KeyCode.AKey) && _player.Location.X != 0) {
+        _player.Location.X -= 1;
+      }
+
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.DKey))
+      {
+        if (_player.Weapon != null) {
+          _player.DeployWeapon (AttackDirection.Right);
+          Objects.Add (_player.Weapon.Projectile);
+        }
+      }
+      else if (SwinGame.KeyDown (KeyCode.DKey) && _player.Location.X != 52) {
+        _player.Location.X += 1;
+      }
+
+      if (SwinGame.KeyTyped (KeyCode.BKey)) 
+      {
+        _player.BuyWeapon (_player.Location,WeaponType.Normal);
+        Objects.Add (_player.Weapon);
+      }
+
+      if (SwinGame.KeyTyped (KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey)) 
+      {
+        _player.BuyWeapon (_player.Location, WeaponType.Super);
+        Objects.Add (_player.Weapon);
+      }
+      
+    }
 
         /// <summary>
         /// Get the current renderer to draw the game
