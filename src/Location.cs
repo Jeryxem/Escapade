@@ -4,6 +4,7 @@ namespace Escapade
   {
     int _x;
     int _y;
+	bool _collison;//added this - jeremy
 
     #region Properties
     public int X {
@@ -28,7 +29,15 @@ namespace Escapade
     {
       X = x;
       Y = y;
+			_collison = false; //added this - jeremy
     }
+
+		public bool Collision
+		{
+			get { return _collison; }
+			set { _collison = value; } 
+		}
+
 
   }
 }

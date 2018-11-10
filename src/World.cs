@@ -58,7 +58,7 @@ namespace Escapade
     {
       for (int x = 0; x < Width; x++) {
         for (int y = 0; y < Height; y++) {
-          Map [x, y] = new Tile (TileType.Rock, x, y);
+          Map [x, y] = new Tile (TileType.Rock);
         }
       }
     }
@@ -89,7 +89,7 @@ namespace Escapade
         for (int x = 0; x < Width; x++) {
           for (int y = 0; y < Height; y++) {
             int neighbours = GetNeighbours (x, y);
-						newMap [x, y] = new Tile (TileType.Empty, x, y); //edited this - jeremy
+			newMap [x, y] = new Tile (TileType.Empty);
             switch (Map [x, y].Type) {
             case TileType.Rock:
               newMap [x, y].Type = neighbours >= 4 ? TileType.Rock : (neighbours < 2 ? TileType.Rock : TileType.Air);
@@ -194,12 +194,12 @@ namespace Escapade
       if (loc.X < 1 || loc.X >= Width - 1 || loc.Y < 1 || loc.Y >= Height - 1) return;
       Tile tile = Map [loc.X, loc.Y];
       if (tile.Type == TileType.Rock) {
-				Map[loc.X, loc.Y] = new Tile(TileType.Air, loc.X, loc.Y); //edited this - jeremy
+				Map[loc.X, loc.Y] = new Tile(TileType.Air);
         if (tile.Mineral != null)
           Escapade.GetPlayer ().Inventory.AddItem (tile.Mineral);
       }
       if(tile.Type == TileType.Air && SwinGame.KeyDown(KeyCode.ShiftKey)) {
-        Map [loc.X, loc.Y] = new Tile (TileType.Rock, loc.X, loc.Y); //edited this - jeremy
+        Map [loc.X, loc.Y] = new Tile (TileType.Rock);
       }
       for (int x = -1; x <= 1; x++) {
         for (int y = -1; y <= 1; y++) {

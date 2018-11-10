@@ -148,7 +148,7 @@ namespace Escapade
 				for (int y = 0; y<GlobalConstants.WORLD_HEIGHT/GlobalConstants.SIZE; y++) 
 				{
 
-					if (_world.Map[x, y].Type == TileType.Rock)
+					if (_world.Map[_enemy.Location.X, _enemy.Location.Y].Type == TileType.Rock)
 					{
 						_enemy.DirectionX = 1;
 					}
@@ -158,7 +158,8 @@ namespace Escapade
 					}
 
 		        }
-		     }*/
+		     }
+			//_enemy.SetCollision();*/
         }
 
         /// <summary>
@@ -214,7 +215,54 @@ namespace Escapade
     public void Update ()
     {
       		_enemy.enemyMovement (); //the enemy movement -Jeremy
-			_enemy.CheckCollision(); //check collision with rock -Jeremy
+
+
+					// click button M to change map to check collision
+					// collision on left right up down, some part of edge no collision if look carefully - jeremy
+					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y].Type == TileType.Rock)
+					{
+						_enemy.DirectionX = 2;
+					}
+					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y].Type == TileType.Rock)
+					{
+						_enemy.DirectionX = 1;
+					}
+
+					if (_world.Map[_enemy.Location.X, _enemy.Location.Y+1].Type == TileType.Rock)
+					{
+						_enemy.DirectionY = 2;
+					}
+
+					if (_world.Map[_enemy.Location.X, _enemy.Location.Y-1].Type == TileType.Rock)
+					{
+						_enemy.DirectionY = 1;
+					}
+
+					/*//collision on sharp edge - my problem with my logic
+					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y+1].Type == TileType.Rock)
+					{
+						_enemy.DirectionX = 2;
+						_enemy.DirectionY = 2;
+					}
+
+					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y-1].Type == TileType.Rock)
+					{
+						_enemy.DirectionX = 2;
+						_enemy.DirectionY = 1;
+					}
+
+					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y+1].Type == TileType.Rock)
+					{
+						_enemy.DirectionX = 1;
+						_enemy.DirectionY = 2;
+					}
+
+					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y-1].Type == TileType.Rock)
+					{
+						_enemy.DirectionX = 1;
+						_enemy.DirectionY = 1;
+					}*/
+
 
       foreach (Entity obj in Objects) {
         obj.Update ();

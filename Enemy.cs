@@ -7,7 +7,6 @@ namespace Escapade
 	{
 		private int _directionX;
 		private int _directionY;
-		//private bool _collison;
 		public World _tile;
 
 		public Enemy(int id, string name, Location location) : base(id, name, location)
@@ -17,50 +16,6 @@ namespace Escapade
 			_directionX = 1;
 			_directionY = 1;
 		}
-
-		public void SetCollision()
-		{
-			//testing
-			for (int x = 0; x < GlobalConstants.WORLD_WIDTH / GlobalConstants.SIZE; x++)
-			{
-				for (int y = 0; y < GlobalConstants.WORLD_HEIGHT / GlobalConstants.SIZE; y++)
-				{
-					if ( _tile.Map[x,y].Type == TileType.Rock) 
-					{
-						_tile.Map[x+1, y].Collision = true;
-						_tile.Map[x-1, y].Collision = true;
-						//_directionX = 2;
-						//if (_tile.Map[x,y].Type == TileType.Rock)
-						{
-							//_directionX = 2;
-						}
-					}
-
-				}
-			}
-		}
-
-		public void CheckCollision() 
-		{
-			for (int x = 0; x < GlobalConstants.WORLD_WIDTH / GlobalConstants.SIZE; x++)
-			{
-				for (int y = 0; y < GlobalConstants.WORLD_HEIGHT / GlobalConstants.SIZE; y++) 
-				{
-					if (_location.X == _tile.Map[x,y].LocationX) 
-					{
-						//if(_tile.Map[x, y].Collision == true )
-						//_directionY = 1;
-					}
-
-					/*if (_location.X == _tile.Map[x+1, y].LocationX) 
-					{
-						_directionY = 2;
-					}*/
-				}
-			}
-		}
-
-
 
 		public void enemyMovement()
 		{
@@ -110,9 +65,17 @@ namespace Escapade
 			}
 		}
 
+
+		//added properties for direction - jeremy
 		public int DirectionX 
 		{
 			get { return _directionX;} set { _directionX = value;}
+		}
+
+		public int DirectionY
+		{
+			get { return _directionY; }
+			set { _directionY = value; } 
 		}
 
 		public override void Draw()

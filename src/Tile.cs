@@ -9,9 +9,6 @@ namespace Escapade
     TileType _type = TileType.Empty;
     Mineral _mineral;
     BitmapMask _mask;
-		int _locationX; 
-		int _locationY; //testing -jeremy
-		bool _collison;//added this - jeremy
 
     #region Properties
     public TileType Type {
@@ -40,32 +37,13 @@ namespace Escapade
     }
     #endregion Properties
 
-    public Tile(TileType type, int locationX, int locationY)
+    public Tile(TileType type)
     {
       Type = type;
       Mask = BitmapMask.None;
-			_locationX = locationX;
-			_locationY = locationY;
-			_collison = false; //added this - jeremy
     }
 
-		public bool Collision
-		{
-			get { return _collison; }
-			set { _collison = value; } 
-		}
-
-		public int LocationX 
-		{
-			get { return _locationX;}
-		}
-
-		public int LocationY
-		{
-			get { return _locationY; } 
-		}
-
-    //public Tile() : this(TileType.Empty) { }
+    public Tile() : this(TileType.Empty) { }
 
   }
 }
