@@ -70,6 +70,46 @@ namespace Escapade
     	}
     }
 
+    public bool CheckObjectHit (World world, Enemy enemy) //stil have to include collision with enemy, problems occurred
+    {
+      if (_weaponType == WeaponType.Normal) 
+      {
+        if (horizontal) 
+        {
+          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
+            return true;
+          else
+            return false;
+        } 
+        else 
+        {
+          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
+            return true;
+          else
+            return false;
+        }
+          
+      } 
+      else 
+      {
+        if (horizontal) 
+        {
+          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
+            return true;
+          else
+            return false;
+        } 
+        else 
+        {
+          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
+            return true;
+          else
+            return false;
+        }
+          
+      }
+    }
+
 
   }
 }

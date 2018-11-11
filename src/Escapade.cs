@@ -16,6 +16,7 @@ namespace Escapade
         static Enemy _enemy;
         static MetaHandler meta;
         public List<Entity> Objects;
+        public List<Projectile> ProjectilesToBeRemoved;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Escapade.Escapade"/> class.
@@ -122,6 +123,7 @@ namespace Escapade
         public void PreInit()
         {
             Objects = new List<Entity>();
+            ProjectilesToBeRemoved = new List<Projectile> ();
         }
 
         /// <summary>
@@ -237,6 +239,17 @@ namespace Escapade
 					{
 						_enemy.DirectionY = 1;
 					}
+
+          foreach (Entity e in Objects) {
+            if (e is Projectile) {
+              if (((Projectile)e).CheckObjectHit (_world, _enemy))
+                ProjectilesToBeRemoved.Add ((Projectile)e);
+            }
+          }
+
+          foreach (Projectile p in ProjectilesToBeRemoved)
+            Objects.Remove (p);
+
 
 					/*//collision on sharp edge - my problem with my logic
 					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y+1].Type == TileType.Rock)
