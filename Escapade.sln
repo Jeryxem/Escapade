@@ -1,6 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Escapade", "Escapade.csproj", "{A9DCAC72-BC77-4C33-BE70-BBFD31D7C798}"
 EndProject
 Global
@@ -8,7 +9,12 @@ Global
 		Debug-Windows|x86 = Debug-Windows|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A9DCAC72-BC77-4C33-BE70-BBFD31D7C798}.Debug-Windows|x86.ActiveCfg = Debug-Windows|x86
-		{A9DCAC72-BC77-4C33-BE70-BBFD31D7C798}.Debug-Windows|x86.Build.0 = Debug-Windows|x86
+		{A9DCAC72-BC77-4C33-BE70-BBFD31D7C798}.Debug-Windows|x86.ActiveCfg = Debug-Windows|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52188720-6601-4F6A-AB99-553A2D6AA4CF}
 	EndGlobalSection
 EndGlobal
