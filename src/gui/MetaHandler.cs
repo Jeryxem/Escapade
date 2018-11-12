@@ -15,11 +15,11 @@ namespace Escapade.src.gui
     /// </summary>
     public class MetaHandler
     {
-        private Panel bottomPanel; // IA - this will hold the panel resource (meta.txt)
+        public Panel bottomPanel; // IA - this will hold the panel resource (meta.txt)
 
         public MetaHandler()
         {
-            bottomPanel = SwinGame.LoadPanel("meta.txt");
+            bottomPanel = SwinGame.LoadPanelNamed("Bottom Pannel", "Meta.txt");
         }
 
         /// <summary>
