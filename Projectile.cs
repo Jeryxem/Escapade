@@ -14,7 +14,7 @@ namespace Escapade
     private const int NORMAL_PROJECTILE_WIDTH = 5;
     private const int SUPER_PROJECTILE_WIDTH = 7;
 
-    private const int PROJECTILE_LENGTH = 20;
+    private const int PROJECTILE_LENGTH = 10;
 
     public Projectile (WeaponType weaponType, int projectileSpeed, AttackDirection direction,Location location) : base(2, "Projectile", location)
     {
@@ -70,46 +70,46 @@ namespace Escapade
     	}
     }
 
-    public bool CheckObjectHit (World world, Enemy enemy) //stil have to include collision with enemy, problems occurred
+    public bool CheckObjectHit (World world, Enemy enemy) // JY- collision works
     {
-      if (_weaponType == WeaponType.Normal) 
-      {
-        if (horizontal) 
+    	int enemyX = enemy.Location.X * GlobalConstants.SIZE, enemyY = enemy.Location.Y * GlobalConstants.SIZE;
+
+    	if (_weaponType == WeaponType.Normal) {
+    		if (horizontal) 
         {
-          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
-            return true;
-          else
-            return false;
-        } 
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, PROJECTILE_LENGTH, NORMAL_PROJECTILE_WIDTH))
+    				return true;
+    			else
+    				return false;
+    		} 
         else 
         {
-          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
-            return true;
-          else
-            return false;
-        }
-          
-      } 
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, NORMAL_PROJECTILE_WIDTH, PROJECTILE_LENGTH))
+    				return true;
+    			else
+    				return false;
+    		}
+
+    	} 
       else 
       {
-        if (horizontal) 
+    		if (horizontal) 
         {
-          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
-            return true;
-          else
-            return false;
-        } 
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, PROJECTILE_LENGTH, SUPER_PROJECTILE_WIDTH))
+    				return true;
+    			else
+    				return false;
+    		} 
         else 
         {
-          if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock)
-            return true;
-          else
-            return false;
-        }
-          
-      }
-    }
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, SUPER_PROJECTILE_WIDTH, PROJECTILE_LENGTH))
+    				return true;
+    			else
+    				return false;
+    		}
 
+    	}
+    }
 
   }
 }

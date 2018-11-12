@@ -11,10 +11,10 @@ namespace Escapade
     private Projectile _projectile;
 
     private const int NORMAL_DAMAGE = 20;
-    private const int SUPER_DAMAGE = 40;
+    private const int SUPER_DAMAGE = 60;
 
     private const int NORMAL_PROJECTILE_SPEED = 1;
-    private const int SUPER_PROJECTILE_SPEED = 2;
+    private const int SUPER_PROJECTILE_SPEED = 1;
 
     private const string NORMAL_NAME = "Rusted Harpoon";
     private const string SUPER_NAME = "Golden Harpoon";
