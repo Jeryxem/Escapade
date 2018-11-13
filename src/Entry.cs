@@ -1,3 +1,5 @@
+using SwinGameSDK;
+
 namespace Escapade
 {
   public class Entry
@@ -7,6 +9,7 @@ namespace Escapade
     /// </summary>
     public static void Main ()
     {
+
       Escapade.GetInstance ().Start ();
     }
   }
