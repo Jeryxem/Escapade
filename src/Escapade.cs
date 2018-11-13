@@ -102,6 +102,12 @@ namespace Escapade
         public void Start()
         {
             SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 45);
+            GameResources.LoadResources ();
+
+            while (!SwinGame.MouseClicked (MouseButton.LeftButton)) 
+            {
+               SwinGame.DrawBitmap (GameResources.GameImage ("main menu"), 0, 0);
+            }
             PreInit();
             Init();
             PostInit();

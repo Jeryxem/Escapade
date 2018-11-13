@@ -40,6 +40,7 @@
     <None Include="Resources\panels\Meta.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\images\8-bit main menu.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">
@@ -224,6 +225,8 @@
     <Compile Include="Projectile.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="GameState.cs" />
+    <Compile Include="GameResources.cs" />
   </ItemGroup>
   <ItemGroup />
   <Target Name="CopyLibsToOut">
