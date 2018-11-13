@@ -101,7 +101,7 @@ namespace Escapade
         /// </summary>
         public void Start()
         {
-            SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 45);
+            SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 55); // IA - Changed the height of the window to allow for the display of the bottom panel
             PreInit();
             Init();
             PostInit();

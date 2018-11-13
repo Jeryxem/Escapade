@@ -6,21 +6,83 @@ using System.Threading.Tasks;
 
 namespace Escapade
 {
-    public static class GameLevel
+    public class GameLevel
     {
-        private static int levelNo = 1;
+        private int levelNo;
+        private List<long> progressTimeTracker;
 
-        public static void IncreaseLevel()
+        public GameLevel()
+        {
+            levelNo = 1;
+        }
+
+        public int Level
+        {
+            get { return levelNo; }
+            set { levelNo = value; }
+        }
+
+        public List<long> Tracker
+        {
+            get { return progressTimeTracker; }
+        }
+
+        public long this[int index]
+        {
+            get
+            {
+                try
+                {
+                    return progressTimeTracker[index];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    return 0;
+                }
+            }
+        }
+
+        public void AddToTracker(long timeTicks)
+        {
+            progressTimeTracker.Add(timeTicks);
+        }
+
+        public void RemoveFromTracker(long timeTicks)
+        {
+            progressTimeTracker.Remove(timeTicks);
+        }
+
+        public void ClearTracker()
+        {
+            progressTimeTracker.Clear();
+        }
+
+        public double AverageLevelProgressTime ()
+        {
+            double average = 0;
+            long totalTime = 0;
+
+            foreach (long timeTick in progressTimeTracker)
+            {
+                totalTime += timeTick;
+            }
+
+            average = totalTime / progressTimeTracker.Count;
+
+            return Math.Floor(average);
+        }
+
+        public void IncreaseLevel()
         {
             levelNo++;
         }
 
-        public static void DecreaseLevel()
+        public void DecreaseLevel()
         {
             levelNo--;
         }
 
-        public static String PrintLevel()
+        public String PrintLevel()
         {
             return levelNo.ToString();
         }

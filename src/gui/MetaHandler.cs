@@ -22,7 +22,7 @@ namespace Escapade.src.gui
         private String hungerIndication;
         private int hungerIndicatorWidth;
         private Color hungerIndicatorColor;
-        
+        public GameLevel gameLevel;
 
         public MetaHandler()
         {
@@ -33,6 +33,7 @@ namespace Escapade.src.gui
             hungerIndication = "You're in shape!";
             hungerIndicatorWidth = 150;
             hungerIndicatorColor = Color.Green;
+            gameLevel = new GameLevel();
         }
 
         private int Map(int indicator)
@@ -40,33 +41,50 @@ namespace Escapade.src.gui
             return (int) Math.Ceiling(indicator / 1.5);
         }
 
+        public void DecreaseEnergy()
+        {
+            hungerIndicatorWidth--;
+        }
+
+        public void IncreaseEnergy()
+        {
+            hungerIndicatorWidth++;
+        }
+
         private void ControlLevelDisplay()
         {
-            if (SwinGame.KeyDown(KeyCode.SpaceKey))
+            if (SwinGame.KeyDown(KeyCode.SpaceKey) && hungerIndicatorWidth > 0)
             {
-                if (hungerIndicatorWidth >= 0)
-                    hungerIndicatorWidth--;
+                DecreaseEnergy();
+            }
+            else if (SwinGame.KeyDown(KeyCode.ShiftKey) && hungerIndicatorWidth < 149)
+            {
+                IncreaseEnergy();
+            }
 
-                if (Map(hungerIndicatorWidth) < 80 && Map(hungerIndicatorWidth) >= 60)
-                {
-                    hungerIndicatorColor = Color.YellowGreen;
-                    hungerIndication = "Start looking for food.";
-                }
-                else if (Map(hungerIndicatorWidth) < 60 && Map(hungerIndicatorWidth) >= 40)
-                {
-                    hungerIndicatorColor = Color.Yellow;
-                    hungerIndication = "Your hunger level is rising.";
-                }
-                else if (Map(hungerIndicatorWidth) < 40 && Map(hungerIndicatorWidth) >= 20)
-                {
-                    hungerIndicatorColor = Color.Orange;
-                    hungerIndication = "Running low on energy.";
-                }
-                else if (Map(hungerIndicatorWidth) < 20)
-                {
-                    hungerIndicatorColor = Color.Red;
-                    hungerIndication = "Get food now! (Almost game over)";
-                }
+            if (Map(hungerIndicatorWidth) < 80 && Map(hungerIndicatorWidth) >= 60)
+            {
+                hungerIndicatorColor = Color.YellowGreen;
+                hungerIndication = "Start looking for food.";
+            }
+            else if (Map(hungerIndicatorWidth) < 60 && Map(hungerIndicatorWidth) >= 40)
+            {
+                hungerIndicatorColor = Color.Yellow;
+                hungerIndication = "Your hunger level is rising.";
+            }
+            else if (Map(hungerIndicatorWidth) < 40 && Map(hungerIndicatorWidth) >= 20)
+            {
+                hungerIndicatorColor = Color.Orange;
+                hungerIndication = "Running low on energy.";
+            }
+            else if (Map(hungerIndicatorWidth) < 20 && Map(hungerIndicatorWidth) > 0)
+            {
+                hungerIndicatorColor = Color.Red;
+                hungerIndication = "Get food now! (Almost game over)";
+            }
+            else if (Map(hungerIndicatorWidth) == 0)
+            {
+                hungerIndication = "No more energy left. Game Over.";
             }
         }
 
@@ -90,15 +108,15 @@ namespace Escapade.src.gui
 
         public void DisplayHungerInformation()
         {
+            ControlLevelDisplay();
+
             SwinGame.DrawText("Your energy levels: ", Color.White, 200, contentVerticalAlign);
 
-            SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 5, hungerIndicatorWidth, 20);
+            SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 12, hungerIndicatorWidth, 20);
 
-            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + hungerIndicatorWidth + 5, GlobalConstants.WORLD_HEIGHT + 12);
+            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + hungerIndicatorWidth + 5, contentVerticalAlign);
 
-            SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 30);
-
-            ControlLevelDisplay();
+            SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 37);
         }
 
         /// <summary>
@@ -106,7 +124,7 @@ namespace Escapade.src.gui
         /// </summary>
         public void DisplayGameLevel()
         {
-            SwinGame.DrawText("Level: 1", Color.White, GlobalConstants.WORLD_WIDTH - 150, contentVerticalAlign);
+            SwinGame.DrawText("Level: " + gameLevel.PrintLevel(), Color.White, GlobalConstants.WORLD_WIDTH - 150, contentVerticalAlign);
         }
             
     }
