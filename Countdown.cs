@@ -53,14 +53,20 @@ namespace Escapade
 
         public String ShowTime()
         {
-            long milliseconds = timer.Ticks;
+            uint milliseconds = timer.Ticks;
             double seconds = milliseconds / 1000;
             double minute = seconds / 60;
+            TimeSpan formatTime = TimeSpan.FromSeconds(seconds);
+
+            // if (seconds > 59)
+                // seconds = 0;
 
             // Display time elapsed in the format mm:ss
-            String time = minute.ToString() + ":" + seconds.ToString();
+            String time = formatTime.ToString();
 
             return time;
+
+
 
         }
     }

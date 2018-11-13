@@ -187,7 +187,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="Countdown.cs" />
     <Compile Include="GameLevel.cs" />

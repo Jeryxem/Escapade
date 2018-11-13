@@ -380,6 +380,7 @@ namespace Escapade
             GuiEnvironment.GetRenderer().RenderWindow();
 
             meta.ShowBottomPanel(); // IA - Make the panel visible
+            meta.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
             meta.DisplayTimer(); // IA - Make the timer visible
             meta.DisplayGameLevel(); // IA - Display the game level
         }
