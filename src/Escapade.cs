@@ -14,9 +14,11 @@ namespace Escapade
         static Player _player;
         static GuiEnvironment _environment;
         static Enemy _enemy;
+		static Enemy _spawnenemy;
         static MetaHandler meta;
         public List<Entity> Objects;
         public List<Projectile> ProjectilesToBeRemoved;
+		//private Timer _spawntimer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Escapade.Escapade"/> class.
@@ -68,19 +70,49 @@ namespace Escapade
             return _player;
         }
 
-        /// <summary>
-        /// Create enemy object.
-        /// </summary>
-        /// <returns>The enemy.</returns> // by - Jeremy Toh
+        //  enemy spawn point - Jeremy Toh
         public static Enemy GetEnemy()
         {
-            if (_enemy == null)
+           if (_enemy == null)
             {
                 Location l = new Location(25, 20);
-                _enemy = new Enemy(0, "Enemy", l);
+                _enemy = new Enemy(0, "Enemy", l, 1, 1);
             }
             return _enemy;
         }
+
+		public static Enemy SpawnMoreEnemy()
+		{
+			
+			Location l = new Location(25, 20);
+			_spawnenemy = new Enemy(0, "Enemy", l, 1, 1);
+
+			return _spawnenemy;  
+		}
+
+		//spawn enemy every 5 sec(will change time for final product)- jeremy
+		/*public void SpawnEnemy()
+		{
+			_spawntimer = SwinGame.CreateTimer();
+			_spawntimer.Start();
+			var milliseconds = _spawntimer.Ticks;
+			var seconds = milliseconds / 1000;
+			Location l = new Location(25, 20);
+
+			if (seconds == 2)
+			{
+				_spawnenemy[].Add(new Enemy(1, "j", l, 1, 1));
+			}
+			else if (seconds > 4)
+			{
+				_spawntimer.Reset();
+			}	
+		}
+
+		public Timer SpawnTimer
+		{
+			get { return _spawntimer; }
+		}*/
 
         /// <summary>
         /// Gets the current game GuiEnvironment - constructs a
@@ -136,42 +168,35 @@ namespace Escapade
             ProjectilesToBeRemoved = new List<Projectile> ();
         }
 
-        /// <summary>
-        /// Initialisation stage 2 - initialise objects dependent on stage 1
-        /// </summary>
+		/// <summary>
+		/// Initialisation stage 2 - initialise objects dependent on stage 1
+		/// </summary>
+
+		bool initdone = false;
+		bool initdone2 = false;
         public void Init()
         {
-            Objects.Add(GetPlayer());
-            Objects.Add(GetEnemy());
-
-            Frame inventory = new Frame("inventory", "Inventory", new Location(10, 10), 150, 150);
-            inventory.AddButton(Color.DarkRed, Color.Red, inventory.Close);
-            GuiEnvironment.GetRenderer().RegisterFrame(inventory);
-
-            Frame help = new Frame("help", "Help and Controls", new Location(250, 10), 150, 250);
-            help.AddButton(Color.DarkRed, Color.Red, help.Close);
-            help.AddButton(Color.DarkBlue, Color.RoyalBlue, inventory.Toggle);
-            GuiEnvironment.GetRenderer().RegisterFrame(help);
-
-
-			/*//testing
-			for (int x = 0; x<GlobalConstants.WORLD_WIDTH/GlobalConstants.SIZE; x++) 
+			if (initdone == false)
 			{
-				for (int y = 0; y<GlobalConstants.WORLD_HEIGHT/GlobalConstants.SIZE; y++) 
-				{
+				Objects.Add(GetPlayer());
+				Objects.Add(GetEnemy());
+				initdone = true;
+			}
+				Objects.Add(SpawnMoreEnemy());
 
-					if (_world.Map[_enemy.Location.X, _enemy.Location.Y].Type == TileType.Rock)
-					{
-						_enemy.DirectionX = 1;
-					}
-					else 
-					{
-						_enemy.DirectionX = 2;
-					}
+			if (initdone2 == false)
+			{
+				Frame inventory = new Frame("inventory", "Inventory", new Location(10, 10), 150, 150);
+				inventory.AddButton(Color.DarkRed, Color.Red, inventory.Close);
+				GuiEnvironment.GetRenderer().RegisterFrame(inventory);
 
-		        }
-		     }
-			//_enemy.SetCollision();*/
+				Frame help = new Frame("help", "Help and Controls", new Location(250, 10), 150, 250);
+				help.AddButton(Color.DarkRed, Color.Red, help.Close);
+				help.AddButton(Color.DarkBlue, Color.RoyalBlue, inventory.Toggle);
+				GuiEnvironment.GetRenderer().RegisterFrame(help);
+				initdone2 = true;
+			}
+
         }
 
         /// <summary>
@@ -209,7 +234,7 @@ namespace Escapade
         {
             while (!SwinGame.WindowCloseRequested())
             {
-
+                
                 SwinGame.ClearScreen(Color.White);
                 SwinGame.ProcessEvents();
 
@@ -221,34 +246,49 @@ namespace Escapade
             SwinGame.ReleaseAllBitmaps();
         }
 
+	int randomhit = 0;
     /// <summary>
     /// Update the game based on events, objects and other things
     /// </summary>
     public void Update ()
     {
-      		_enemy.enemyMovement (); //the enemy movement -Jeremy
-
 
 					// click button M to change map to check collision
 					// collision on left right up down, some part of edge no collision if look carefully - jeremy
 					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y].Type == TileType.Rock)
 					{
 						_enemy.DirectionX = 2;
+						//_spawnenemy.DirectionX = 2;
+						randomhit++;
 					}
 					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y].Type == TileType.Rock)
 					{
 						_enemy.DirectionX = 1;
+						//_spawnenemy.DirectionX = 1;
+						randomhit++;
 					}
 
 					if (_world.Map[_enemy.Location.X, _enemy.Location.Y+1].Type == TileType.Rock)
 					{
 						_enemy.DirectionY = 2;
+						//_spawnenemy.DirectionY = 2;
+						randomhit++;
 					}
 
-					if (_world.Map[_enemy.Location.X, _enemy.Location.Y-1].Type == TileType.Rock)
+					if (_world.Map[_enemy.Location.X, _enemy.Location.Y - 1].Type == TileType.Rock)
 					{
 						_enemy.DirectionY = 1;
+						//_spawnenemy.DirectionX = 1;
+						randomhit++;
 					}
+
+
+			//spawn rate - jeremy
+			if (randomhit >= 20) 
+			{
+				Init();
+				randomhit = 0;
+			}
 
           foreach (Entity e in Objects) {
             if (e is Projectile) {
@@ -259,32 +299,6 @@ namespace Escapade
 
           foreach (Projectile p in ProjectilesToBeRemoved)
             Objects.Remove (p);
-
-
-					/*//collision on sharp edge - my problem with my logic
-					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y+1].Type == TileType.Rock)
-					{
-						_enemy.DirectionX = 2;
-						_enemy.DirectionY = 2;
-					}
-
-					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y-1].Type == TileType.Rock)
-					{
-						_enemy.DirectionX = 2;
-						_enemy.DirectionY = 1;
-					}
-
-					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y+1].Type == TileType.Rock)
-					{
-						_enemy.DirectionX = 1;
-						_enemy.DirectionY = 2;
-					}
-
-					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y-1].Type == TileType.Rock)
-					{
-						_enemy.DirectionX = 1;
-						_enemy.DirectionY = 1;
-					}*/
 
 
       foreach (Entity obj in Objects) {
@@ -381,7 +395,6 @@ namespace Escapade
       }
       
     }
-
         /// <summary>
         /// Get the current renderer to draw the game
         /// </summary>
