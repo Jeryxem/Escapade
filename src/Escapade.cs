@@ -104,15 +104,14 @@ namespace Escapade
             SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 45);
             GameResources.LoadResources ();
 
-             while (true) //problem loading image
+			      while (SwinGame.MouseClicked(MouseButton.LeftButton) == false) //problem loading image
             {
                 SwinGame.ClearScreen (Color.White);
-                SwinGame.DrawBitmap (GameResources.GameImage ("main menu"), 0, 0);
-                SwinGame.ProcessEvents ();
-                if (SwinGame.MouseClicked (MouseButton.LeftButton))
-                  break;
+				        SwinGame.DrawBitmap(GameResources.GameImage("main menu"), 0, 0);
+				        SwinGame.ProcessEvents();
+                SwinGame.RefreshScreen(60);
             }
-
+            SwinGame.ClearScreen (Color.White);
             PreInit();
             Init();
             PostInit();
