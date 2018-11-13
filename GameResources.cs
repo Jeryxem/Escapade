@@ -40,16 +40,16 @@ namespace Escapade
     	return _Music [music];
     }
 
-    private static void LoadImages ()
+    public static void LoadImages ()
     {
       NewImage ("main menu", "main menu.png");
     }
 
-    private static void LoadSounds ()
+    public static void LoadSounds ()
     { 
     }
 
-    private static void LoadMusic ()
+    public static void LoadMusic ()
     {
     }
 

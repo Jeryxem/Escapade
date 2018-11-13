@@ -106,7 +106,7 @@ namespace Escapade
 
              while (true) //problem loading image
             {
-                SwinGame.ClearScreen ();
+                SwinGame.ClearScreen (Color.White);
                 SwinGame.DrawBitmap (GameResources.GameImage ("main menu"), 0, 0);
                 SwinGame.ProcessEvents ();
                 if (SwinGame.MouseClicked (MouseButton.LeftButton))
