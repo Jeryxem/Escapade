@@ -20,7 +20,7 @@ namespace Escapade.src.gui
         private int contentVerticalAlign;
         private Countdown timer;
         private String hungerIndication;
-        private int hungerIndicatorWidth;
+        private double hungerIndicatorWidth;
         private Color hungerIndicatorColor;
         public GameLevel gameLevel;
 
@@ -30,30 +30,28 @@ namespace Escapade.src.gui
             timer = new Countdown();
             timer.StartTimer();
             contentVerticalAlign = GlobalConstants.WORLD_HEIGHT + 18;
-            hungerIndication = "You're in shape!";
             hungerIndicatorWidth = 150;
-            hungerIndicatorColor = Color.Green;
             gameLevel = new GameLevel();
         }
 
-        private int Map(int indicator)
+        private int Map(double indicator)
         {
             return (int) Math.Ceiling(indicator / 1.5);
         }
 
         public void DecreaseEnergy()
         {
-            hungerIndicatorWidth--;
+            hungerIndicatorWidth -= 0.02;
         }
 
         public void IncreaseEnergy()
         {
-            hungerIndicatorWidth++;
+            hungerIndicatorWidth += 0.02;
         }
 
         private void ControlLevelDisplay()
         {
-            if (SwinGame.KeyDown(KeyCode.SpaceKey) && hungerIndicatorWidth > 0)
+            if (hungerIndicatorWidth > 0)
             {
                 DecreaseEnergy();
             }
@@ -85,6 +83,10 @@ namespace Escapade.src.gui
             else if (Map(hungerIndicatorWidth) == 0)
             {
                 hungerIndication = "No more energy left. Game Over.";
+            } else
+            {
+                hungerIndication = "You're in shape!";
+                hungerIndicatorColor = Color.LawnGreen;
             }
         }
 
@@ -112,9 +114,9 @@ namespace Escapade.src.gui
 
             SwinGame.DrawText("Your energy levels: ", Color.White, 200, contentVerticalAlign);
 
-            SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 12, hungerIndicatorWidth, 20);
+            SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 12, (int) hungerIndicatorWidth, 20);
 
-            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + hungerIndicatorWidth + 5, contentVerticalAlign);
+            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + (int) hungerIndicatorWidth + 5, contentVerticalAlign);
 
             SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 37);
         }
