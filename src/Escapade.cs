@@ -101,9 +101,7 @@ namespace Escapade
         /// </summary>
         public void Start()
         {
-<<<<<<< HEAD
             SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 55); // IA - Changed the height of the window to allow for the display of the bottom panel
-=======
             SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 45);
             GameResources.LoadResources ();
 
@@ -115,7 +113,6 @@ namespace Escapade
                 SwinGame.RefreshScreen(60);
             }
             SwinGame.ClearScreen (Color.White);
->>>>>>> 5e392907417ddf47e61337d674ed7b89edbe360b
             PreInit();
             Init();
             PostInit();
