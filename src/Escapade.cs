@@ -102,7 +102,6 @@ namespace Escapade
         public void Start()
         {
             SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 55); // IA - Changed the height of the window to allow for the display of the bottom panel
-            SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 45);
             GameResources.LoadResources ();
 
 			      while (SwinGame.MouseClicked(MouseButton.LeftButton) == false) //problem loading image

@@ -57,7 +57,7 @@ namespace Escapade.src.gui
             {
                 DecreaseEnergy();
             }
-            else if (SwinGame.KeyDown(KeyCode.ShiftKey) && hungerIndicatorWidth < 149)
+            else if ((SwinGame.KeyDown(KeyCode.LeftShiftKey) || SwinGame.KeyDown(KeyCode.RightShiftKey)) && hungerIndicatorWidth < 149)
             {
                 IncreaseEnergy();
             }
