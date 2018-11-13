@@ -42,7 +42,7 @@ namespace Escapade
 
     private static void LoadImages ()
     {
-      NewImage ("main menu", "8-bit main menu.png");
+      NewImage ("main menu", "main menu.png");
     }
 
     private static void LoadSounds ()
