@@ -11,8 +11,8 @@ namespace Escapade
     private int projectileLocationX, projectileLocationY;
     private bool horizontal;
 
-    private const int NORMAL_PROJECTILE_WIDTH = 5;
-    private const int SUPER_PROJECTILE_WIDTH = 7;
+    private const int NORMAL_PROJECTILE_WIDTH = 10;
+    private const int SUPER_PROJECTILE_WIDTH = 20;
 
     private const int PROJECTILE_LENGTH = 10;
 

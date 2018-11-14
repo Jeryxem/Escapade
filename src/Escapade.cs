@@ -244,6 +244,7 @@ namespace Escapade
                 SwinGame.RefreshScreen(30);
             }
             SwinGame.ReleaseAllBitmaps();
+            GameResources.FreeResources ();
         }
 
 	int randomhit = 0;
@@ -338,7 +339,7 @@ namespace Escapade
 
       //please test it, use b to buy or shift b (for super) and try attacking
       //you have to buy a weapon first
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.WKey))
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.WKey))
       {
         if (_player.Weapon != null) {
           _player.DeployWeapon (AttackDirection.Up);
@@ -349,7 +350,7 @@ namespace Escapade
         _player.Location.Y -= 1;
       }
 
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.SKey))
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.SKey))
       {
         if (_player.Weapon != null) {
           _player.DeployWeapon (AttackDirection.Down);
@@ -360,7 +361,7 @@ namespace Escapade
         _player.Location.Y += 1;
       } 
 
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.AKey))
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.AKey))
       {
        if (_player.Weapon != null) {
           _player.DeployWeapon (AttackDirection.Left);
@@ -371,7 +372,7 @@ namespace Escapade
         _player.Location.X -= 1;
       }
 
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyTyped (KeyCode.DKey))
+      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.DKey))
       {
         if (_player.Weapon != null) {
           _player.DeployWeapon (AttackDirection.Right);
