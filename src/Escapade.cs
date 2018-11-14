@@ -375,7 +375,7 @@ namespace Escapade
           Objects.Add (_player.Weapon.Projectile);
         }
       }
-      else if (SwinGame.KeyDown (KeyCode.WKey) && _player.Location.Y != 0) {
+     else if (SwinGame.KeyDown (KeyCode.WKey) && _world.Map[_player.Location.X, _player.Location.Y-1].Type != TileType.Rock) {
         _player.Location.Y -= 1;
       }
 
@@ -386,7 +386,7 @@ namespace Escapade
           Objects.Add (_player.Weapon.Projectile);
         }
       }
-			else if (SwinGame.KeyDown (KeyCode.SKey) && _player.Location.Y != GlobalConstants.WORLD_HEIGHT/GlobalConstants.SIZE - 1) {
+			else if (SwinGame.KeyDown (KeyCode.SKey) && _world.Map[_player.Location.X, _player.Location.Y+1].Type != TileType.Rock) {
         _player.Location.Y += 1;
       } 
 
@@ -397,7 +397,7 @@ namespace Escapade
           Objects.Add (_player.Weapon.Projectile);
         }
       }
-      else if (SwinGame.KeyDown (KeyCode.AKey) && _player.Location.X != 0) {
+      else if (SwinGame.KeyDown (KeyCode.AKey) &&  _world.Map[_player.Location.X-1, _player.Location.Y].Type != TileType.Rock) {
         _player.Location.X -= 1;
       }
 
@@ -408,7 +408,7 @@ namespace Escapade
           Objects.Add (_player.Weapon.Projectile);
         }
       }
-			else if (SwinGame.KeyDown (KeyCode.DKey) && _player.Location.X != GlobalConstants.WORLD_WIDTH/GlobalConstants.SIZE - 1) {
+			else if (SwinGame.KeyDown (KeyCode.DKey) && _world.Map[_player.Location.X+1, _player.Location.Y].Type != TileType.Rock) {
         _player.Location.X += 1;
       }
 

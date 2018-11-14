@@ -144,14 +144,6 @@ namespace Escapade
 			}
 		}
 
-
-		//remove enemy when weapons hit - jeremy
-		public void RemoveEnemy() 
-		{
-			
-		}
-
-
 		//added properties for direction - jeremy
 	/*	//spawn timer property
 		public bool SpawnTimer
