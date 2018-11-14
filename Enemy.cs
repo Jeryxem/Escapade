@@ -8,6 +8,7 @@ namespace Escapade
 		//private Timer _spawntimer;
 		private int _directionX;
 		private int _directionY;
+    private Color _enemyColor;
 		public World _world;
 		//private bool _spawn = false;
 		public Escapade _escapade;
@@ -18,10 +19,16 @@ namespace Escapade
 			_directionX = directionX;
 			_directionY = directionY;
 			_world = Escapade.GetWorld();
+
+      // JY- to differentiate between the boss and the spawned ones
+      if (name == "Boss Enemy")
+        _enemyColor = Color.GreenYellow;
+      else
+        _enemyColor = Color.MediumVioletRed;
 		}
 
 
-		/*//spawn enemy every 5 sec(will change time for final product)- jeremy
+    /*//spawn enemy every 5 sec(will change time for final product)- jeremy
 		public void SpawnEnemy()
 		{
 			_spawntimer = SwinGame.CreateTimer();
@@ -41,6 +48,42 @@ namespace Escapade
 				_spawn = false;
 			}
 		}*/
+
+    // JY- added to help the enemy detect if it is hit
+    public bool CheckHit (Projectile projectile)
+    {
+      int enemyX = Location.X * GlobalConstants.SIZE, enemyY = Location.Y * GlobalConstants.SIZE;
+      int projectileLocationX = projectile.ProjectileLocationX, projectileLocationY = projectile.ProjectileLocationY;
+
+      if (projectile.Type == WeaponType.Normal) {
+        if (projectile.Horizontal) {
+          if (SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.NORMAL_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
+            return true;
+          else
+            return false;
+        } else {
+          if (SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.NORMAL_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
+            return true;
+          else
+            return false;
+        }
+
+      } else {
+        if (projectile.Horizontal) {
+          if (SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.PROJECTILE_LENGTH, GlobalConstants.SUPER_PROJECTILE_WIDTH))
+            return true;
+          else
+            return false;
+        } else {
+          if (SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.SUPER_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
+            return true;
+          else
+            return false;
+        }
+
+      }
+    }
+    
 	
 		public void enemyMovement()
 		{
@@ -130,7 +173,7 @@ namespace Escapade
 		public override void Draw()
 		{
 				int size = Escapade.GetWorld().Size;
-				SwinGame.FillRectangle(Color.MediumVioletRed, Location.X * size, Location.Y * size, size, size);
+				SwinGame.FillRectangle(_enemyColor, Location.X * size, Location.Y * size, size, size);
 				SwinGame.DrawRectangle(Color.White, Location.X * size, Location.Y * size, size, size);
 		}
 

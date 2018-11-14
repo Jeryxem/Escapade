@@ -31,6 +31,28 @@ namespace Escapade
           
     }
 
+    public bool Horizontal 
+    {
+      get { return horizontal; }
+    }
+
+    public WeaponType Type 
+    {
+      get { return _weaponType; }
+    }
+
+    public int ProjectileLocationX 
+    {
+      get { return projectileLocationX; }
+      set { projectileLocationX = value; }
+    }
+
+    public int ProjectileLocationY 
+    {
+    	get { return projectileLocationY; }
+    	set { projectileLocationY = value; }
+        }
+
     public override void Update ()
     {
        if (_direction == AttackDirection.Left || _direction == AttackDirection.Right) 
@@ -59,14 +81,14 @@ namespace Escapade
     	if (_weaponType == WeaponType.Normal) {
 
     		if (horizontal)
-    			SwinGame.FillRectangle (Color.Brown, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, PROJECTILE_LENGTH, NORMAL_PROJECTILE_WIDTH);
+    			SwinGame.FillRectangle (Color.Brown, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, GlobalConstants.PROJECTILE_LENGTH, GlobalConstants.NORMAL_PROJECTILE_WIDTH);
     		else
-    			SwinGame.FillRectangle (Color.Brown, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, NORMAL_PROJECTILE_WIDTH, PROJECTILE_LENGTH);
+    			SwinGame.FillRectangle (Color.Brown, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, GlobalConstants.NORMAL_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH);
     	} else {
     		if (horizontal)
-    			SwinGame.FillRectangle (Color.Gold, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, PROJECTILE_LENGTH, SUPER_PROJECTILE_WIDTH);
+    			SwinGame.FillRectangle (Color.Gold, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, GlobalConstants.PROJECTILE_LENGTH, GlobalConstants.SUPER_PROJECTILE_WIDTH);
     		else
-    			SwinGame.FillRectangle (Color.Gold, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, SUPER_PROJECTILE_WIDTH, PROJECTILE_LENGTH);
+    			SwinGame.FillRectangle (Color.Gold, projectileLocationX* GlobalConstants.SIZE, projectileLocationY* GlobalConstants.SIZE, GlobalConstants.SUPER_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH);
     	}
     }
 
@@ -77,14 +99,14 @@ namespace Escapade
     	if (_weaponType == WeaponType.Normal) {
     		if (horizontal) 
         {
-    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, PROJECTILE_LENGTH, NORMAL_PROJECTILE_WIDTH))
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.PROJECTILE_LENGTH, GlobalConstants.NORMAL_PROJECTILE_WIDTH))
     				return true;
     			else
     				return false;
     		} 
         else 
         {
-    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, NORMAL_PROJECTILE_WIDTH, PROJECTILE_LENGTH))
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.NORMAL_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
     				return true;
     			else
     				return false;
@@ -95,14 +117,14 @@ namespace Escapade
       {
     		if (horizontal) 
         {
-    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, PROJECTILE_LENGTH, SUPER_PROJECTILE_WIDTH))
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.PROJECTILE_LENGTH, GlobalConstants.SUPER_PROJECTILE_WIDTH))
     				return true;
     			else
     				return false;
     		} 
         else 
         {
-    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, SUPER_PROJECTILE_WIDTH, PROJECTILE_LENGTH))
+    			if (world.Map [projectileLocationX, projectileLocationY].Type == TileType.Rock || SwinGame.PointInRect (SwinGame.PointAt (enemyX, enemyY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.SUPER_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
     				return true;
     			else
     				return false;

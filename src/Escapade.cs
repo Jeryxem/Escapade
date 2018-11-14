@@ -18,6 +18,8 @@ namespace Escapade
         static MetaHandler meta;
         public List<Entity> Objects;
         public List<Projectile> ProjectilesToBeRemoved;
+    public List<Enemy> EnemiesToBeRemoved;
+    public List<Enemy> SpawnedEnemies;
 		//private Timer _spawntimer;
 
         /// <summary>
@@ -76,7 +78,7 @@ namespace Escapade
            if (_enemy == null)
             {
                 Location l = new Location(25, 20);
-                _enemy = new Enemy(0, "Enemy", l, 1, 1);
+                _enemy = new Enemy(0, "Boss Enemy", l, 1, 1); // to differentiate the enemy
             }
             return _enemy;
         }
@@ -166,6 +168,8 @@ namespace Escapade
         {
             Objects = new List<Entity>();
             ProjectilesToBeRemoved = new List<Projectile> ();
+            EnemiesToBeRemoved = new List<Enemy> ();
+            SpawnedEnemies = new List<Enemy> ();
         }
 
 		/// <summary>
@@ -179,10 +183,12 @@ namespace Escapade
 			if (initdone == false)
 			{
 				Objects.Add(GetPlayer());
-				Objects.Add(GetEnemy());
+        Objects.Add(GetEnemy());
 				initdone = true;
 			}
-				Objects.Add(SpawnMoreEnemy());
+      Enemy spawnedEnemy = SpawnMoreEnemy ();
+			Objects.Add(spawnedEnemy);
+      SpawnedEnemies.Add (spawnedEnemy);
 
 			if (initdone2 == false)
 			{
@@ -291,16 +297,33 @@ namespace Escapade
 				randomhit = 0;
 			}
 
-          foreach (Entity e in Objects) {
-            if (e is Projectile) {
-              if (((Projectile)e).CheckObjectHit (_world, _enemy))
-                ProjectilesToBeRemoved.Add ((Projectile)e);
-            }
+      // JY- detect projectile hits, projectile and enemies will be deleted
+       foreach (Entity e in Objects) 
+      {
+        if (e is Projectile) 
+        {
+          foreach (Enemy _e in SpawnedEnemies) 
+          {
+          if (((Projectile)e).CheckObjectHit (_world, _e)) 
+            ProjectilesToBeRemoved.Add ((Projectile)e);
+            
+            if (_e.CheckHit ((Projectile)e))
+              EnemiesToBeRemoved.Add (_e);
+              
           }
+        }
+      }
 
-          foreach (Projectile p in ProjectilesToBeRemoved)
-            Objects.Remove (p);
+      foreach (Projectile p in ProjectilesToBeRemoved)
+        Objects.Remove (p);
 
+      foreach (Enemy en in EnemiesToBeRemoved)
+      {
+        if (SpawnedEnemies.Contains (en))
+          SpawnedEnemies.Remove (en);
+        
+        Objects.Remove (en);
+      }
 
       foreach (Entity obj in Objects) {
         obj.Update ();
