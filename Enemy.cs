@@ -99,20 +99,18 @@ namespace Escapade
 				_location.X -= 1;
 			}
 
-			if (_location.X == 0)
-			{
-				_directionX = 1;
-			}
-
-
+			//right collision
 			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
 			{
 				_directionX = 2;
+				//_directionY = 0;
 			}
+
 
 			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock)
 			{
 				_directionX = 1;
+				//_directionY = 0;
 			}
 
 			//direction Y, 1 go down
@@ -127,20 +125,208 @@ namespace Escapade
 				_location.Y -= 1;
 			}
 
-			if (_location.Y == 0)
-			{
-				_directionY = 1;
-			}
-
 			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock)
 			{
 				_directionY = 2;
-
+				//_directionX = 0;
 			}
 
 			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock)
 			{
 				_directionY = 1;
+				//_directionX = 0;
+			}
+		}
+
+		int randomcounter = 0;
+		public void RandomDirection()
+		{
+			if (randomcounter < 50) //change this to increase/decrease direction change frequency - jeremy
+			{
+				randomcounter++;
+			}
+			if (randomcounter == 10)
+			{
+				//random directionX
+				if (_directionX == 0)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0)
+					{
+						_directionX = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1)
+					{
+						_directionX = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2)
+					{
+						_directionX = 2;
+						randomcounter = 0;
+					}
+					else
+					{
+						_directionX = 2;
+						randomcounter = 0;
+					}
+				}
+
+				if (_directionX == 1)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0)
+					{
+						_directionX = 0;
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1)
+					{
+						_directionX = 0;
+						_directionY = 2;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2)
+					{
+						_directionX = 2;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else
+					{
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+				}
+
+				if (_directionX == 2)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0)
+					{
+						_directionX = 0;
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1)
+					{
+						_directionX = 0;
+						_directionY = 2;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2)
+					{
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else
+					{
+						_directionX = 2;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+				}
+
+				//random directionY
+				if (_directionY == 0)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0)
+					{
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1)
+					{
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2)
+					{
+						_directionY = 2;
+						randomcounter = 0;
+					}
+					else
+					{
+						_directionY = 2;
+						randomcounter = 0;
+					}
+				}
+
+				if (_directionY == 1)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0)
+					{
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1)
+					{
+						_directionX = 2;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2)
+					{
+						_directionX = 0;
+						_directionY = 2;
+						randomcounter = 0;
+					}
+					else
+					{
+						_directionX = 0;
+						_directionY = 1;
+						randomcounter = 0;
+					}
+				}
+
+				if (_directionY == 2)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0)
+					{
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1)
+					{
+						_directionX = 2;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2)
+					{
+						_directionX = 0;
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else
+					{
+						_directionX = 0;
+						_directionY = 2;
+						randomcounter = 0;
+					}
+				}
+
 			}
 		}
 
@@ -175,6 +361,7 @@ namespace Escapade
 		public override void Update()
 		{
 			enemyMovement();
+			RandomDirection();
 		}
 	}
 }
