@@ -302,15 +302,21 @@ namespace Escapade
       {
         if (e is Projectile) 
         {
-          foreach (Enemy _e in SpawnedEnemies) 
+          if (SpawnedEnemies.Count > 0) 
           {
-          if (((Projectile)e).CheckObjectHit (_world, _e)) 
-            ProjectilesToBeRemoved.Add ((Projectile)e);
-            
-            if (_e.CheckHit ((Projectile)e))
-              EnemiesToBeRemoved.Add (_e);
-              
-          }
+            foreach (Enemy _e in SpawnedEnemies) 
+            {
+              if (((Projectile)e).CheckObjectHit (_world, _e))
+                ProjectilesToBeRemoved.Add ((Projectile)e);
+
+              if (_e.CheckHit ((Projectile)e))
+                EnemiesToBeRemoved.Add (_e);
+
+            }
+          } 
+          else
+            if (((Projectile)e).CheckObjectHit (_world, _enemy))
+                ProjectilesToBeRemoved.Add ((Projectile)e);
         }
       }
 
