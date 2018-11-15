@@ -20,6 +20,7 @@ namespace Escapade
         public List<Projectile> ProjectilesToBeRemoved;
     public List<Enemy> EnemiesToBeRemoved;
     public List<Enemy> SpawnedEnemies;
+    public Stack<GameState> _gameStates;
 		//private Timer _spawntimer;
 
         /// <summary>
@@ -130,28 +131,91 @@ namespace Escapade
             return _environment;
         }
 
-        /// <summary>
-        /// Starts the game by initialising world, game objects then starting game loop
-        /// </summary>
-        public void Start()
-        {
-            SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size, GetWorld().Height * GetWorld().Size + 55); // IA - Changed the height of the window to allow for the display of the bottom panel
-            GameResources.LoadResources ();
+    public void ControlGameState ()
+    {
+      switch (_gameStates.Peek ()) 
+      {
+      case GameState.ViewingMainMenu:
+        MainMenu ();
+        break;
+      //case GameState.ViewingInstructions:
+      case GameState.SinglePlayerMode:
+        SinglePlayerMode ();
+        break;
+      case GameState.TwoPlayerMode:
+        TwoPlayerMode ();
+        break;
+      case GameState.ViewingEndGame:
+        EndGame ();
+        break;
 
-			      while (SwinGame.MouseClicked(MouseButton.LeftButton) == false) //problem loading image
-            {
-                SwinGame.ClearScreen (Color.White);
-				        SwinGame.DrawBitmap(GameResources.GameImage("main menu"), 0, 0);
-				        SwinGame.ProcessEvents();
-                SwinGame.RefreshScreen(60);
-            }
-            SwinGame.ClearScreen (Color.White);
-            PreInit();
-            Init();
-            PostInit();
-            PrepareExtraComponents();
-            Run();
+      }
+    }
+
+    /// <summary>
+    /// Starts the game by initialising world, game objects then starting game loop
+    /// </summary>
+    public void Start ()
+    {
+      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size, GetWorld ().Height * GetWorld ().Size + 55); // IA - Changed the height of the window to allow for the display of the bottom panel
+      GameResources.LoadResources ();
+      _gameStates = new Stack<GameState> ();
+      _gameStates.Push (GameState.ViewingMainMenu);
+      ControlGameState ();
+    }
+
+    public void MainMenu ()
+    {
+      bool commandChosen = false;
+
+      while (!commandChosen)
+      {
+        SwinGame.ClearScreen (Color.White);
+        SwinGame.DrawBitmap (GameResources.GameImage ("main menu"), 0, 0);
+        SwinGame.ProcessEvents ();
+
+        if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
+          if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.SINGLE_PLAYER_BUTTON_X, (float)GlobalConstants.SINGLE_PLAYER_BUTTON_Y, (float)GlobalConstants.SINGLE_PLAYER_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+            _gameStates.Push (GameState.SinglePlayerMode);
+          else if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.TWO_PLAYER_BUTTON_X, (float)GlobalConstants.TWO_PLAYER_BUTTON_Y, (float)GlobalConstants.TWO_PLAYER_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+            _gameStates.Push (GameState.TwoPlayerMode);
+          else if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.INSTRUCTIONS_BUTTON_X, (float)GlobalConstants.INSTRUCTIONS_BUTTON_Y, (float)GlobalConstants.INSTRUCTIONS_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+            _gameStates.Push (GameState.ViewingInstructions);
+          else if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.QUIT_BUTTON_X, (float)GlobalConstants.QUIT_BUTTON_Y, (float)GlobalConstants.QUIT_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+            _gameStates.Push (GameState.ViewingEndGame);
+
+          commandChosen = true;
         }
+        SwinGame.RefreshScreen (60);
+            
+      }
+       SwinGame.ClearScreen (Color.White);
+      ControlGameState ();
+    }
+
+    public void SinglePlayerMode ()
+    {
+      PreInit ();
+	    Init ();
+	    PostInit ();
+	    PrepareExtraComponents ();
+      Run ();
+    }
+
+    public void TwoPlayerMode ()
+    {
+    	PreInit ();
+    	Init ();
+    	PostInit ();
+    	PrepareExtraComponents ();
+	    Run ();
+    }
+
+    public void EndGame ()
+    {
+      SwinGame.ReleaseAllBitmaps();
+      GameResources.FreeResources ();
+    }
 
         /// <summary>
         /// This method creates all the extra (custom) components or objects needed in the game.
