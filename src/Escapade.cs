@@ -148,6 +148,9 @@ namespace Escapade
       case GameState.ViewingEndGame:
         EndGame ();
         break;
+      case GameState.QuittingGame:
+        QuitGame ();
+        break;
 
       }
     }
@@ -213,9 +216,16 @@ namespace Escapade
 
     public void EndGame ()
     {
-      SwinGame.ReleaseAllBitmaps();
-      GameResources.FreeResources ();
+      _gameStates.Push (GameState.ViewingMainMenu);
+      ControlGameState ();
     }
+
+    public void QuitGame ()
+    {
+      GameResources.FreeResources ();
+      SwinGame.ReleaseAllBitmaps();
+    }
+
 
         /// <summary>
         /// This method creates all the extra (custom) components or objects needed in the game.
@@ -313,8 +323,8 @@ namespace Escapade
 
                 SwinGame.RefreshScreen(30);
             }
-            SwinGame.ReleaseAllBitmaps();
-            GameResources.FreeResources ();
+      _gameStates.Push (GameState.QuittingGame);
+      ControlGameState ();
         }
 
 	int randomhit = 0;
