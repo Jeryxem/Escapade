@@ -6,7 +6,7 @@ namespace Escapade
   public class Weapon : Entity
   {
     private bool _equipped;
-    private int _damage, _projectileSpeed;
+    private int _damage, _projectileSpeed, _ammunition;
     private WeaponType _weaponType;
     private Projectile _projectile;
 
@@ -27,10 +27,12 @@ namespace Escapade
       if (_weaponType == WeaponType.Normal) {
         _name = NORMAL_NAME;
         _damage = NORMAL_DAMAGE;
+        _ammunition = 40;
         _projectileSpeed = NORMAL_PROJECTILE_SPEED;
       } else {
         _name = SUPER_NAME;
         _damage = SUPER_DAMAGE;
+        _ammunition = 20;
         _projectileSpeed = SUPER_PROJECTILE_SPEED;
       }
     }
@@ -61,7 +63,8 @@ namespace Escapade
 
     public void Attack (Location location, AttackDirection direction)
     {
-      _projectile = new Projectile (_weaponType, _projectileSpeed, direction, location);
+       _projectile = new Projectile (_weaponType, _projectileSpeed, direction, location);
+       Ammunition--;
     }
 
     public override void Update ()
@@ -71,6 +74,12 @@ namespace Escapade
     public override void Draw ()
     {
        
+    }
+
+    public int Ammunition 
+    {
+      get { return _ammunition; }
+      set { _ammunition = value; }
     }
 
   }

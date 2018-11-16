@@ -100,7 +100,7 @@ namespace Escapade
 			}
 
 			//right collision
-			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
+      if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
 			{
 				_directionX = 2;
 				//_directionY = 0;

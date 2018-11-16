@@ -444,7 +444,7 @@ namespace Escapade
       //you have to buy a weapon first
       if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.WKey))
       {
-        if (_player.Weapon != null) {
+        if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
           _player.DeployWeapon (AttackDirection.Up);
           Objects.Add (_player.Weapon.Projectile);
         }
@@ -455,7 +455,7 @@ namespace Escapade
 
       if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.SKey))
       {
-        if (_player.Weapon != null) {
+        if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
           _player.DeployWeapon (AttackDirection.Down);
           Objects.Add (_player.Weapon.Projectile);
         }
@@ -466,7 +466,7 @@ namespace Escapade
 
       if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.AKey))
       {
-       if (_player.Weapon != null) {
+       if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
           _player.DeployWeapon (AttackDirection.Left);
           Objects.Add (_player.Weapon.Projectile);
         }
@@ -477,7 +477,7 @@ namespace Escapade
 
       if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.DKey))
       {
-        if (_player.Weapon != null) {
+        if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
           _player.DeployWeapon (AttackDirection.Right);
           Objects.Add (_player.Weapon.Projectile);
         }
