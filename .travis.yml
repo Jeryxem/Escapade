@@ -1,7 +1,8 @@
 language: csharp
 solution: MyGameWin.sln
-script:
-    - dotnet restore
-    - msbuild/p:Configuration=Debug-Windows MyGameWin.sln 
 before_install:
     - sudo apt-get install nunit-console
+before_script:
+    - nuget restore MyGameWin.sln
+after_script:
+    - nunit-console MyGameWin.Tests/bin/Release/MyGameWin.Tests.dll
