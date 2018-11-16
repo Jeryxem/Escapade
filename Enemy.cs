@@ -100,28 +100,39 @@ namespace Escapade
 			}
 
 			//right left collision
-			if ((_world.Map[_location.X, _location.Y].Type == TileType.Rock) && _directionX == 1)
-			{
-				_directionX = 2;
-			}
-
-			if ((_world.Map[_location.X, _location.Y].Type == TileType.Rock) && _directionX == 2)
+			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _directionX == 2)
 			{
 				_directionX = 1;
+				_directionY = 2;
 			}
 
+			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _directionX == 2)
+			{
+				_directionX = 1;
+				_directionY = 1;
+			}
+
+			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _directionX == 1)
+			{
+				_directionX = 2;
+				_directionY = 2;
+			}
+
+			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _directionX == 1)
+			{
+				_directionX = 2;
+				_directionY = 1;
+			}
 
       		if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
 			{
 				_directionX = 2;
-				//_directionY = 0;
 			}
 
 
 			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock)
 			{
 				_directionX = 1;
-				//_directionY = 0;
 			}
 
 			//direction Y, 1 go down
@@ -137,13 +148,27 @@ namespace Escapade
 			}
 
 			//up down collision
-			if ((_world.Map[_location.X, _location.Y].Type == TileType.Rock) && _directionY == 1)
+			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _directionY == 1)
 			{
+				_directionX = 1;
 				_directionY = 2;
 			}
 
-			if ((_world.Map[_location.X, _location.Y].Type == TileType.Rock) && _directionY == 2)
+			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _directionY == 2)
 			{
+				_directionX = 1;
+				_directionY = 1;
+			}
+
+			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _directionY == 1)
+			{
+				_directionX = 2;
+				_directionY = 2;
+			}
+
+			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _directionY == 2)
+			{
+				_directionX = 2;
 				_directionY = 1;
 			}
 

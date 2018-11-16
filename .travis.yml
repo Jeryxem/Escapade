@@ -1,6 +1,6 @@
 language: csharp
 solution: MyGameWin.sln
 script:
-    - msbuild/p:Configuration=Debug-Windows Escapade.sln 
+    - msbuild/p:Configuration=Debug-Windows Escapade.csproj 
 before_install:
     - sudo apt-get install nunit-console

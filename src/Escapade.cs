@@ -93,30 +93,6 @@ namespace Escapade
 			return _spawnenemy;  
 		}
 
-		//spawn enemy every 5 sec(will change time for final product)- jeremy
-		/*public void SpawnEnemy()
-		{
-			_spawntimer = SwinGame.CreateTimer();
-			_spawntimer.Start();
-			var milliseconds = _spawntimer.Ticks;
-			var seconds = milliseconds / 1000;
-			Location l = new Location(25, 20);
-
-			if (seconds == 2)
-			{
-				_spawnenemy[].Add(new Enemy(1, "j", l, 1, 1));
-			}
-			else if (seconds > 4)
-			{
-				_spawntimer.Reset();
-			}	
-		}
-
-		public Timer SpawnTimer
-		{
-			get { return _spawntimer; }
-		}*/
-
         /// <summary>
         /// Gets the current game GuiEnvironment - constructs a
         /// <see cref="T:Escapade.gui.GuiEnvironment"/> object if a current one doesn't exist
@@ -339,27 +315,23 @@ namespace Escapade
 					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y].Type == TileType.Rock)
 					{
 						_enemy.DirectionX = 2;
-						//_spawnenemy.DirectionX = 2;
 						randomhit++;
 					}
 					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y].Type == TileType.Rock)
 					{
 						_enemy.DirectionX = 1;
-						//_spawnenemy.DirectionX = 1;
 						randomhit++;
 					}
 
 					if (_world.Map[_enemy.Location.X, _enemy.Location.Y+1].Type == TileType.Rock)
 					{
 						_enemy.DirectionY = 2;
-						//_spawnenemy.DirectionY = 2;
 						randomhit++;
 					}
 
 					if (_world.Map[_enemy.Location.X, _enemy.Location.Y - 1].Type == TileType.Rock)
 					{
 						_enemy.DirectionY = 1;
-						//_spawnenemy.DirectionX = 1;
 						randomhit++;
 					}
 
