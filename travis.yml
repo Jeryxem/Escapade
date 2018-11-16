@@ -1,0 +1,5 @@
+language: csharp
+solution: MyGameWin.sln
+script:
+    - msbuild/p:Configuration=Debug-Windows MyGame.sln before_install:
+    - sudo apt-get install nunit-console
