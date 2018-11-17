@@ -13,43 +13,33 @@ namespace Escapade.src.gui
     /// <summary>
     /// This class takes care of the bottom panel at the bottom of the screen, which shows the timer and the game's level [by Isaac]
     /// </summary>
-    public class MetaHandler
+    public static class MetaHandler
     {
         
-        private Panel bottomPanel; // IA - this will hold the panel resource (meta.txt)
-        private int contentVerticalAlign;
-        private Countdown timer;
-        private String hungerIndication;
-        private double hungerIndicatorWidth;
-        private Color hungerIndicatorColor;
-        public GameLevel gameLevel;
+        public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Pannel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
+        public static int contentVerticalAlign = GlobalConstants.WORLD_HEIGHT + 18;
+        public static Countdown timer = new Countdown();
+        public static String hungerIndication;
+        public static double hungerIndicatorWidth = 150;
+        public static Color hungerIndicatorColor;
+        public static GameLevel gameLevel = new GameLevel();
 
-        public MetaHandler()
-        {
-            bottomPanel = SwinGame.LoadPanelNamed("Bottom Pannel", "Meta.txt");
-            timer = new Countdown();
-            timer.StartTimer();
-            contentVerticalAlign = GlobalConstants.WORLD_HEIGHT + 18;
-            hungerIndicatorWidth = 150;
-            gameLevel = new GameLevel();
-        }
-
-        private int Map(double indicator)
+        public static int Map(double indicator)
         {
             return (int) Math.Ceiling(indicator / 1.5);
         }
 
-        public void DecreaseEnergy()
+        public static void DecreaseEnergy()
         {
             hungerIndicatorWidth -= 0.02;
         }
 
-        public void IncreaseEnergy()
+        public static void IncreaseEnergy()
         {
             hungerIndicatorWidth += 0.02;
         }
 
-        private void ControlLevelDisplay()
+        public static void ControlLevelDisplay()
         {
             if (hungerIndicatorWidth > 0)
             {
@@ -93,7 +83,7 @@ namespace Escapade.src.gui
         /// <summary>
         /// This method calls all the required methods to make the panel visible on the screen with the intended background color.
         /// </summary>
-        public void ShowBottomPanel()
+        public static void ShowBottomPanel()
         {
             SwinGame.GUISetBackgroundColor(Color.Black);
             SwinGame.ShowPanel(bottomPanel);
@@ -103,12 +93,12 @@ namespace Escapade.src.gui
         /// <summary>
         /// In the next update, this method will pull the timer info from a Countdown object.
         /// </summary>
-        public void DisplayTimer ()
+        public static void DisplayTimer ()
         {            
             SwinGame.DrawText("Time: " + timer.ShowTime(), Color.White, 20, contentVerticalAlign);
         }
 
-        public void DisplayHungerInformation()
+        public static void DisplayHungerInformation()
         {
             ControlLevelDisplay();
 
@@ -124,7 +114,7 @@ namespace Escapade.src.gui
         /// <summary>
         /// In the next update, this method will pull the level info from a GameLevel object.
         /// </summary>
-        public void DisplayGameLevel()
+        public static void DisplayGameLevel()
         {
             SwinGame.DrawText("Level: " + gameLevel.PrintLevel(), Color.White, GlobalConstants.WORLD_WIDTH - 150, contentVerticalAlign);
         }

@@ -15,7 +15,6 @@ namespace Escapade
         static GuiEnvironment _environment;
         static Enemy _enemy;
 		static Enemy _spawnenemy;
-        static MetaHandler meta;
         public List<Entity> Objects;
         public List<Projectile> ProjectilesToBeRemoved;
     public List<Enemy> EnemiesToBeRemoved;
@@ -208,7 +207,8 @@ namespace Escapade
         /// </summary>
         private void PrepareExtraComponents()
         {
-            meta = new MetaHandler(); // IA - use this to control what is shown on the bottom of the screen in the meta section.
+            MetaHandler.timer.StartTimer();
+            // meta = new MetaHandler(); // IA - use this to control what is shown on the bottom of the screen in the meta section.
         }
 
         /// <summary>
@@ -478,10 +478,10 @@ namespace Escapade
         {
             GuiEnvironment.GetRenderer().RenderWindow();
 
-            meta.ShowBottomPanel(); // IA - Make the panel visible
-            meta.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
-            meta.DisplayTimer(); // IA - Make the timer visible
-            meta.DisplayGameLevel(); // IA - Display the game level
+            MetaHandler.ShowBottomPanel(); // IA - Make the panel visible
+            MetaHandler.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
+            MetaHandler.DisplayTimer(); // IA - Make the timer visible
+            MetaHandler.DisplayGameLevel(); // IA - Display the game level
         }
     }
 }
