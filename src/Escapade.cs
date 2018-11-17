@@ -483,8 +483,9 @@ namespace Escapade
             MetaHandler.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
             MetaHandler.DisplayTimer(); // IA - Make the timer visible
             MetaHandler.DisplayGameLevel(); // IA - Display the game level
-            MetaHandler.DisplayAmmunitionLevel(_player.Weapon);
-            MetaHandler.DisplayEnemyHitCount(EnemiesToBeRemoved);
+            MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
+            MetaHandler.DisplayEnemyHitCount(EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
+            MetaHandler.DisplayExistingEnemies(SpawnedEnemies); // IA - Display how many enemies have been created.
         }
     }
 }
