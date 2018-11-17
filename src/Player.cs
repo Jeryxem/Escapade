@@ -1,4 +1,5 @@
 using Escapade.item;
+using Escapade.src.gui;
 using SwinGameSDK;
 
 namespace Escapade
@@ -46,7 +47,8 @@ namespace Escapade
     {
       if (_weapon != null)
         _weapon.Attack (_location, attackDirection);
-    }
+            MetaHandler.DisplayAmmunitionLevel(_weapon);
+        }
 
     /// <summary>
     /// Draws this player at its current location, and draws a

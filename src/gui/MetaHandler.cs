@@ -17,7 +17,8 @@ namespace Escapade.src.gui
     {
         
         public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Pannel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
-        public static int contentVerticalAlign = GlobalConstants.WORLD_HEIGHT + 18;
+        private static int contentFirstLine = GlobalConstants.WORLD_HEIGHT + 18;
+        private static int contentSecondLine = GlobalConstants.WORLD_HEIGHT + 48;
         public static Countdown timer = new Countdown();
         public static String hungerIndication;
         public static double hungerIndicatorWidth = 150;
@@ -95,18 +96,18 @@ namespace Escapade.src.gui
         /// </summary>
         public static void DisplayTimer ()
         {            
-            SwinGame.DrawText("Time: " + timer.ShowTime(), Color.White, 20, contentVerticalAlign);
+            SwinGame.DrawText("Time: " + timer.ShowTime(), Color.White, 20, contentFirstLine);
         }
 
         public static void DisplayHungerInformation()
         {
             ControlLevelDisplay();
 
-            SwinGame.DrawText("Your energy levels: ", Color.White, 200, contentVerticalAlign);
+            SwinGame.DrawText("Your energy levels: ", Color.White, 200, contentFirstLine);
 
             SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 12, (int) hungerIndicatorWidth, 20);
 
-            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + (int) hungerIndicatorWidth + 5, contentVerticalAlign);
+            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + (int) hungerIndicatorWidth + 5, contentFirstLine);
 
             SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 37);
         }
@@ -116,7 +117,31 @@ namespace Escapade.src.gui
         /// </summary>
         public static void DisplayGameLevel()
         {
-            SwinGame.DrawText("Level: " + gameLevel.PrintLevel(), Color.White, GlobalConstants.WORLD_WIDTH - 150, contentVerticalAlign);
+            SwinGame.DrawText("Level: " + gameLevel.PrintLevel(), Color.White, GlobalConstants.WORLD_WIDTH - 150, contentFirstLine);
+        }
+
+        public static void DisplayAmmunitionLevel(Weapon weapon)
+        {
+            if (weapon != null)
+            {
+                if (weapon.Ammunition > 0)
+                {
+                    {
+                        SwinGame.DrawText("AMMUNITION AVAILABLE: " + weapon.Ammunition.ToString(), Color.Yellow, 20, contentSecondLine);
+
+                        SwinGame.DrawText("AMMUNITION TYPE: " + weapon.Type.ToString(), Color.Yellow, 20, contentSecondLine + 15);
+                    }
+                } else
+                {
+                    SwinGame.DrawText("You've ran out of ammo!", Color.Yellow, 20, contentSecondLine);
+
+                    SwinGame.DrawText("Gather minerals to buy more weapons!", Color.Yellow, 20, contentSecondLine + 15);
+                }
+            }
+            else
+            {
+                SwinGame.DrawText("Press B or Shift + B to buy weapons.", Color.Yellow, 20, contentSecondLine);
+            }
         }
             
     }

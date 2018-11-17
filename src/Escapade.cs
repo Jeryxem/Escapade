@@ -135,7 +135,7 @@ namespace Escapade
     /// </summary>
     public void Start ()
     {
-      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size, GetWorld ().Height * GetWorld ().Size + 55); // IA - Changed the height of the window to allow for the display of the bottom panel
+      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size, GetWorld ().Height * GetWorld ().Size + 80); // IA - Changed the height of the window to allow for the display of the bottom panel
       GameResources.LoadResources ();
       _gameStates = new Stack<GameState> ();
       _gameStates.Push (GameState.ViewingMainMenu);
@@ -416,10 +416,11 @@ namespace Escapade
       //you have to buy a weapon first
       if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.WKey))
       {
-        if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
-          _player.DeployWeapon (AttackDirection.Up);
-          Objects.Add (_player.Weapon.Projectile);
-        }
+                if (_player.Weapon != null && _player.Weapon.Ammunition > 0)
+                {
+                    _player.DeployWeapon(AttackDirection.Up);
+                    Objects.Add(_player.Weapon.Projectile);
+                }
       }
      else if (SwinGame.KeyDown (KeyCode.WKey) && _world.Map[_player.Location.X, _player.Location.Y-1].Type != TileType.Rock) {
         _player.Location.Y -= 1;
@@ -482,6 +483,7 @@ namespace Escapade
             MetaHandler.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
             MetaHandler.DisplayTimer(); // IA - Make the timer visible
             MetaHandler.DisplayGameLevel(); // IA - Display the game level
+            MetaHandler.DisplayAmmunitionLevel(_player.Weapon);
         }
     }
 }
