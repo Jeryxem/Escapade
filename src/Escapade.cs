@@ -135,7 +135,7 @@ namespace Escapade
     /// </summary>
     public void Start ()
     {
-      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size, GetWorld ().Height * GetWorld ().Size + 80); // IA - Changed the height of the window to allow for the display of the bottom panel
+      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size + 200, GetWorld ().Height * GetWorld ().Size + 80); // IA - Changed the height of the window to allow for the display of the bottom panel
       GameResources.LoadResources ();
       _gameStates = new Stack<GameState> ();
       _gameStates.Push (GameState.ViewingMainMenu);
@@ -479,11 +479,12 @@ namespace Escapade
         {
             GuiEnvironment.GetRenderer().RenderWindow();
 
-            MetaHandler.ShowBottomPanel(); // IA - Make the panel visible
+            MetaHandler.ShowPanels(); // IA - Make the panel visible
             MetaHandler.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
             MetaHandler.DisplayTimer(); // IA - Make the timer visible
             MetaHandler.DisplayGameLevel(); // IA - Display the game level
             MetaHandler.DisplayAmmunitionLevel(_player.Weapon);
+            MetaHandler.DisplayEnemyHitCount(EnemiesToBeRemoved);
         }
     }
 }

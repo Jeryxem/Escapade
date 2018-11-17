@@ -17,6 +17,7 @@ namespace Escapade.src.gui
     {
         
         public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Pannel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
+        public static Panel rightPanel = SwinGame.LoadPanelNamed("Left Pannel", "Extra.txt");
         private static int contentFirstLine = GlobalConstants.WORLD_HEIGHT + 18;
         private static int contentSecondLine = GlobalConstants.WORLD_HEIGHT + 48;
         public static Countdown timer = new Countdown();
@@ -84,10 +85,11 @@ namespace Escapade.src.gui
         /// <summary>
         /// This method calls all the required methods to make the panel visible on the screen with the intended background color.
         /// </summary>
-        public static void ShowBottomPanel()
+        public static void ShowPanels()
         {
             SwinGame.GUISetBackgroundColor(Color.Black);
             SwinGame.ShowPanel(bottomPanel);
+            SwinGame.ShowPanel(rightPanel);
             SwinGame.DrawInterface();
         }
 
@@ -142,6 +144,11 @@ namespace Escapade.src.gui
             {
                 SwinGame.DrawText("Press B or Shift + B to buy weapons.", Color.Yellow, 20, contentSecondLine);
             }
+        }
+
+        public static void DisplayEnemyHitCount(List<Enemy> enemiesHit)
+        {
+            SwinGame.DrawText("Enemies hit: " + enemiesHit.Count.ToString(), Color.Yellow, 350, contentSecondLine + 15);
         }
             
     }
