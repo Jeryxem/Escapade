@@ -20,7 +20,6 @@ namespace Escapade
     public List<Enemy> EnemiesToBeRemoved;
     public List<Enemy> SpawnedEnemies;
     public Stack<GameState> _gameStates;
-		//private Timer _spawntimer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Escapade.Escapade"/> class.
@@ -78,7 +77,7 @@ namespace Escapade
            if (_enemy == null)
             {
                 Location l = new Location(25, 20);
-                _enemy = new Enemy(0, "Boss Enemy", l, 1, 1); // to differentiate the enemy
+                _enemy = new Enemy(0, "Boss Enemy", l, 1, 0); // to differentiate the enemy
             }
             return _enemy;
         }
@@ -87,7 +86,7 @@ namespace Escapade
 		{
 			
 			Location l = new Location(25, 20);
-			_spawnenemy = new Enemy(0, "Enemy", l, 1, 1);
+			_spawnenemy = new Enemy(0, "Enemy", l, 1, 0);
 
 			return _spawnenemy;  
 		}
@@ -236,9 +235,13 @@ namespace Escapade
         Objects.Add(GetEnemy());
 				initdone = true;
 			}
-      Enemy spawnedEnemy = SpawnMoreEnemy ();
-			Objects.Add(spawnedEnemy);
-      SpawnedEnemies.Add (spawnedEnemy);
+      
+			if (initdone2 == true) //make sure only strong enemy spawn at the start of game
+			{
+				Enemy spawnedEnemy = SpawnMoreEnemy();
+				Objects.Add(spawnedEnemy);
+				SpawnedEnemies.Add(spawnedEnemy);
+			}
 
 			if (initdone2 == false)
 			{
@@ -314,24 +317,20 @@ namespace Escapade
 					// collision on left right up down, some part of edge no collision if look carefully - jeremy
 					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y].Type == TileType.Rock)
 					{
-						_enemy.DirectionX = 2;
 						randomhit++;
 					}
 					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y].Type == TileType.Rock)
 					{
-						_enemy.DirectionX = 1;
 						randomhit++;
 					}
 
 					if (_world.Map[_enemy.Location.X, _enemy.Location.Y+1].Type == TileType.Rock)
 					{
-						_enemy.DirectionY = 2;
 						randomhit++;
 					}
 
 					if (_world.Map[_enemy.Location.X, _enemy.Location.Y - 1].Type == TileType.Rock)
 					{
-						_enemy.DirectionY = 1;
 						randomhit++;
 					}
 

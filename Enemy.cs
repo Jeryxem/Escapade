@@ -5,12 +5,10 @@ namespace Escapade
 {
 	public class Enemy : Entity
 	{
-		//private Timer _spawntimer;
 		private int _directionX;
 		private int _directionY;
     private Color _enemyColor;
 		public World _world;
-		//private bool _spawn = false;
 		public Escapade _escapade;
 		public Enemy(int id, string name, Location location, int directionX, int directionY) : base(id, name, location)
 		{
@@ -26,28 +24,6 @@ namespace Escapade
       else
         _enemyColor = Color.MediumVioletRed;
 		}
-
-
-    /*//spawn enemy every 5 sec(will change time for final product)- jeremy
-		public void SpawnEnemy()
-		{
-			_spawntimer = SwinGame.CreateTimer();
-			_spawntimer.Start();
-			var milliseconds = _spawntimer.Ticks;
-			var seconds = milliseconds / 1000;
-
-			if (seconds == 2)
-			{
-				_spawn = true;
-			}
-			else if (seconds > 2)
-			{
-				_spawntimer.Reset();
-			}else 
-			{
-				_spawn = false;
-			}
-		}*/
 
     // JY- added to help the enemy detect if it is hit
     public bool CheckHit (Projectile projectile)
@@ -99,42 +75,6 @@ namespace Escapade
 				_location.X -= 1;
 			}
 
-			//right left collision
-			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _directionX == 2)
-			{
-				_directionX = 1;
-				_directionY = 2;
-			}
-
-			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _directionX == 2)
-			{
-				_directionX = 1;
-				_directionY = 1;
-			}
-
-			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _directionX == 1)
-			{
-				_directionX = 2;
-				_directionY = 2;
-			}
-
-			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _directionX == 1)
-			{
-				_directionX = 2;
-				_directionY = 1;
-			}
-
-      		if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
-			{
-				_directionX = 2;
-			}
-
-
-			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock)
-			{
-				_directionX = 1;
-			}
-
 			//direction Y, 1 go down
 			if (_directionY == 1)
 			{
@@ -147,31 +87,70 @@ namespace Escapade
 				_location.Y -= 1;
 			}
 
-			//up down collision
-			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _directionY == 1)
-			{
-				_directionX = 1;
-				_directionY = 2;
-			}
-
-			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _directionY == 2)
-			{
-				_directionX = 1;
-				_directionY = 1;
-			}
-
-			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock && _world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _directionY == 1)
+			//if inside rock because of edge direction
+			if (_world.Map[_location.X, _location.Y].Type == TileType.Rock && (_directionX == 1 || _directionY == 1))
 			{
 				_directionX = 2;
 				_directionY = 2;
 			}
 
-			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock && _world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _directionY == 2)
+			if (_world.Map[_location.X, _location.Y].Type == TileType.Rock && (_directionX == 1 || _directionY == 2))
 			{
 				_directionX = 2;
 				_directionY = 1;
 			}
 
+			if (_world.Map[_location.X, _location.Y].Type == TileType.Rock && (_directionX == 2 || _directionY == 1))
+			{
+				_directionX = 1;
+				_directionY = 2;
+			}
+
+			if (_world.Map[_location.X, _location.Y].Type == TileType.Rock && (_directionX == 2 || _directionY == 2))
+			{
+				_directionX = 1;
+				_directionY = 1;
+			}
+
+
+			//right left up down edge collision
+			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && (_directionX == 2 || _directionY == 1))
+			{
+				_directionX = 1;
+				_directionY = 2;
+			}
+
+			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y-1].Type == TileType.Rock && (_directionX == 2 || _directionY == 2))
+			{
+				_directionX = 1;
+				_directionY = 1;
+			}
+
+			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && (_directionX == 1 || _directionY == 1))
+			{
+				_directionX = 2;
+				_directionY = 2;
+			}
+
+			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y-1].Type == TileType.Rock && (_directionX == 1 || _directionY == 2))
+			{
+				_directionX = 2;
+				_directionY = 1;
+			}
+
+			//right left, putting below so that above code runs first to prevent error
+			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
+			{
+				_directionX = 2;
+			}
+
+
+			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock)
+			{
+				_directionX = 1;
+			}
+
+			//up down
 			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock)
 			{
 				_directionY = 2;
@@ -186,36 +165,40 @@ namespace Escapade
 		int randomcounter = 0;
 		public void RandomDirection()
 		{
-			if (randomcounter < 20) //change this to increase/decrease direction change frequency - jeremy
+			if (randomcounter < 13) //change this to increase/decrease direction change frequency - jeremy
 			{
 				randomcounter++;
 			}
-			if (randomcounter == 20)
+			if (randomcounter == 13)
 			{
 				//random directionX
-				if (_directionX == 0)
+				if (_directionX == 0 && _directionY == 1)
 				{
 					Random r = new Random();
 					int nextdirection = r.Next(0, 3);
 
-					if (nextdirection == 0 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock)
+					if (nextdirection == 0 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
 					{
 						_directionX = 1;
+						_directionY = 0;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock)
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
 						_directionY = 1;
+						_directionX = 0;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 2 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					else if (nextdirection == 2 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
 					{
 						_directionX = 2;
+						_directionY = 0;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 3 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					else if (nextdirection == 3 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
 						_directionY = 2;
+						_directionX = 0;
 						randomcounter = 0;
 					}
 					else 
@@ -224,30 +207,65 @@ namespace Escapade
 					}
 				}
 
-				if (_directionX == 1)
+				if (_directionX == 0 && _directionY == 2)
 				{
 					Random r = new Random();
 					int nextdirection = r.Next(0, 3);
 
-					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock)
+					if (nextdirection == 0 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
 					{
-						_directionX = 0;
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					{
 						_directionY = 1;
-						randomcounter = 0;
-					}
-					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
-					{
 						_directionX = 0;
-						_directionY = 2;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 2 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					else if (nextdirection == 2 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
 					{
 						_directionX = 2;
 						_directionY = 0;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 3 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock)
+					else if (nextdirection == 3 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					{
+						_directionY = 2;
+						_directionX = 0;
+						randomcounter = 0;
+					}
+					else 
+					{
+						randomcounter = 0;
+					}
+				}
+
+				if (_directionX == 1 && _directionY == 0)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X+1, _location.Y].Type != TileType.Rock && _world.Map[_location.X-1, _location.Y].Type != TileType.Rock)
+					{
+						_directionX = 0;
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X+1, _location.Y].Type != TileType.Rock && _world.Map[_location.X-1, _location.Y].Type != TileType.Rock)
+					{
+						_directionX = 0;
+						_directionY = 2;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y+1].Type != TileType.Rock && _world.Map[_location.X, _location.Y-1].Type != TileType.Rock)
+					{
+						_directionX = 2;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 3 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y+1].Type != TileType.Rock && _world.Map[_location.X, _location.Y-1].Type != TileType.Rock)
 					{
 						_directionX = 1;
 						_directionY = 0;
@@ -259,30 +277,100 @@ namespace Escapade
 					}
 				}
 
-				if (_directionX == 2)
+				if (_directionX == 1 && _directionY == 1)
 				{
 					Random r = new Random();
 					int nextdirection = r.Next(0, 3);
 
-					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock)
+					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
 						_directionX = 0;
 						_directionY = 1;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
 						_directionX = 0;
 						_directionY = 2;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 2 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock)
+					else if (nextdirection == 2 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					{
+						_directionX = 2;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 3 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
 					{
 						_directionX = 1;
 						_directionY = 0;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 3 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					else 
+					{
+						randomcounter = 0;
+					}
+				}
+
+				if (_directionX == 1 && _directionY == 2)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					{
+						_directionX = 0;
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					{
+						_directionX = 0;
+						_directionY = 2;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					{
+						_directionX = 2;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 3 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					{
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else 
+					{
+						randomcounter = 0;
+					}
+				}
+
+				if (_directionX == 2 && _directionY == 0)
+				{
+					Random r = new Random();
+					int nextdirection = r.Next(0, 3);
+
+					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X+1, _location.Y].Type != TileType.Rock && _world.Map[_location.X-1, _location.Y].Type != TileType.Rock)
+					{
+						_directionX = 0;
+						_directionY = 1;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X+1, _location.Y].Type != TileType.Rock && _world.Map[_location.X-1, _location.Y].Type != TileType.Rock)
+					{
+						_directionX = 0;
+						_directionY = 2;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 2 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y+1].Type != TileType.Rock && _world.Map[_location.X, _location.Y-1].Type != TileType.Rock)
+					{
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 3 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y+1].Type != TileType.Rock && _world.Map[_location.X, _location.Y-1].Type != TileType.Rock)
 					{
 						_directionX = 2;
 						_directionY = 0;
@@ -294,30 +382,33 @@ namespace Escapade
 					}
 				}
 
-				//random directionY
-				if (_directionY == 0)
+				if (_directionX == 2 && _directionY == 1)
 				{
 					Random r = new Random();
 					int nextdirection = r.Next(0, 3);
 
-					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock)
+					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
+						_directionX = 0;
 						_directionY = 1;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 1 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock)
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
-						_directionX = 1;
-						randomcounter = 0;
-					}
-					else if (nextdirection == 2 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
-					{
+						_directionX = 0;
 						_directionY = 2;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 3 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
+					else if (nextdirection == 2 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					{
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 3 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
 					{
 						_directionX = 2;
+						_directionY = 0;
 						randomcounter = 0;
 					}
 					else 
@@ -326,33 +417,33 @@ namespace Escapade
 					}
 				}
 
-				if (_directionY == 1)
+				if (_directionX == 2 && _directionY == 2)
 				{
 					Random r = new Random();
 					int nextdirection = r.Next(0, 3);
 
-					if (nextdirection == 0 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock)
+					if (nextdirection == 0 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
-						_directionX = 1;
-						_directionY = 0;
+						_directionX = 0;
+						_directionY = 1;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 1 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
-					{
-						_directionX = 2;
-						_directionY = 0;
-						randomcounter = 0;
-					}
-					else if (nextdirection == 2 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					else if (nextdirection == 1 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
 					{
 						_directionX = 0;
 						_directionY = 2;
 						randomcounter = 0;
 					}
-					else if (nextdirection == 3 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock)
+					else if (nextdirection == 2 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
 					{
-						_directionX = 0;
-						_directionY = 1;
+						_directionX = 1;
+						_directionY = 0;
+						randomcounter = 0;
+					}
+					else if (nextdirection == 3 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
+					{
+						_directionX = 2;
+						_directionY = 0;
 						randomcounter = 0;
 					}
 					else 
@@ -360,47 +451,8 @@ namespace Escapade
 						randomcounter = 0;
 					}
 				}
-
-				if (_directionY == 2)
-				{
-					Random r = new Random();
-					int nextdirection = r.Next(0, 3);
-
-					if (nextdirection == 0 && _world.Map[_location.X + 1, _location.Y].Type != TileType.Rock)
-					{
-						_directionX = 1;
-						_directionY = 0;
-						randomcounter = 0;
-					}
-					else if (nextdirection == 1 && _world.Map[_location.X - 1, _location.Y].Type != TileType.Rock)
-					{
-						_directionX = 2;
-						_directionY = 0;
-						randomcounter = 0;
-					}
-					else if (nextdirection == 2 && _world.Map[_location.X, _location.Y - 1].Type != TileType.Rock)
-					{
-						_directionX = 0;
-						_directionY = 1;
-						randomcounter = 0;
-					}
-					else if (nextdirection == 3 && _world.Map[_location.X, _location.Y + 1].Type != TileType.Rock)
-					{
-						_directionX = 0;
-						_directionY = 2;
-						randomcounter = 0;
-					}
-				}
-
 			}
 		}
-
-		//added properties for direction - jeremy
-	/*	//spawn timer property
-		public bool SpawnTimer
-		{
-			get { return _spawn; } 
-		}*/
 
 		public int DirectionX 
 		{
