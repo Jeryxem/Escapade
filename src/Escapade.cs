@@ -147,7 +147,6 @@ namespace Escapade
       bool commandChosen = false;
 
       SwinGame.PlayMusic (GameResources.GameMusic ("main_menu_music"));
-      if (!SwinGame.MusicPlaying ()) {
 
         while (!commandChosen) {
           SwinGame.ClearScreen (Color.White);
@@ -169,7 +168,6 @@ namespace Escapade
           SwinGame.RefreshScreen (60);
 
         }
-      }
       SwinGame.ClearScreen (Color.White);
       SwinGame.StopMusic ();
       ControlGameState ();
