@@ -9,7 +9,6 @@ namespace Escapade
     /// </summary>
     public static void Main ()
     {
-
       Escapade.GetInstance ().Start ();
     }
   }
