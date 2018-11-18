@@ -59,7 +59,7 @@ namespace Escapade.gui
                     }
                 }
         if (e == GuiEvent.MouseRight) {
-          Escapade.GetWorld ().ModifyTile (new Location (x, y));
+					Escapade.GetWorld ().ModifyTile (new Location (x, y));
           Frame inv = GetRenderer ().GetFrame ("inventory");
           if (inv != null) {
             List<string> minerals = Escapade.GetPlayer ().Inventory.ItemList.Select (i => i.Name).ToList ();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Escapade.gui;
 using Escapade.src.gui;
 using SwinGameSDK;
@@ -380,12 +381,242 @@ namespace Escapade
         obj.Update ();
       }
 
-      if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
+      /*if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
         GetEnvironment ().HandleGuiEvent (GuiEvent.MouseLeft, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
-      }
-      if (SwinGame.MouseClicked (MouseButton.RightButton)) {
-        GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
-      }
+      }*/
+
+	  //mine rocks/minerals right
+			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X+1);
+				int y = (_player.Location.Y);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location (x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Rock)
+					{
+						_world.Map[x, y] = new Tile(TileType.Air);
+						if (tile.Mineral != null)
+							GetPlayer().Inventory.AddItem(tile.Mineral);
+					}
+
+					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+					if (inv != null)
+					{
+						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
+						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+						foreach (string s in minerals)
+						{
+							if (mineralCount.ContainsKey(s))
+							{
+								mineralCount[s]++;
+							}
+							else
+							{
+								mineralCount[s] = 1;
+							}
+						}
+						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+						inv.Content = minerals;
+					}
+				}
+	 		}
+
+			//mine left
+			if (SwinGame.KeyDown(KeyCode.AKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X - 1);
+				int y = (_player.Location.Y);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Rock)
+					{
+						_world.Map[x, y] = new Tile(TileType.Air);
+						if (tile.Mineral != null)
+							GetPlayer().Inventory.AddItem(tile.Mineral);
+					}
+
+					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+					if (inv != null)
+					{
+						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
+						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+						foreach (string s in minerals)
+						{
+							if (mineralCount.ContainsKey(s))
+							{
+								mineralCount[s]++;
+							}
+							else
+							{
+								mineralCount[s] = 1;
+							}
+						}
+						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+						inv.Content = minerals;
+					}
+				}
+			}
+
+			//mine top
+			if (SwinGame.KeyDown(KeyCode.WKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X);
+				int y = (_player.Location.Y-1);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Rock)
+					{
+						_world.Map[x, y] = new Tile(TileType.Air);
+						if (tile.Mineral != null)
+							GetPlayer().Inventory.AddItem(tile.Mineral);
+					}
+
+					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+					if (inv != null)
+					{
+						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
+						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+						foreach (string s in minerals)
+						{
+							if (mineralCount.ContainsKey(s))
+							{
+								mineralCount[s]++;
+							}
+							else
+							{
+								mineralCount[s] = 1;
+							}
+						}
+						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+						inv.Content = minerals;
+					}
+				}
+			}
+
+			//mine bottom
+			if (SwinGame.KeyDown(KeyCode.SKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X);
+				int y = (_player.Location.Y+1);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Rock)
+					{
+						_world.Map[x, y] = new Tile(TileType.Air);
+						if (tile.Mineral != null)
+							GetPlayer().Inventory.AddItem(tile.Mineral);
+					}
+
+					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+					if (inv != null)
+					{
+						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
+						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+						foreach (string s in minerals)
+						{
+							if (mineralCount.ContainsKey(s))
+							{
+								mineralCount[s]++;
+							}
+							else
+							{
+								mineralCount[s] = 1;
+							}
+						}
+						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+						inv.Content = minerals;
+					}
+				}
+			}
+
+			//build rock right
+			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyReleased(KeyCode.GKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X + 1);
+				int y = (_player.Location.Y);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Air)
+					{
+						_world.Map[x, y] = new Tile (TileType.Rock);
+					}
+				}
+	 	   }
+
+			//build rock left
+			if (SwinGame.KeyDown(KeyCode.AKey) && SwinGame.KeyReleased(KeyCode.GKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X - 1);
+				int y = (_player.Location.Y);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Air)
+					{
+						_world.Map[x, y] = new Tile(TileType.Rock);
+					}
+				}
+	 	   }
+
+			//build rock up
+			if (SwinGame.KeyDown(KeyCode.WKey) && SwinGame.KeyReleased(KeyCode.GKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X);
+				int y = (_player.Location.Y-1);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Air)
+					{
+						_world.Map[x, y] = new Tile(TileType.Rock);
+					}
+				}
+	 	   }
+
+			//build rock down
+			if (SwinGame.KeyDown(KeyCode.SKey) && SwinGame.KeyReleased(KeyCode.GKey)) 
+			{
+				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+				GetEnvironment();
+				int x = (_player.Location.X);
+				int y = (_player.Location.Y+1);
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+				if (f == null)
+				{
+					Tile tile = _world.Map[x, y];
+					if (tile.Type == TileType.Air)
+					{
+						_world.Map[x, y] = new Tile(TileType.Rock);
+					}
+				}
+	 	   }
+
 
       if (SwinGame.KeyTyped (KeyCode.IKey)) {
         GuiEnvironment.GetRenderer ().ToggleFrame ("inventory");
