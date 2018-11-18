@@ -112,6 +112,29 @@ namespace Escapade
 				_directionY = 1;
 			}
 
+			//right left, putting below so that above code runs first to prevent error
+			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock || Location.X == 51 || Location.X == 50)
+			{
+				_directionX = 2;
+			}
+
+			//map edge
+			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock || Location.X == 1 || Location.X == 2)
+			{
+				_directionX = 1;
+			}
+
+			//up down
+			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock || Location.Y == 35 || Location.Y == 34)
+			{
+				_directionY = 2;
+			}
+
+			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock || Location.Y == 1 || Location.Y == 2)
+			{
+				_directionY = 1;
+			}
+
 
 			//right left up down edge collision
 			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && (_directionX == 2 || _directionY == 1))
@@ -135,29 +158,6 @@ namespace Escapade
 			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y-1].Type == TileType.Rock && (_directionX == 1 || _directionY == 2))
 			{
 				_directionX = 2;
-				_directionY = 1;
-			}
-
-			//right left, putting below so that above code runs first to prevent error
-			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
-			{
-				_directionX = 2;
-			}
-
-
-			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock)
-			{
-				_directionX = 1;
-			}
-
-			//up down
-			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock)
-			{
-				_directionY = 2;
-			}
-
-			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock)
-			{
 				_directionY = 1;
 			}
 		}
