@@ -20,7 +20,6 @@ namespace Escapade
     public List<Enemy> EnemiesToBeRemoved;
     public List<Enemy> SpawnedEnemies;
     public Stack<GameState> _gameStates;
-		//private Timer _spawntimer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Escapade.Escapade"/> class.
@@ -78,7 +77,7 @@ namespace Escapade
            if (_enemy == null)
             {
                 Location l = new Location(25, 20);
-                _enemy = new Enemy(0, "Boss Enemy", l, 1, 1); // to differentiate the enemy
+                _enemy = new Enemy(0, "Boss Enemy", l, 1, 0); // to differentiate the enemy
             }
             return _enemy;
         }
@@ -87,7 +86,7 @@ namespace Escapade
 		{
 			
 			Location l = new Location(25, 20);
-			_spawnenemy = new Enemy(0, "Enemy", l, 1, 1);
+			_spawnenemy = new Enemy(0, "Enemy", l, 1, 0);
 
 			return _spawnenemy;  
 		}
@@ -135,7 +134,7 @@ namespace Escapade
     /// </summary>
     public void Start ()
     {
-      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size, GetWorld ().Height * GetWorld ().Size + 80); // IA - Changed the height of the window to allow for the display of the bottom panel
+      SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size + 200, GetWorld ().Height * GetWorld ().Size + 80); // IA - Changed the height of the window to allow for the display of the bottom panel
       GameResources.LoadResources ();
       _gameStates = new Stack<GameState> ();
       _gameStates.Push (GameState.ViewingMainMenu);
@@ -236,9 +235,13 @@ namespace Escapade
         Objects.Add(GetEnemy());
 				initdone = true;
 			}
-      Enemy spawnedEnemy = SpawnMoreEnemy ();
-			Objects.Add(spawnedEnemy);
-      SpawnedEnemies.Add (spawnedEnemy);
+      
+			if (initdone2 == true) //make sure only strong enemy spawn at the start of game
+			{
+				Enemy spawnedEnemy = SpawnMoreEnemy();
+				Objects.Add(spawnedEnemy);
+				SpawnedEnemies.Add(spawnedEnemy);
+			}
 
 			if (initdone2 == false)
 			{
@@ -314,24 +317,20 @@ namespace Escapade
 					// collision on left right up down, some part of edge no collision if look carefully - jeremy
 					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y].Type == TileType.Rock)
 					{
-						_enemy.DirectionX = 2;
 						randomhit++;
 					}
 					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y].Type == TileType.Rock)
 					{
-						_enemy.DirectionX = 1;
 						randomhit++;
 					}
 
 					if (_world.Map[_enemy.Location.X, _enemy.Location.Y+1].Type == TileType.Rock)
 					{
-						_enemy.DirectionY = 2;
 						randomhit++;
 					}
 
 					if (_world.Map[_enemy.Location.X, _enemy.Location.Y - 1].Type == TileType.Rock)
 					{
-						_enemy.DirectionY = 1;
 						randomhit++;
 					}
 
@@ -479,11 +478,13 @@ namespace Escapade
         {
             GuiEnvironment.GetRenderer().RenderWindow();
 
-            MetaHandler.ShowBottomPanel(); // IA - Make the panel visible
+            MetaHandler.ShowPanels(); // IA - Make the panel visible
             MetaHandler.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
             MetaHandler.DisplayTimer(); // IA - Make the timer visible
             MetaHandler.DisplayGameLevel(); // IA - Display the game level
-            MetaHandler.DisplayAmmunitionLevel(_player.Weapon);
+            MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
+            MetaHandler.DisplayEnemyHitCount(EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
+            MetaHandler.DisplayExistingEnemies(SpawnedEnemies); // IA - Display how many enemies have been created.
         }
     }
 }

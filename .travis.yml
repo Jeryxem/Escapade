@@ -4,4 +4,4 @@ before_install:
     - sudo apt-get install nunit-console
 script:
     - nuget restore MyGameWin.sln
-    - msbuild/p:Configuration=Debug-Windows|x86 MyGameWin.sln
+    - msbuild/p:Configuration=Debug-Windows MyGameWin.sln

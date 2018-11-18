@@ -16,9 +16,13 @@ namespace Escapade.src.gui
     public static class MetaHandler
     {
         
-        public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Pannel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
+        public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Panel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
+        public static Panel enemiesPanel = SwinGame.LoadPanelNamed("Enemies Panel", "Extra1.txt");
+        public static Panel inventoryPanel = SwinGame.LoadPanelNamed("Inventory Panel", "Extra2.txt");
+        public static Panel foodPanel = SwinGame.LoadPanelNamed("Food Panel", "Extra3.txt");
         private static int contentFirstLine = GlobalConstants.WORLD_HEIGHT + 18;
         private static int contentSecondLine = GlobalConstants.WORLD_HEIGHT + 48;
+        private static int contentRightAlign = GlobalConstants.WORLD_WIDTH + 10;
         public static Countdown timer = new Countdown();
         public static String hungerIndication;
         public static double hungerIndicatorWidth = 150;
@@ -84,10 +88,13 @@ namespace Escapade.src.gui
         /// <summary>
         /// This method calls all the required methods to make the panel visible on the screen with the intended background color.
         /// </summary>
-        public static void ShowBottomPanel()
+        public static void ShowPanels()
         {
             SwinGame.GUISetBackgroundColor(Color.Black);
             SwinGame.ShowPanel(bottomPanel);
+            SwinGame.ShowPanel(enemiesPanel);
+            SwinGame.ShowPanel(inventoryPanel);
+            SwinGame.ShowPanel(foodPanel);
             SwinGame.DrawInterface();
         }
 
@@ -143,6 +150,16 @@ namespace Escapade.src.gui
                 SwinGame.DrawText("Press B or Shift + B to buy weapons.", Color.Yellow, 20, contentSecondLine);
             }
         }
-            
+
+        public static void DisplayExistingEnemies(List<Enemy> existingEnemies)
+        {
+            SwinGame.DrawText("Red Enemies: " + existingEnemies.Count.ToString(), Color.Yellow, contentRightAlign, 35);
+        }
+
+        public static void DisplayEnemyHitCount(List<Enemy> enemiesHit)
+        {
+            SwinGame.DrawText("Successful hits: " + enemiesHit.Count.ToString(), Color.Yellow, contentRightAlign, 15);
+        }
+
     }
 }
