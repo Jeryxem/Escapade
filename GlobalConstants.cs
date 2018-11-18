@@ -12,18 +12,18 @@ namespace Escapade
 
     public const int PROJECTILE_LENGTH = 10;
 
-    public const int SINGLE_PLAYER_BUTTON_X = 405;
-    public const int SINGLE_PLAYER_BUTTON_Y = 272;
-    public const int SINGLE_PLAYER_BUTTON_WIDTH = 160;
-    public const int TWO_PLAYER_BUTTON_X = 405;
-    public const int TWO_PLAYER_BUTTON_Y = 320;
-    public const int TWO_PLAYER_BUTTON_WIDTH = 160;
-    public const int INSTRUCTIONS_BUTTON_X = 405;
-    public const int INSTRUCTIONS_BUTTON_Y = 360;
-    public const int INSTRUCTIONS_BUTTON_WIDTH = 145;
-    public const int QUIT_BUTTON_X = 405;
-    public const int QUIT_BUTTON_Y = 400;
-    public const int QUIT_BUTTON_WIDTH = 45;
-    public const int BUTTON_HEIGHT = 23;
+    public const int SINGLE_PLAYER_BUTTON_X = 395;
+    public const int SINGLE_PLAYER_BUTTON_Y = 380;
+    public const int SINGLE_PLAYER_BUTTON_WIDTH = 230;
+    public const int TWO_PLAYER_BUTTON_X = 395;
+    public const int TWO_PLAYER_BUTTON_Y = 425;
+    public const int TWO_PLAYER_BUTTON_WIDTH = 190;
+    public const int INSTRUCTIONS_BUTTON_X = 395;
+    public const int INSTRUCTIONS_BUTTON_Y = 465;
+    public const int INSTRUCTIONS_BUTTON_WIDTH = 150;
+    public const int QUIT_BUTTON_X = 395;
+    public const int QUIT_BUTTON_Y = 510;
+    public const int QUIT_BUTTON_WIDTH = 110;
+    public const int BUTTON_HEIGHT = 20;
   }
 }
