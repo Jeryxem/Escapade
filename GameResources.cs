@@ -43,6 +43,17 @@ namespace Escapade
     public static void LoadImages ()
     {
       NewImage ("main_menu", "main_menu.png");
+      NewImage("instructions","instructions.png");
+      NewImage ("wasd", "WASD.png");
+      NewImage ("arrow_key", "Arrow Key.png");
+      NewImage ("arrow_key_O", "Arrow Key O.png");
+      NewImage ("b_key", "B Key.png");
+      NewImage ("j_p_key", "J P Key.png");
+      NewImage ("o_key", "O Key.png");
+      NewImage ("p_key", "P Key.png");
+      NewImage ("shift_b_key", "Shift B Key.png");
+      NewImage ("v_key", "V Key.png");
+      NewImage ("wasd_v_key", "WASD V Key.png");
     }
 
     public static void LoadSounds ()

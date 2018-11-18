@@ -25,5 +25,8 @@ namespace Escapade
     public const int QUIT_BUTTON_Y = 510;
     public const int QUIT_BUTTON_WIDTH = 110;
     public const int BUTTON_HEIGHT = 20;
+
+    public const int INSTRUCTIONS_CONTENT_X = 130;
+    public const int INSTRUCTIONS_CONTENT_Y = 185;
   }
 }

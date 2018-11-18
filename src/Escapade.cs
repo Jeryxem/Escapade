@@ -113,7 +113,9 @@ namespace Escapade
       case GameState.ViewingMainMenu:
         MainMenu ();
         break;
-      //case GameState.ViewingInstructions:
+      case GameState.ViewingInstructions:
+        Instructions ();
+        break;
       case GameState.SinglePlayerMode:
         SinglePlayerMode ();
         break;
@@ -166,8 +168,8 @@ namespace Escapade
             commandChosen = true;
           }
 
-        SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
-        SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
+        //SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
+        //SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
         SwinGame.RefreshScreen (60);
         }
       SwinGame.ClearScreen (Color.White);
@@ -175,11 +177,50 @@ namespace Escapade
       ControlGameState ();
     }
 
+    public void Instructions ()
+    {
+      bool viewInstructionsDone = false;
+
+      while (!viewInstructionsDone) 
+      {
+        SwinGame.ClearScreen(Color.White);
+        SwinGame.DrawBitmap (GameResources.GameImage ("instructions"), 0, 0);
+        DisplayInstructionsContent ();
+        SwinGame.ProcessEvents ();
+
+        if (SwinGame.MouseClicked (MouseButton.LeftButton))
+          viewInstructionsDone = true;
+        SwinGame.RefreshScreen (60);
+      }
+      _gameStates.Push (GameState.ViewingMainMenu);
+      ControlGameState ();
+    }
+
+    public void DisplayInstructionsContent ()
+    {
+      int textSpacing = 10, textSpacingIncrementer = 10;
+
+      SwinGame.DrawText ("Objective:",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y);
+      SwinGame.DrawText ("(1) Kill enemies & advance in levels",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      textSpacing += textSpacingIncrementer;
+      SwinGame.DrawText ("(2) Defeat the other player!",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      textSpacing += textSpacingIncrementer*2;
+      SwinGame.DrawText ("Controls: ",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      textSpacing += textSpacingIncrementer;
+      SwinGame.DrawText ("Player 1 > ",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawText ("Player 2 > ",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X+550,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      textSpacing += textSpacingIncrementer;
+      SwinGame.DrawBitmap(GameResources.GameImage("wasd"),GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawBitmap(GameResources.GameImage("arrow_key"),GlobalConstants.INSTRUCTIONS_CONTENT_X+550,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawText ("To move",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X+300,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing+50);
+
+    }
+
     public void SinglePlayerMode ()
     {
       PreInit ();
 	    Init ();
-	    PostInit ();
+        PostInit ();
 	    PrepareExtraComponents ();
       Run ();
     }
