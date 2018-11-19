@@ -112,13 +112,13 @@ namespace Escapade
 				_directionY = 1;
 			}
 
-			//right left, putting below so that above code runs first to prevent error
+			//map edge, due to random direction and frame, need to put 2 statements to make sure enemy stays inside map 
+			//in case direction push it out of the map on certain frames
 			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock || Location.X == 51 || Location.X == 50)
 			{
 				_directionX = 2;
 			}
 
-			//map edge
 			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock || Location.X == 1 || Location.X == 2)
 			{
 				_directionX = 1;
@@ -136,7 +136,7 @@ namespace Escapade
 			}
 
 
-			//right left up down edge collision
+			//right left up down sharp edge collision
 			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock && _world.Map[_location.X, _location.Y+1].Type == TileType.Rock && (_directionX == 2 || _directionY == 1))
 			{
 				_directionX = 1;

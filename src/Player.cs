@@ -8,6 +8,7 @@ namespace Escapade
   {
     Inventory _inventory;
     Weapon _weapon;
+private Color _playerColor;
 
     #region Properties
     public Inventory Inventory {
@@ -29,8 +30,14 @@ namespace Escapade
     public Player(int id, string name, Location location) : base(id, name, location)
     {
       Inventory = new Inventory ();
-			_location.X = 20;
-			_location.Y = 20;
+			_location.X = location.X;
+			_location.Y = location.Y;
+
+			// differentiate between the player 1 and player 2 - jeremy toh
+      if (name == "Player2")
+		_playerColor = Color.Black;
+      else
+		_playerColor = Color.MediumSlateBlue;
     }
 
     public Weapon Weapon 
@@ -57,7 +64,7 @@ namespace Escapade
     public override void Draw()
     {
       int size = Escapade.GetWorld ().Size;
-      SwinGame.FillRectangle(Color.MediumSlateBlue, Location.X * size, Location.Y * size, size, size);
+	  SwinGame.FillRectangle(_playerColor, Location.X * size, Location.Y * size, size, size);
       SwinGame.DrawRectangle(Color.White, Location.X * size, Location.Y * size, size, size);
     /*  if (Path.TargetPath.Count > 0) {
         foreach (Location loc in Path.TargetPath) {
