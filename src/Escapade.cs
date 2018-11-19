@@ -201,9 +201,9 @@ namespace Escapade
       int textSpacing = 10, textSpacingIncrementer = 10;
 
       SwinGame.DrawText ("Objective:",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y);
-      SwinGame.DrawText ("(1) Kill enemies & advance in levels",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawText ("(1) Kill enemies & advance in levels (Single-player)",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
       textSpacing += textSpacingIncrementer;
-      SwinGame.DrawText ("(2) Defeat the other player!",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawText ("(2) Defeat the other player! (Two-player)",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
       textSpacing += textSpacingIncrementer*2;
       SwinGame.DrawText ("Controls: ",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
       textSpacing += textSpacingIncrementer;
@@ -212,8 +212,19 @@ namespace Escapade
       textSpacing += textSpacingIncrementer;
       SwinGame.DrawBitmap(GameResources.GameImage("wasd"),GlobalConstants.INSTRUCTIONS_CONTENT_X,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
       SwinGame.DrawBitmap(GameResources.GameImage("arrow_key"),GlobalConstants.INSTRUCTIONS_CONTENT_X+550,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
-      SwinGame.DrawText ("To move",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X+300,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing+50);
-
+      SwinGame.DrawText ("To move",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X+320,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing+50);
+      textSpacing += textSpacingIncrementer*2;
+      SwinGame.DrawBitmap(GameResources.GameImage("wasd_v_key"),GlobalConstants.INSTRUCTIONS_CONTENT_X-6,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawBitmap(GameResources.GameImage("arrow_key_O"),GlobalConstants.INSTRUCTIONS_CONTENT_X+544,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawText ("To use weapon",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X+300,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing+100);
+      textSpacing += textSpacingIncrementer*16;
+      SwinGame.DrawBitmap(GameResources.GameImage("b_key"),GlobalConstants.INSTRUCTIONS_CONTENT_X+25,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawBitmap(GameResources.GameImage("p_key"),GlobalConstants.INSTRUCTIONS_CONTENT_X+575,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawText ("To buy normal weapon",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X+275,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing+25);
+      textSpacing += textSpacingIncrementer*2;
+      SwinGame.DrawBitmap(GameResources.GameImage("shift_b_key"),GlobalConstants.INSTRUCTIONS_CONTENT_X-25,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawBitmap(GameResources.GameImage("j_p_key"),GlobalConstants.INSTRUCTIONS_CONTENT_X+550,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing);
+      SwinGame.DrawText ("To buy super weapon",Color.Black,GlobalConstants.INSTRUCTIONS_CONTENT_X+275,GlobalConstants.INSTRUCTIONS_CONTENT_Y+textSpacing+100);
     }
 
     public void SinglePlayerMode ()
