@@ -124,8 +124,7 @@ namespace Escapade
         /// </summary>
         public void ControlLevels()
         {
-            double formula = (GameLevel.GetLevel() * 5) + 1 + GameLevel.GetLevel() * GameLevel.GetLevel();
-            if (EnemiesToBeRemoved.Count >= formula)
+            if (EnemiesToBeRemoved.Count >= GameLevel.GetFormula())
             {
                 GameLevel.IncreaseLevel();
                 EnemiesToBeRemoved.Clear(); // IA - Reset the count of enemies destroyed at each level.
