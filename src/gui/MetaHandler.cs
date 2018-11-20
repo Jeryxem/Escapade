@@ -22,7 +22,7 @@ namespace Escapade.src.gui
         public static Panel foodPanel = SwinGame.LoadPanelNamed("Food Panel", "Extra3.txt");
         private static int contentFirstLine = GlobalConstants.WORLD_HEIGHT + 18;
         private static int contentSecondLine = GlobalConstants.WORLD_HEIGHT + 48;
-        private static int contentRightAlign = GlobalConstants.WORLD_WIDTH + 10;
+        private static int contentRightAlign = GlobalConstants.WORLD_WIDTH + 5;
         public static Countdown timer = new Countdown();
 
         public static String hungerIndication;
@@ -124,7 +124,8 @@ namespace Escapade.src.gui
         /// </summary>
         public static void DisplayGameLevel()
         {
-            SwinGame.DrawText("Level: " + GameLevel.PrintLevel(), Color.White, GlobalConstants.WORLD_WIDTH - 150, contentFirstLine);
+            Font arial = SwinGame.LoadFont("arial", 20);
+            SwinGame.DrawText("Level: " + GameLevel.PrintLevel(), Color.White, arial, GlobalConstants.WORLD_WIDTH - 150, contentFirstLine);
         }
 
         public static void DisplayAmmunitionLevel(Weapon weapon)
@@ -153,9 +154,13 @@ namespace Escapade.src.gui
 
         public static void DisplayEnemiesInfo(List<Enemy> existingEnemies, List<Enemy> enemiesHit)
         {
-            SwinGame.DrawText("Red Enemies: " + existingEnemies.Count.ToString(), Color.Yellow, contentRightAlign, 35);
+            SwinGame.DrawText("ENEMIES IN THIS LEVEL", Color.Yellow, contentRightAlign, 15);
 
-            SwinGame.DrawText("Successful hits: " + enemiesHit.Count.ToString(), Color.Yellow, contentRightAlign, 15);
+            SwinGame.DrawText("Red Enemies: " + existingEnemies.Count.ToString(), Color.Yellow, contentRightAlign, 45);
+
+            SwinGame.DrawText("Successful hits: " + enemiesHit.Count.ToString(), Color.Yellow, contentRightAlign, 70);
+
+            SwinGame.DrawText("Destroy " + (GameLevel.GetFormula() - enemiesHit.Count).ToString() + " more enemies.", Color.Yellow, contentRightAlign, 100);
         }
 
         public static void DisplayRate(double[] mineralWorth)
@@ -168,16 +173,19 @@ namespace Escapade.src.gui
             }
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Diamond worth: " + mineralWorth[0].ToString(), Color.White, 810, 210);
+            SwinGame.DrawText("YOUR MINERAL POINTS", Color.White, contentRightAlign, 210);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Emerald worth: " + mineralWorth[1].ToString(), Color.White, 810, 230);
+            SwinGame.DrawText("Diamond worth: " + mineralWorth[0].ToString(), Color.White, contentRightAlign, 240);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Ruby worth: " + mineralWorth[2].ToString(), Color.White, 810, 250);
+            SwinGame.DrawText("Emerald worth: " + mineralWorth[1].ToString(), Color.White, contentRightAlign, 265);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Sapphire: " + mineralWorth[3].ToString(), Color.White, 810, 270);
+            SwinGame.DrawText("Ruby worth: " + mineralWorth[2].ToString(), Color.White, contentRightAlign, 290);
+
+            // IA - Display the total value of minerals while the game runs
+            SwinGame.DrawText("Sapphire: " + mineralWorth[3].ToString(), Color.White, contentRightAlign, 315);
         }
 
     }
