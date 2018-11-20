@@ -9,6 +9,7 @@ namespace Escapade
     private int _damage, _projectileSpeed, _ammunition;
     private WeaponType _weaponType;
     private Projectile _projectile;
+    private string _owner;
 
     private const int NORMAL_DAMAGE = 20;
     private const int SUPER_DAMAGE = 60;
@@ -19,10 +20,11 @@ namespace Escapade
     private const string NORMAL_NAME = "Rusted Harpoon";
     private const string SUPER_NAME = "Golden Harpoon";
 
-    public Weapon (Location location, WeaponType weaponType) : base (1, "Weapon", location)
+    public Weapon (Location location, WeaponType weaponType, string owner) : base (1, "Weapon", location)
     {
       _weaponType = weaponType;
       _equipped = false;
+      _owner = owner;
 
       if (_weaponType == WeaponType.Normal) {
         _name = NORMAL_NAME;
@@ -63,7 +65,7 @@ namespace Escapade
 
     public void Attack (Location location, AttackDirection direction)
     {
-       _projectile = new Projectile (_weaponType, _projectileSpeed, direction, location);
+       _projectile = new Projectile (_weaponType, _projectileSpeed, direction, location, _owner);
        Ammunition--;
     }
 

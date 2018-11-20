@@ -8,7 +8,8 @@ namespace Escapade
   {
     Inventory _inventory;
     Weapon _weapon;
-private Color _playerColor;
+    private Color _playerColor;
+    private string _name;
 
     #region Properties
     public Inventory Inventory {
@@ -32,6 +33,7 @@ private Color _playerColor;
       Inventory = new Inventory ();
 			_location.X = location.X;
 			_location.Y = location.Y;
+      _name = name;
 
 			// differentiate between the player 1 and player 2 - jeremy toh
       if (name == "Player2")
@@ -47,7 +49,7 @@ private Color _playerColor;
 
     public void BuyWeapon (Location location, WeaponType weaponType) //JY- player buys weapon
     {
-      _weapon = new Weapon (_location,weaponType);
+      _weapon = new Weapon (_location,weaponType,_name);
     }
 
     public void DeployWeapon (AttackDirection attackDirection) //JY- player uses weapon
@@ -56,6 +58,61 @@ private Color _playerColor;
         _weapon.Attack (_location, attackDirection);
             MetaHandler.DisplayAmmunitionLevel(_weapon);
         }
+
+    public bool PlayerHitbyProjectile (Projectile projectile)
+    {
+      int playerX = Location.X * GlobalConstants.SIZE, playerY = Location.Y * GlobalConstants.SIZE;
+      int projectileLocationX = projectile.ProjectileLocationX, projectileLocationY = projectile.ProjectileLocationY;
+
+      if (projectile.Type == WeaponType.Normal) {
+        if (projectile.Horizontal) {
+          if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.NORMAL_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
+            if (_name != (projectile.Owner))
+              return true;
+            else
+              return false;
+          else
+            return false;
+        } else {
+          if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.NORMAL_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
+            if (_name != (projectile.Owner))
+              return true;
+            else
+              return false;
+          else
+            return false;
+        }
+
+      } else {
+        if (projectile.Horizontal) {
+          if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.PROJECTILE_LENGTH, GlobalConstants.SUPER_PROJECTILE_WIDTH))
+            if (_name != (projectile.Owner))
+              return true;
+            else
+              return false;
+          else
+            return false;
+        } else {
+          if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), projectileLocationX * GlobalConstants.SIZE, projectileLocationY * GlobalConstants.SIZE, GlobalConstants.SUPER_PROJECTILE_WIDTH, GlobalConstants.PROJECTILE_LENGTH))
+            if (_name != (projectile.Owner))
+              return true;
+            else
+              return false;
+          else
+            return false;
+        }
+
+      }
+    }
+
+      public bool PlayerHitbyEnemy (Enemy e)
+      {
+        int playerX = Location.X * GlobalConstants.SIZE, playerY = Location.Y * GlobalConstants.SIZE;
+        if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), e.Location.X * GlobalConstants.SIZE, e.Location.Y * GlobalConstants.SIZE, 30, 30))
+          return true;
+        else
+          return false;
+      } 
 
     /// <summary>
     /// Draws this player at its current location, and draws a

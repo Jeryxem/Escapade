@@ -68,7 +68,7 @@ namespace Escapade
             if (_player == null)
             {
                 Location l = new Location(7, 5);
-                _player = new Player(0, "Player", l);
+                _player = new Player(0, "Player1", l);
             }
             return _player;
         }
@@ -423,27 +423,54 @@ namespace Escapade
 			}
 
       // JY- detect projectile hits, projectile and enemies will be deleted
-       foreach (Entity e in Objects) 
-      {
-        if (e is Projectile) 
-        {
-          if (SpawnedEnemies.Count > 0) 
-          {
-            foreach (Enemy _e in SpawnedEnemies) 
-            {
+      foreach (Entity e in Objects) {
+        if (e is Projectile) {
+
+          if (_twoplayer) {
+            if (_player.PlayerHitbyProjectile ((Projectile)e)) {
+              _gameStates.Push (GameState.ViewingEndGame);
+              ControlGameState ();
+            } else if (_player2.PlayerHitbyProjectile ((Projectile)e)) {
+              _gameStates.Push (GameState.ViewingEndGame);
+              ControlGameState ();
+            }
+          } else {
+            if (_player.PlayerHitbyProjectile ((Projectile)e)) {
+              _gameStates.Push (GameState.ViewingEndGame);
+              ControlGameState ();
+            }
+          }
+
+          if (SpawnedEnemies.Count > 0) {
+            foreach (Enemy _e in SpawnedEnemies) {
               if (((Projectile)e).CheckObjectHit (_world, _e))
                 ProjectilesToBeRemoved.Add ((Projectile)e);
 
               if (_e.CheckHit ((Projectile)e))
                 EnemiesToBeRemoved.Add (_e);
 
+              if (_twoplayer) {
+                if (_player.PlayerHitbyEnemy (_e)) {
+                  _gameStates.Push (GameState.ViewingEndGame);
+                  ControlGameState ();
+                } else if (_player2.PlayerHitbyEnemy (_e)) {
+                  _gameStates.Push (GameState.ViewingEndGame);
+                  ControlGameState ();
+                }
+              } else {
+                if (_player.PlayerHitbyEnemy (_e)) {
+                  _gameStates.Push (GameState.ViewingEndGame);
+                  ControlGameState ();
+                }
+              }
+
             }
-          } 
-          else
+          } else
             if (((Projectile)e).CheckObjectHit (_world, _enemy))
-                ProjectilesToBeRemoved.Add ((Projectile)e);
+            ProjectilesToBeRemoved.Add ((Projectile)e);
         }
       }
+
 
       foreach (Projectile p in ProjectilesToBeRemoved)
         Objects.Remove (p);
@@ -459,6 +486,7 @@ namespace Escapade
       foreach (Entity obj in Objects) {
         obj.Update ();
       }
+
 
       /*if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
         GetEnvironment ().HandleGuiEvent (GuiEvent.MouseLeft, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));

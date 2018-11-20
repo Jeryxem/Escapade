@@ -6,6 +6,7 @@ namespace Escapade
   public class Projectile : Entity
   {
     private int _projectileSpeed;
+    private string _owner;
     private AttackDirection _direction;
     private WeaponType _weaponType;
     private int projectileLocationX, projectileLocationY;
@@ -16,11 +17,12 @@ namespace Escapade
 
     private const int PROJECTILE_LENGTH = 10;
 
-    public Projectile (WeaponType weaponType, int projectileSpeed, AttackDirection direction,Location location) : base(2, "Projectile", location)
+    public Projectile (WeaponType weaponType, int projectileSpeed, AttackDirection direction,Location location, string owner) : base(2, "Projectile", location)
     {
       _projectileSpeed = projectileSpeed;
       _direction = direction;
       _weaponType = weaponType;
+      _owner = owner;
       projectileLocationX = location.X;
       projectileLocationY = location.Y;
 
@@ -39,6 +41,12 @@ namespace Escapade
     public WeaponType Type 
     {
       get { return _weaponType; }
+    }
+
+    public string Owner 
+    {
+      get { return _owner; }
+      set { _owner = value; }
     }
 
     public int ProjectileLocationX 
