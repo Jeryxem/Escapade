@@ -279,17 +279,23 @@ namespace Escapade
         SwinGame.ProcessEvents ();
         if (SwinGame.MouseClicked (MouseButton.LeftButton)) 
         {
+					if (_twoplayer == true)
+					{
+						_player2.Location.X = 45;
+						_player2.Location.Y = 30;
+					}
+
           proceed = true;
           initdone = false;
           initdone2 = false;
           initPlayer2 = false;
           _twoplayer = false;
 
-					Objects.Remove(_player);
-					Objects.Remove(_player2);
-					Objects.Remove(_enemy);
-					Objects.Remove(_spawnenemy);
-					//_player.PlayerHitbyEnemy((Enemy)e) = false;
+					_player.Location.X = 7;
+					_player.Location.Y = 5;
+					_enemy.Location.X = 25;
+					_enemy.Location.Y = 20;
+                    GetWorld().GenerateMap ();
         }
 
         SwinGame.RefreshScreen (60);
