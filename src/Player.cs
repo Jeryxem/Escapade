@@ -107,7 +107,7 @@ namespace Escapade
     }
 
     //JY- added this to check if the player is hit by an enemy
-      public bool PlayerHitbyEnemy (Enemy e)
+		public bool PlayerHitbyEnemy (Enemy e)
       {
         int playerX = Location.X * GlobalConstants.SIZE, playerY = Location.Y * GlobalConstants.SIZE;
         if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), e.Location.X * GlobalConstants.SIZE, e.Location.Y * GlobalConstants.SIZE, 15, 15))

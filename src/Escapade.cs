@@ -284,11 +284,18 @@ namespace Escapade
           initdone2 = false;
           initPlayer2 = false;
           _twoplayer = false;
+
+					Objects.Remove(_player);
+					Objects.Remove(_player2);
+					Objects.Remove(_enemy);
+					Objects.Remove(_spawnenemy);
+					//_player.PlayerHitbyEnemy((Enemy)e) = false;
         }
 
         SwinGame.RefreshScreen (60);
-      }
+      }	
       _gameStates.Push (GameState.ViewingMainMenu);
+      ControlGameState ();
     }
 
     public void QuitGame ()
@@ -412,125 +419,143 @@ namespace Escapade
         }
 
 	int randomhit = 0;
-    /// <summary>
-    /// Update the game based on events, objects and other things
-    /// </summary>
-    public void Update ()
-    {
+		/// <summary>
+		/// Update the game based on events, objects and other things
+		/// </summary>
+		public void Update()
+		{
 
-					// click button M to change map to check collision
-					// collision on left right up down, some part of edge no collision if look carefully - jeremy
-					if (_world.Map[_enemy.Location.X+1, _enemy.Location.Y].Type == TileType.Rock)
-					{
-						randomhit++;
-					}
-					if (_world.Map[_enemy.Location.X-1, _enemy.Location.Y].Type == TileType.Rock)
-					{
-						randomhit++;
-					}
+			// click button M to change map to check collision
+			// collision on left right up down, some part of edge no collision if look carefully - jeremy
+			if (_world.Map[_enemy.Location.X + 1, _enemy.Location.Y].Type == TileType.Rock)
+			{
+				randomhit++;
+			}
+			if (_world.Map[_enemy.Location.X - 1, _enemy.Location.Y].Type == TileType.Rock)
+			{
+				randomhit++;
+			}
 
-					if (_world.Map[_enemy.Location.X, _enemy.Location.Y+1].Type == TileType.Rock)
-					{
-						randomhit++;
-					}
+			if (_world.Map[_enemy.Location.X, _enemy.Location.Y + 1].Type == TileType.Rock)
+			{
+				randomhit++;
+			}
 
-					if (_world.Map[_enemy.Location.X, _enemy.Location.Y - 1].Type == TileType.Rock)
-					{
-						randomhit++;
-					}
+			if (_world.Map[_enemy.Location.X, _enemy.Location.Y - 1].Type == TileType.Rock)
+			{
+				randomhit++;
+			}
 
 
 			//spawn rate - jeremy
-			if (randomhit >= 20) 
+			if (randomhit >= 20)
 			{
 				Init();
 				randomhit = 0;
 			}
 
-      // JY- detect projectile hits, projectile and enemies will be deleted
-      foreach (Entity e in Objects) {
-        if (e is Projectile) {
+			// JY- detect projectile hits, projectile and enemies will be deleted
+			foreach (Entity e in Objects)
+			{
+				if (e is Projectile)
+				{
 
-          if (_twoplayer) {
-            if (_player.PlayerHitbyProjectile ((Projectile)e)) {
-              _gameStates.Push (GameState.PlayerTwoWins);
-              ControlGameState ();
-            } else if (_player2.PlayerHitbyProjectile ((Projectile)e)) {
-              _gameStates.Push (GameState.PlayerOneWins);
-              ControlGameState ();
-            }
-          } else {
-            if (_player.PlayerHitbyProjectile ((Projectile)e)) {
-              _gameStates.Push (GameState.SinglePlayerEndGame);
-              ControlGameState ();
-            }
-          }
+					if (_twoplayer)
+					{
+						if (_player.PlayerHitbyProjectile((Projectile)e))
+						{
+							_gameStates.Push(GameState.PlayerTwoWins);
+							ControlGameState();
+						}
+						else if (_player2.PlayerHitbyProjectile((Projectile)e))
+						{
+							_gameStates.Push(GameState.PlayerOneWins);
+							ControlGameState();
+						}
+					}
+					else
+					{
+						if (_player.PlayerHitbyProjectile((Projectile)e))
+						{
+							_gameStates.Push(GameState.SinglePlayerEndGame);
+							ControlGameState();
+						}
+					}
 
-          if (SpawnedEnemies.Count > 0) {
-            foreach (Enemy _e in SpawnedEnemies) {
-              if (((Projectile)e).CheckObjectHit (_world, _e))
-                ProjectilesToBeRemoved.Add ((Projectile)e);
+					if (SpawnedEnemies.Count > 0)
+					{
+						foreach (Enemy _e in SpawnedEnemies)
+						{
+							if (((Projectile)e).CheckObjectHit(_world, _e))
+								ProjectilesToBeRemoved.Add((Projectile)e);
 
-              if (_e.CheckHit ((Projectile)e))
-                EnemiesToBeRemoved.Add (_e);
+							if (_e.CheckHit((Projectile)e))
+								EnemiesToBeRemoved.Add(_e);
 
-            }
-          } else
-            if (((Projectile)e).CheckObjectHit (_world, _enemy))
-            ProjectilesToBeRemoved.Add ((Projectile)e);
-        } 
-        //JY- detect enemies hitting players
-        else if (e is Enemy) 
-        {
-          if (_twoplayer) {
-            if (_player.PlayerHitbyEnemy ((Enemy)e)) {
-              _gameStates.Push (GameState.PlayerTwoWins);
-              ControlGameState ();
-            } else if (_player2.PlayerHitbyEnemy ((Enemy)e)) {
-              _gameStates.Push (GameState.PlayerOneWins);
-              ControlGameState ();
-            }
-          }
-            else 
-            {
-              if (_player.PlayerHitbyEnemy ((Enemy)e)) 
-              {
-                _gameStates.Push (GameState.SinglePlayerEndGame);
-  				      ControlGameState ();
-              }
-            }
-        }
-      }
+						}
+					}
+					else
+					  if (((Projectile)e).CheckObjectHit(_world, _enemy))
+						ProjectilesToBeRemoved.Add((Projectile)e);
+				}
+				//JY- detect enemies hitting players
+				else if (e is Enemy)
+				{
+					if (_twoplayer)
+					{
+						if (_player.PlayerHitbyEnemy((Enemy)e))
+						{
+							_gameStates.Push(GameState.PlayerTwoWins);
+							//_player.PlayerHitbyEnemy((Enemy)e) = !_player.PlayerHitbyEnemy((Enemy)e);
+							ControlGameState();
+						}
+						else if (_player2.PlayerHitbyEnemy((Enemy)e))
+						{
+							_gameStates.Push(GameState.PlayerOneWins);
+							ControlGameState();
+						}
+					}
+					else
+					{
+						if (_player.PlayerHitbyEnemy((Enemy)e))
+						{
+							_gameStates.Push(GameState.SinglePlayerEndGame);
+							ControlGameState();
+						}
+					}
+				}
+			}
 
-      foreach (Projectile p in ProjectilesToBeRemoved)
-        Objects.Remove (p);
+			foreach (Projectile p in ProjectilesToBeRemoved)
+				Objects.Remove(p);
 
-      foreach (Enemy en in EnemiesToBeRemoved)
-      {
-        if (SpawnedEnemies.Contains (en))
-          SpawnedEnemies.Remove (en);
-        
-        Objects.Remove (en);
-      }
+			foreach (Enemy en in EnemiesToBeRemoved)
+			{
+				if (SpawnedEnemies.Contains(en))
+					SpawnedEnemies.Remove(en);
 
-      foreach (Entity obj in Objects) {
-        obj.Update ();
-      }
+				Objects.Remove(en);
+			}
+
+			foreach (Entity obj in Objects)
+			{
+				obj.Update();
+			}
 
 
-      /*if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
-        GetEnvironment ().HandleGuiEvent (GuiEvent.MouseLeft, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
-      }*/
+			/*if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
+			  GetEnvironment ().HandleGuiEvent (GuiEvent.MouseLeft, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
+			}*/
 
 			//PLAYER 1 MINE/BUILD ROCKS INPUT
-	  //mine rocks/minerals right
-			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			//mine rocks/minerals right
+			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyReleased(KeyCode.FKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
-				int x = (_player.Location.X+1);
+				int x = (_player.Location.X + 1);
 				int y = (_player.Location.Y);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location (x, y));
+				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
 				if (f == null)
 				{
 					Tile tile = _world.Map[x, y];
@@ -561,10 +586,10 @@ namespace Escapade
 						inv.Content = minerals;
 					}
 				}
-	 		}
+			}
 
 			//mine left
-			if (SwinGame.KeyDown(KeyCode.AKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			if (SwinGame.KeyDown(KeyCode.AKey) && SwinGame.KeyReleased(KeyCode.FKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -604,12 +629,12 @@ namespace Escapade
 			}
 
 			//mine top
-			if (SwinGame.KeyDown(KeyCode.WKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			if (SwinGame.KeyDown(KeyCode.WKey) && SwinGame.KeyReleased(KeyCode.FKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
 				int x = (_player.Location.X);
-				int y = (_player.Location.Y-1);
+				int y = (_player.Location.Y - 1);
 				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
 				if (f == null)
 				{
@@ -644,12 +669,12 @@ namespace Escapade
 			}
 
 			//mine bottom
-			if (SwinGame.KeyDown(KeyCode.SKey) && SwinGame.KeyReleased(KeyCode.FKey)) 
+			if (SwinGame.KeyDown(KeyCode.SKey) && SwinGame.KeyReleased(KeyCode.FKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
 				int x = (_player.Location.X);
-				int y = (_player.Location.Y+1);
+				int y = (_player.Location.Y + 1);
 				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
 				if (f == null)
 				{
@@ -684,7 +709,7 @@ namespace Escapade
 			}
 
 			//build rock right
-			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyDown(KeyCode.GKey)) 
+			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyDown(KeyCode.GKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -696,13 +721,13 @@ namespace Escapade
 					Tile tile = _world.Map[x, y];
 					if (tile.Type == TileType.Air)
 					{
-						_world.Map[x, y] = new Tile (TileType.Rock);
+						_world.Map[x, y] = new Tile(TileType.Rock);
 					}
 				}
-	 	   }
+			}
 
 			//build rock left
-			if (SwinGame.KeyDown(KeyCode.AKey) && SwinGame.KeyDown(KeyCode.GKey)) 
+			if (SwinGame.KeyDown(KeyCode.AKey) && SwinGame.KeyDown(KeyCode.GKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -717,15 +742,15 @@ namespace Escapade
 						_world.Map[x, y] = new Tile(TileType.Rock);
 					}
 				}
-	 	   }
+			}
 
 			//build rock up
-			if (SwinGame.KeyDown(KeyCode.WKey) && SwinGame.KeyDown(KeyCode.GKey)) 
+			if (SwinGame.KeyDown(KeyCode.WKey) && SwinGame.KeyDown(KeyCode.GKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
 				int x = (_player.Location.X);
-				int y = (_player.Location.Y-1);
+				int y = (_player.Location.Y - 1);
 				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
 				if (f == null)
 				{
@@ -735,15 +760,15 @@ namespace Escapade
 						_world.Map[x, y] = new Tile(TileType.Rock);
 					}
 				}
-	 	   }
+			}
 
 			//build rock down
-			if (SwinGame.KeyDown(KeyCode.SKey) && SwinGame.KeyDown(KeyCode.GKey)) 
+			if (SwinGame.KeyDown(KeyCode.SKey) && SwinGame.KeyDown(KeyCode.GKey))
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
 				int x = (_player.Location.X);
-				int y = (_player.Location.Y+1);
+				int y = (_player.Location.Y + 1);
 				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
 				if (f == null)
 				{
@@ -751,389 +776,411 @@ namespace Escapade
 					if (tile.Type == TileType.Air)
 					{
 						_world.Map[x, y] = new Tile(TileType.Rock);
-					}
-				}
-	 	   }
-
-			//PLAYER 2 MINE/BUILD ROCKS INPUT
-	  	//mine rocks/minerals right
-			if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-								GetEnvironment();
-				int x = (_player2.Location.X + 1);
-				int y = (_player2.Location.Y);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
-					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer2().Inventory.AddItem(tile.Mineral);
-					}
-
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
-						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
-						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
-					}
-				}
-	 		}
-
-			//mine left
-			if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player2.Location.X - 1);
-				int y = (_player2.Location.Y);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
-					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer2().Inventory.AddItem(tile.Mineral);
-					}
-
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
-						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
-						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
 					}
 				}
 			}
 
-			//mine top
-			if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
+			if (_twoplayer == true)
 			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player2.Location.X);
-				int y = (_player2.Location.Y - 1);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
+				//PLAYER 2 MINE/BUILD ROCKS INPUT
+				//mine rocks/minerals right
+				if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyReleased(KeyCode.KKey))
 				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X + 1);
+					int y = (_player2.Location.Y);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
 					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer2().Inventory.AddItem(tile.Mineral);
-					}
-
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Rock)
 						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
+							_world.Map[x, y] = new Tile(TileType.Air);
+							if (tile.Mineral != null)
+								GetPlayer2().Inventory.AddItem(tile.Mineral);
 						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
+
+						Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+						if (inv != null)
+						{
+							List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
+							Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+							foreach (string s in minerals)
+							{
+								if (mineralCount.ContainsKey(s))
+								{
+									mineralCount[s]++;
+								}
+								else
+								{
+									mineralCount[s] = 1;
+								}
+							}
+							minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+							inv.Content = minerals;
+						}
+					}
+				}
+
+				//mine left
+				if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyReleased(KeyCode.KKey))
+				{
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X - 1);
+					int y = (_player2.Location.Y);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
+					{
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Rock)
+						{
+							_world.Map[x, y] = new Tile(TileType.Air);
+							if (tile.Mineral != null)
+								GetPlayer2().Inventory.AddItem(tile.Mineral);
+						}
+
+						Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+						if (inv != null)
+						{
+							List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
+							Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+							foreach (string s in minerals)
+							{
+								if (mineralCount.ContainsKey(s))
+								{
+									mineralCount[s]++;
+								}
+								else
+								{
+									mineralCount[s] = 1;
+								}
+							}
+							minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+							inv.Content = minerals;
+						}
+					}
+				}
+
+				//mine top
+				if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyReleased(KeyCode.KKey))
+				{
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X);
+					int y = (_player2.Location.Y - 1);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
+					{
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Rock)
+						{
+							_world.Map[x, y] = new Tile(TileType.Air);
+							if (tile.Mineral != null)
+								GetPlayer2().Inventory.AddItem(tile.Mineral);
+						}
+
+						Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+						if (inv != null)
+						{
+							List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
+							Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+							foreach (string s in minerals)
+							{
+								if (mineralCount.ContainsKey(s))
+								{
+									mineralCount[s]++;
+								}
+								else
+								{
+									mineralCount[s] = 1;
+								}
+							}
+							minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+							inv.Content = minerals;
+						}
+					}
+				}
+
+				//mine bottom
+				if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyReleased(KeyCode.KKey))
+				{
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X);
+					int y = (_player2.Location.Y + 1);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
+					{
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Rock)
+						{
+							_world.Map[x, y] = new Tile(TileType.Air);
+							if (tile.Mineral != null)
+								GetPlayer2().Inventory.AddItem(tile.Mineral);
+						}
+
+						Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
+						if (inv != null)
+						{
+							List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
+							Dictionary<string, int> mineralCount = new Dictionary<string, int>();
+							foreach (string s in minerals)
+							{
+								if (mineralCount.ContainsKey(s))
+								{
+									mineralCount[s]++;
+								}
+								else
+								{
+									mineralCount[s] = 1;
+								}
+							}
+							minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
+							inv.Content = minerals;
+						}
+					}
+				}
+
+				//build rock right
+				if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyDown(KeyCode.LKey))
+				{
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X + 1);
+					int y = (_player2.Location.Y);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
+					{
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Air)
+						{
+							_world.Map[x, y] = new Tile(TileType.Rock);
+						}
+					}
+				}
+
+				//build rock left
+				if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyDown(KeyCode.LKey))
+				{
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X - 1);
+					int y = (_player2.Location.Y);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
+					{
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Air)
+						{
+							_world.Map[x, y] = new Tile(TileType.Rock);
+						}
+					}
+				}
+
+				//build rock up
+				if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyDown(KeyCode.LKey))
+				{
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X);
+					int y = (_player2.Location.Y - 1);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
+					{
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Air)
+						{
+							_world.Map[x, y] = new Tile(TileType.Rock);
+						}
+					}
+				}
+
+				//build rock down
+				if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyDown(KeyCode.LKey))
+				{
+					//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
+					GetEnvironment();
+					int x = (_player2.Location.X);
+					int y = (_player2.Location.Y + 1);
+					Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
+					if (f == null)
+					{
+						Tile tile = _world.Map[x, y];
+						if (tile.Type == TileType.Air)
+						{
+							_world.Map[x, y] = new Tile(TileType.Rock);
+						}
 					}
 				}
 			}
 
-			//mine bottom
-			if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player2.Location.X);
-				int y = (_player2.Location.Y + 1);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
-					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer2().Inventory.AddItem(tile.Mineral);
-					}
 
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer2().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
-						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
-						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
-					}
-				}
+			if (SwinGame.KeyTyped(KeyCode.QKey))
+			{
+				GuiEnvironment.GetRenderer().ToggleFrame("inventory");
 			}
 
-			//build rock right
-			if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyDown(KeyCode.LKey)) 
+			if (SwinGame.KeyTyped(KeyCode.HKey))
 			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player2.Location.X + 1);
-				int y = (_player2.Location.Y);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Air)
-					{
-						_world.Map[x, y] = new Tile(TileType.Rock);
-					}
-				}
-	 	   }
+				GuiEnvironment.GetRenderer().ToggleFrame("help");
+			}
 
-			//build rock left
-			if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyDown(KeyCode.LKey)) 
+			if (SwinGame.KeyTyped(KeyCode.EKey))
 			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player2.Location.X - 1);
-				int y = (_player2.Location.Y);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Air)
-					{
-						_world.Map[x, y] = new Tile(TileType.Rock);
-					}
-				}
-	 	   }
+				GetWorld().PutMinerals();
+			}
 
-			//build rock up
-			if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyDown(KeyCode.LKey)) 
+			/*if (SwinGame.KeyTyped (KeyCode.MKey)) {
+			  GetWorld ().GenerateMap ();
+			}*/
+
+			if (SwinGame.KeyDown(KeyCode.EscapeKey))
 			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player2.Location.X);
-				int y = (_player2.Location.Y - 1);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Air)
-					{
-						_world.Map[x, y] = new Tile(TileType.Rock);
-					}
-				}
-	 	   }
-
-			//build rock down
-			if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyDown(KeyCode.LKey)) 
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player2.Location.X);
-				int y = (_player2.Location.Y + 1);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Air)
-					{
-						_world.Map[x, y] = new Tile(TileType.Rock);
-					}
-				}
-	 	   }
-
-
-
-      if (SwinGame.KeyTyped (KeyCode.QKey)) {
-        GuiEnvironment.GetRenderer ().ToggleFrame ("inventory");
-      }
-
-      if (SwinGame.KeyTyped (KeyCode.HKey)) {
-        GuiEnvironment.GetRenderer ().ToggleFrame ("help");
-      }
-
-      if (SwinGame.KeyTyped (KeyCode.EKey)) {
-        GetWorld ().PutMinerals ();
-      }
-
-      /*if (SwinGame.KeyTyped (KeyCode.MKey)) {
-        GetWorld ().GenerateMap ();
-      }*/
-
-      if (SwinGame.KeyDown (KeyCode.EscapeKey)) {
-        Environment.Exit (0);
-      }
+				Environment.Exit(0);
+			}
 
 			//PLAYER 1 KEY MOVEMENT/WEAPON INPUT
-      //changes player input using keyboard - jeremy
-      //Allowed player to attack,
-      //else if if used so that the player can spam attack and move at the same time - Jonathan
+			//changes player input using keyboard - jeremy
+			//Allowed player to attack,
+			//else if if used so that the player can spam attack and move at the same time - Jonathan
 
-      //please test it, use b to buy or shift b (for super) and try attacking
-      //you have to buy a weapon first
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.WKey))
-      {
-                if (_player.Weapon != null && _player.Weapon.Ammunition > 0)
-                {
-                    _player.DeployWeapon(AttackDirection.Up);
-                    Objects.Add(_player.Weapon.Projectile);
-                }
-      }
-			else if (SwinGame.KeyDown (KeyCode.WKey) && _world.Map[_player.Location.X, _player.Location.Y-1].Type != TileType.Rock && _player.Location.Y-1 != 0) {
-        _player.Location.Y -= 1;
-      }
+			//please test it, use b to buy or shift b (for super) and try attacking
+			//you have to buy a weapon first
+			if (SwinGame.KeyDown(KeyCode.VKey) && SwinGame.KeyDown(KeyCode.WKey))
+			{
+				if (_player.Weapon != null && _player.Weapon.Ammunition > 0)
+				{
+					_player.DeployWeapon(AttackDirection.Up);
+					Objects.Add(_player.Weapon.Projectile);
+				}
+			}
+			else if (SwinGame.KeyDown(KeyCode.WKey) && _world.Map[_player.Location.X, _player.Location.Y - 1].Type != TileType.Rock && _player.Location.Y - 1 != 0)
+			{
+				_player.Location.Y -= 1;
+			}
 
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.SKey))
-      {
-        if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
-          _player.DeployWeapon (AttackDirection.Down);
-          Objects.Add (_player.Weapon.Projectile);
-        }
-      }
-			else if (SwinGame.KeyDown (KeyCode.SKey) && _world.Map[_player.Location.X, _player.Location.Y+1].Type != TileType.Rock && _player.Location.Y+1 != 36) {
-        _player.Location.Y += 1;
-      } 
+			if (SwinGame.KeyDown(KeyCode.VKey) && SwinGame.KeyDown(KeyCode.SKey))
+			{
+				if (_player.Weapon != null && _player.Weapon.Ammunition > 0)
+				{
+					_player.DeployWeapon(AttackDirection.Down);
+					Objects.Add(_player.Weapon.Projectile);
+				}
+			}
+			else if (SwinGame.KeyDown(KeyCode.SKey) && _world.Map[_player.Location.X, _player.Location.Y + 1].Type != TileType.Rock && _player.Location.Y + 1 != 36)
+			{
+				_player.Location.Y += 1;
+			}
 
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.AKey))
-      {
-       if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
-          _player.DeployWeapon (AttackDirection.Left);
-          Objects.Add (_player.Weapon.Projectile);
-        }
-      }
-      else if (SwinGame.KeyDown (KeyCode.AKey) &&  _world.Map[_player.Location.X-1, _player.Location.Y].Type != TileType.Rock && _player.Location.X-1 != 0) {
-        _player.Location.X -= 1;
-      }
+			if (SwinGame.KeyDown(KeyCode.VKey) && SwinGame.KeyDown(KeyCode.AKey))
+			{
+				if (_player.Weapon != null && _player.Weapon.Ammunition > 0)
+				{
+					_player.DeployWeapon(AttackDirection.Left);
+					Objects.Add(_player.Weapon.Projectile);
+				}
+			}
+			else if (SwinGame.KeyDown(KeyCode.AKey) && _world.Map[_player.Location.X - 1, _player.Location.Y].Type != TileType.Rock && _player.Location.X - 1 != 0)
+			{
+				_player.Location.X -= 1;
+			}
 
-      if (SwinGame.KeyDown (KeyCode.VKey) && SwinGame.KeyDown (KeyCode.DKey))
-      {
-        if (_player.Weapon != null && _player.Weapon.Ammunition > 0) {
-          _player.DeployWeapon (AttackDirection.Right);
-          Objects.Add (_player.Weapon.Projectile);
-        }
-      }
-			else if (SwinGame.KeyDown (KeyCode.DKey) && _world.Map[_player.Location.X+1, _player.Location.Y].Type != TileType.Rock && _player.Location.X+1 != 52) {
-        _player.Location.X += 1;
-      }
+			if (SwinGame.KeyDown(KeyCode.VKey) && SwinGame.KeyDown(KeyCode.DKey))
+			{
+				if (_player.Weapon != null && _player.Weapon.Ammunition > 0)
+				{
+					_player.DeployWeapon(AttackDirection.Right);
+					Objects.Add(_player.Weapon.Projectile);
+				}
+			}
+			else if (SwinGame.KeyDown(KeyCode.DKey) && _world.Map[_player.Location.X + 1, _player.Location.Y].Type != TileType.Rock && _player.Location.X + 1 != 52)
+			{
+				_player.Location.X += 1;
+			}
 
-      if (SwinGame.KeyTyped (KeyCode.BKey)) 
-      {
-        _player.BuyWeapon (_player.Location,WeaponType.Normal);
-        Objects.Add (_player.Weapon);
-      }
+			if (SwinGame.KeyTyped(KeyCode.BKey))
+			{
+				_player.BuyWeapon(_player.Location, WeaponType.Normal);
+				Objects.Add(_player.Weapon);
+			}
 
-      if (SwinGame.KeyTyped (KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey)) 
-      {
-        _player.BuyWeapon (_player.Location, WeaponType.Super);
-        Objects.Add (_player.Weapon);
-      }
-      
-			//PLAYER 2 MOVEMENT/WEAPON KEY INPUT
-			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.UpKey))
-      {
-                if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0)
-                {
-                    _player2.DeployWeapon(AttackDirection.Up);
-                    Objects.Add(_player2.Weapon.Projectile);
-                }
-      }
-			else if (SwinGame.KeyDown (KeyCode.UpKey) && _world.Map[_player2.Location.X, _player2.Location.Y-1].Type != TileType.Rock && _player2.Location.Y-1 != 0) {
-        _player2.Location.Y -= 1;
-      }
+			if (SwinGame.KeyTyped(KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey))
+			{
+				_player.BuyWeapon(_player.Location, WeaponType.Super);
+				Objects.Add(_player.Weapon);
+			}
 
-			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.DownKey))
-      {
-        if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0) {
-          _player2.DeployWeapon (AttackDirection.Down);
-          Objects.Add (_player2.Weapon.Projectile);
-        }
-      }
-			else if (SwinGame.KeyDown (KeyCode.DownKey) && _world.Map[_player2.Location.X, _player2.Location.Y+1].Type != TileType.Rock && _player2.Location.Y+1 != 36) {
-        _player2.Location.Y += 1;
-      } 
+			if (_twoplayer == true)
+			{
+				//PLAYER 2 MOVEMENT/WEAPON KEY INPUT
+				if (SwinGame.KeyDown(KeyCode.OKey) && SwinGame.KeyDown(KeyCode.UpKey))
+				{
+					if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0)
+					{
+						_player2.DeployWeapon(AttackDirection.Up);
+						Objects.Add(_player2.Weapon.Projectile);
+					}
+				}
+				else if (SwinGame.KeyDown(KeyCode.UpKey) && _world.Map[_player2.Location.X, _player2.Location.Y - 1].Type != TileType.Rock && _player2.Location.Y - 1 != 0)
+				{
+					_player2.Location.Y -= 1;
+				}
 
-			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.LeftKey))
-      {
-       if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0) {
-          _player2.DeployWeapon (AttackDirection.Left);
-          Objects.Add (_player2.Weapon.Projectile);
-        }
-      }
-			else if (SwinGame.KeyDown (KeyCode.LeftKey) &&  _world.Map[_player2.Location.X-1, _player2.Location.Y].Type != TileType.Rock && _player2.Location.X-1 != 0) {
-        _player2.Location.X -= 1;
-      }
+				if (SwinGame.KeyDown(KeyCode.OKey) && SwinGame.KeyDown(KeyCode.DownKey))
+				{
+					if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0)
+					{
+						_player2.DeployWeapon(AttackDirection.Down);
+						Objects.Add(_player2.Weapon.Projectile);
+					}
+				}
+				else if (SwinGame.KeyDown(KeyCode.DownKey) && _world.Map[_player2.Location.X, _player2.Location.Y + 1].Type != TileType.Rock && _player2.Location.Y + 1 != 36)
+				{
+					_player2.Location.Y += 1;
+				}
 
-			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.RightKey))
-      {
-        if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0) {
-          _player2.DeployWeapon (AttackDirection.Right);
-          Objects.Add (_player2.Weapon.Projectile);
-        }
-      }
-			else if (SwinGame.KeyDown (KeyCode.RightKey) && _world.Map[_player2.Location.X+1, _player2.Location.Y].Type != TileType.Rock && _player2.Location.X+1 != 52) {
-        _player2.Location.X += 1;
-      }
+				if (SwinGame.KeyDown(KeyCode.OKey) && SwinGame.KeyDown(KeyCode.LeftKey))
+				{
+					if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0)
+					{
+						_player2.DeployWeapon(AttackDirection.Left);
+						Objects.Add(_player2.Weapon.Projectile);
+					}
+				}
+				else if (SwinGame.KeyDown(KeyCode.LeftKey) && _world.Map[_player2.Location.X - 1, _player2.Location.Y].Type != TileType.Rock && _player2.Location.X - 1 != 0)
+				{
+					_player2.Location.X -= 1;
+				}
 
-      if (SwinGame.KeyTyped (KeyCode.PKey)) 
-      {
-        _player2.BuyWeapon (_player2.Location,WeaponType.Normal);
-        Objects.Add (_player2.Weapon);
-      }
+				if (SwinGame.KeyDown(KeyCode.OKey) && SwinGame.KeyDown(KeyCode.RightKey))
+				{
+					if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0)
+					{
+						_player2.DeployWeapon(AttackDirection.Right);
+						Objects.Add(_player2.Weapon.Projectile);
+					}
+				}
+				else if (SwinGame.KeyDown(KeyCode.RightKey) && _world.Map[_player2.Location.X + 1, _player2.Location.Y].Type != TileType.Rock && _player2.Location.X + 1 != 52)
+				{
+					_player2.Location.X += 1;
+				}
 
-			if (SwinGame.KeyTyped (KeyCode.PKey) && SwinGame.KeyDown(KeyCode.JKey)) 
-      {
-        _player2.BuyWeapon (_player2.Location, WeaponType.Super);
-        Objects.Add (_player2.Weapon);
-      }
-      
-    }
+				if (SwinGame.KeyTyped(KeyCode.PKey))
+				{
+					_player2.BuyWeapon(_player2.Location, WeaponType.Normal);
+					Objects.Add(_player2.Weapon);
+				}
 
+				if (SwinGame.KeyTyped(KeyCode.PKey) && SwinGame.KeyDown(KeyCode.JKey))
+				{
+					_player2.BuyWeapon(_player2.Location, WeaponType.Super);
+					Objects.Add(_player2.Weapon);
+				}
+
+			}
+		}
 
         /// <summary>
         /// Get the current renderer to draw the game
