@@ -22,6 +22,7 @@ namespace Escapade
     public List<Enemy> EnemiesToBeRemoved;
     public List<Enemy> SpawnedEnemies;
     public Stack<GameState> _gameStates;
+    private bool firstGame = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Escapade.Escapade"/> class.
@@ -261,6 +262,14 @@ namespace Escapade
 
     public void SinglePlayerMode ()
     {
+      if (!firstGame) 
+      {
+          _player.Location.X = 7;
+          _player.Location.Y = 5;
+          _enemy.Location.X = 25;
+          _enemy.Location.Y = 20;
+          GetWorld ().GenerateMap ();
+      }
         PreInit ();
         Init ();
         PostInit ();
@@ -272,6 +281,15 @@ namespace Escapade
     public void TwoPlayerMode ()
     {
 			_twoplayer = true;
+
+      if (!firstGame) 
+      {
+          _player.Location.X = 7;
+          _player.Location.Y = 5;
+          _enemy.Location.X = 25;
+          _enemy.Location.Y = 20;
+          GetWorld ().GenerateMap ();
+      }
 
         PreInit ();
         Init ();
@@ -290,6 +308,7 @@ namespace Escapade
         SwinGame.DrawBitmap (GameResources.GameImage (status), 0, 0);
 
         SwinGame.ProcessEvents ();
+
         if (SwinGame.MouseClicked (MouseButton.LeftButton)) 
         {
 					if (_twoplayer == true)
@@ -297,22 +316,17 @@ namespace Escapade
 						_player2.Location.X = 45;
 						_player2.Location.Y = 30;
 					}
-
           proceed = true;
           initdone = false;
           initdone2 = false;
           initPlayer2 = false;
           _twoplayer = false;
-
-					_player.Location.X = 7;
-					_player.Location.Y = 5;
-					_enemy.Location.X = 25;
-					_enemy.Location.Y = 20;
-                    GetWorld().GenerateMap ();
+          firstGame = false;
         }
 
         SwinGame.RefreshScreen (60);
-      }	
+      }
+      SwinGame.ClearScreen (Color.White);
       _gameStates.Push (GameState.ViewingMainMenu);
       ControlGameState ();
     }
@@ -422,7 +436,7 @@ namespace Escapade
         public void Run()
         {
             SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
-      while (!SwinGame.WindowCloseRequested() && _gameStates.Peek() != GameState.ViewingMainMenu)
+      while (!SwinGame.WindowCloseRequested() && _gameStates.Peek() != GameState.QuittingGame)
             {
                 
                 SwinGame.ClearScreen(Color.White);
