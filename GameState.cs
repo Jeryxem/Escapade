@@ -7,7 +7,9 @@ namespace Escapade
     ViewingInstructions,
     SinglePlayerMode,
     TwoPlayerMode,
-    ViewingEndGame,
+    PlayerOneWins,
+    PlayerTwoWins,
+    SinglePlayerEndGame,
     QuittingGame
   }
 }

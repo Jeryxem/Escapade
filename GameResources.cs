@@ -54,6 +54,9 @@ namespace Escapade
       NewImage ("shift_b_key", "Shift B Key.png");
       NewImage ("v_key", "V Key.png");
       NewImage ("wasd_v_key", "WASD V Key.png");
+      NewImage ("player_one_wins", "player_one_wins.png");
+      NewImage ("player_two_wins", "player_two_wins.png");
+      NewImage ("you_died", "you_died.png");
     }
 
     public static void LoadSounds ()

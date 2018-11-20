@@ -135,8 +135,14 @@ namespace Escapade
       case GameState.TwoPlayerMode:
         TwoPlayerMode ();
         break;
-      case GameState.ViewingEndGame:
-        EndGame ();
+      case GameState.PlayerOneWins:
+        EndGame ("player_one_wins");
+        break;
+      case GameState.PlayerTwoWins:
+        EndGame ("player_two_wins");
+        break;
+      case GameState.SinglePlayerEndGame:
+        EndGame ("you_died");
         break;
       case GameState.QuittingGame:
         QuitGame ();
@@ -242,28 +248,47 @@ namespace Escapade
 
     public void SinglePlayerMode ()
     {
-      PreInit ();
-	    Init ();
+        PreInit ();
+        Init ();
         PostInit ();
-	    PrepareExtraComponents ();
-      Run ();
+        PrepareExtraComponents ();
+        Run ();
     }
 
 		bool _twoplayer = false;//if false, player 2 object wont be created - jeremy toh
     public void TwoPlayerMode ()
     {
 			_twoplayer = true;
-    	PreInit ();
-    	Init ();
-    	PostInit ();
-    	PrepareExtraComponents ();
+
+        PreInit ();
+        Init ();
+        PostInit ();
+        PrepareExtraComponents ();
 	    Run ();
     }
 
-    public void EndGame ()
+    public void EndGame (string status)
     {
+      bool proceed = false;
+
+      while (!proceed) 
+      {
+        SwinGame.ClearScreen(Color.White);
+        SwinGame.DrawBitmap (GameResources.GameImage (status), 0, 0);
+
+        SwinGame.ProcessEvents ();
+        if (SwinGame.MouseClicked (MouseButton.LeftButton)) 
+        {
+          proceed = true;
+          initdone = false;
+          initdone2 = false;
+          initPlayer2 = false;
+          _twoplayer = false;
+        }
+
+        SwinGame.RefreshScreen (60);
+      }
       _gameStates.Push (GameState.ViewingMainMenu);
-      ControlGameState ();
     }
 
     public void QuitGame ()
@@ -350,13 +375,13 @@ namespace Escapade
             helpList.Add("inventory frame");
             helpList.Add(" ");
             helpList.Add("~ Mouse Controls ~");
-			helpList.Add("B, LShift+B(P1), P, P+J(P2): Buy Weapon");
-			helpList.Add("F(P1), K(P2): On rock tile - dig rock");
-			helpList.Add("G(P1), L(P2): On air - place rock");
-			helpList.Add("V(P1), O(P2): Shoot ");
+			      helpList.Add("B, LShift+B(P1), P, P+J(P2): Buy Weapon");
+		      	helpList.Add("F(P1), K(P2): On rock tile - dig rock");
+			      helpList.Add("G(P1), L(P2): On air - place rock");
+		      	helpList.Add("V(P1), O(P2): Shoot ");
             helpList.Add("~ Keyboard controls ~");
             helpList.Add("E - Generate new minerals");
-			helpList.Add("M - Generate a new map(removed)");
+		       	helpList.Add("M - Generate a new map(removed)");
             helpList.Add("H - Toggle this frame");
             helpList.Add("Q - Toggle inventory frame");
             helpList.Add("Esc - Quit game");
@@ -371,7 +396,7 @@ namespace Escapade
         public void Run()
         {
             SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
-            while (!SwinGame.WindowCloseRequested())
+      while (!SwinGame.WindowCloseRequested() && _gameStates.Peek() != GameState.ViewingMainMenu)
             {
                 
                 SwinGame.ClearScreen(Color.White);
@@ -428,15 +453,15 @@ namespace Escapade
 
           if (_twoplayer) {
             if (_player.PlayerHitbyProjectile ((Projectile)e)) {
-              _gameStates.Push (GameState.ViewingEndGame);
+              _gameStates.Push (GameState.PlayerTwoWins);
               ControlGameState ();
             } else if (_player2.PlayerHitbyProjectile ((Projectile)e)) {
-              _gameStates.Push (GameState.ViewingEndGame);
+              _gameStates.Push (GameState.PlayerOneWins);
               ControlGameState ();
             }
           } else {
             if (_player.PlayerHitbyProjectile ((Projectile)e)) {
-              _gameStates.Push (GameState.ViewingEndGame);
+              _gameStates.Push (GameState.SinglePlayerEndGame);
               ControlGameState ();
             }
           }
@@ -449,28 +474,33 @@ namespace Escapade
               if (_e.CheckHit ((Projectile)e))
                 EnemiesToBeRemoved.Add (_e);
 
-              if (_twoplayer) {
-                if (_player.PlayerHitbyEnemy (_e)) {
-                  _gameStates.Push (GameState.ViewingEndGame);
-                  ControlGameState ();
-                } else if (_player2.PlayerHitbyEnemy (_e)) {
-                  _gameStates.Push (GameState.ViewingEndGame);
-                  ControlGameState ();
-                }
-              } else {
-                if (_player.PlayerHitbyEnemy (_e)) {
-                  _gameStates.Push (GameState.ViewingEndGame);
-                  ControlGameState ();
-                }
-              }
-
             }
           } else
             if (((Projectile)e).CheckObjectHit (_world, _enemy))
             ProjectilesToBeRemoved.Add ((Projectile)e);
+        } 
+        //JY- detect enemies hitting players
+        else if (e is Enemy) 
+        {
+          if (_twoplayer) {
+            if (_player.PlayerHitbyEnemy ((Enemy)e)) {
+              _gameStates.Push (GameState.PlayerTwoWins);
+              ControlGameState ();
+            } else if (_player2.PlayerHitbyEnemy ((Enemy)e)) {
+              _gameStates.Push (GameState.PlayerOneWins);
+              ControlGameState ();
+            }
+          }
+            else 
+            {
+              if (_player.PlayerHitbyEnemy ((Enemy)e)) 
+              {
+                _gameStates.Push (GameState.SinglePlayerEndGame);
+  				      ControlGameState ();
+              }
+            }
         }
       }
-
 
       foreach (Projectile p in ProjectilesToBeRemoved)
         Objects.Remove (p);

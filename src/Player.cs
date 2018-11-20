@@ -59,6 +59,7 @@ namespace Escapade
             MetaHandler.DisplayAmmunitionLevel(_weapon);
         }
 
+    //JY- added to check if the player is hit by a projectile
     public bool PlayerHitbyProjectile (Projectile projectile)
     {
       int playerX = Location.X * GlobalConstants.SIZE, playerY = Location.Y * GlobalConstants.SIZE;
@@ -105,10 +106,11 @@ namespace Escapade
       }
     }
 
+    //JY- added this to check if the player is hit by an enemy
       public bool PlayerHitbyEnemy (Enemy e)
       {
         int playerX = Location.X * GlobalConstants.SIZE, playerY = Location.Y * GlobalConstants.SIZE;
-        if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), e.Location.X * GlobalConstants.SIZE, e.Location.Y * GlobalConstants.SIZE, 30, 30))
+        if (SwinGame.PointInRect (SwinGame.PointAt (playerX, playerY), e.Location.X * GlobalConstants.SIZE, e.Location.Y * GlobalConstants.SIZE, 15, 15))
           return true;
         else
           return false;
