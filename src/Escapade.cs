@@ -119,6 +119,19 @@ namespace Escapade
             return _environment;
         }
 
+        /// <summary>
+        /// This method sets a formula that must be evaluated before deciding whether the player can progress to the next level. Added by Isaac.
+        /// </summary>
+        public void ControlLevels()
+        {
+            double formula = (GameLevel.GetLevel() * 5) + 1 + GameLevel.GetLevel() * GameLevel.GetLevel();
+            if (EnemiesToBeRemoved.Count >= formula)
+            {
+                GameLevel.IncreaseLevel();
+                EnemiesToBeRemoved.Clear(); // IA - Reset the count of enemies destroyed at each level.
+            }
+        }
+
     public void ControlGameState ()
     {
       switch (_gameStates.Peek ()) 
@@ -1186,6 +1199,9 @@ namespace Escapade
 				}
 
 			}
+
+            // IA - After computing everything, determine when/if the level should be increased.
+            ControlLevels();
 		}
 
         /// <summary>
@@ -1200,8 +1216,7 @@ namespace Escapade
             MetaHandler.DisplayTimer(); // IA - Make the timer visible
             MetaHandler.DisplayGameLevel(); // IA - Display the game level
             MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
-            MetaHandler.DisplayEnemyHitCount(EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
-            MetaHandler.DisplayExistingEnemies(SpawnedEnemies); // IA - Display how many enemies have been created.
+            MetaHandler.DisplayEnemiesInfo(SpawnedEnemies, EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
 
             // IA - Only display the worth of minerals while the game runs.
             if (_gameStates.Peek() == GameState.SinglePlayerMode || _gameStates.Peek() == GameState.TwoPlayerMode)

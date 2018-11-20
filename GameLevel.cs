@@ -6,85 +6,29 @@ using System.Threading.Tasks;
 
 namespace Escapade
 {
-    public class GameLevel
+    public static class GameLevel
     {
-        private int levelNo;
-        private List<long> progressTimeTracker;
+        private static int _levelNo = 1;
 
-        public GameLevel()
+        public static int GetLevel()
+        { return _levelNo; }
+
+        public static void SetLevel(int value)
+        { _levelNo = value; }
+
+        public static void IncreaseLevel()
         {
-            levelNo = 1;
+            _levelNo++;
         }
 
-        public int Level
+        public static void ResetLevel()
         {
-            get { return levelNo; }
-            set { levelNo = value; }
+            _levelNo = 1;
         }
 
-        public List<long> Tracker
+        public static String PrintLevel()
         {
-            get { return progressTimeTracker; }
-        }
-
-        public long this[int index]
-        {
-            get
-            {
-                try
-                {
-                    return progressTimeTracker[index];
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    return 0;
-                }
-            }
-        }
-
-        public void AddToTracker(long timeTicks)
-        {
-            progressTimeTracker.Add(timeTicks);
-        }
-
-        public void RemoveFromTracker(long timeTicks)
-        {
-            progressTimeTracker.Remove(timeTicks);
-        }
-
-        public void ClearTracker()
-        {
-            progressTimeTracker.Clear();
-        }
-
-        public double AverageLevelProgressTime ()
-        {
-            double average = 0;
-            long totalTime = 0;
-
-            foreach (long timeTick in progressTimeTracker)
-            {
-                totalTime += timeTick;
-            }
-
-            average = totalTime / progressTimeTracker.Count;
-
-            return Math.Floor(average);
-        }
-
-        public void IncreaseLevel()
-        {
-            levelNo++;
-        }
-
-        public void DecreaseLevel()
-        {
-            levelNo--;
-        }
-
-        public String PrintLevel()
-        {
-            return levelNo.ToString();
+            return _levelNo.ToString();
         }
     }
 }

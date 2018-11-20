@@ -15,7 +15,7 @@ namespace Escapade.src.gui
     /// </summary>
     public static class MetaHandler
     {
-        
+
         public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Panel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
         public static Panel enemiesPanel = SwinGame.LoadPanelNamed("Enemies Panel", "Extra1.txt");
         public static Panel inventoryPanel = SwinGame.LoadPanelNamed("Inventory Panel", "Extra2.txt");
@@ -24,14 +24,14 @@ namespace Escapade.src.gui
         private static int contentSecondLine = GlobalConstants.WORLD_HEIGHT + 48;
         private static int contentRightAlign = GlobalConstants.WORLD_WIDTH + 10;
         public static Countdown timer = new Countdown();
+
         public static String hungerIndication;
         public static double hungerIndicatorWidth = 150;
         public static Color hungerIndicatorColor;
-        public static GameLevel gameLevel = new GameLevel();
 
         public static int Map(double indicator)
         {
-            return (int) Math.Ceiling(indicator / 1.5);
+            return (int)Math.Ceiling(indicator / 1.5);
         }
 
         public static void DecreaseEnergy()
@@ -101,8 +101,8 @@ namespace Escapade.src.gui
         /// <summary>
         /// In the next update, this method will pull the timer info from a Countdown object.
         /// </summary>
-        public static void DisplayTimer ()
-        {            
+        public static void DisplayTimer()
+        {
             SwinGame.DrawText("Time: " + timer.ShowTime(), Color.White, 20, contentFirstLine);
         }
 
@@ -112,9 +112,9 @@ namespace Escapade.src.gui
 
             SwinGame.DrawText("Your energy levels: ", Color.White, 200, contentFirstLine);
 
-            SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 12, (int) hungerIndicatorWidth, 20);
+            SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 12, (int)hungerIndicatorWidth, 20);
 
-            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + (int) hungerIndicatorWidth + 5, contentFirstLine);
+            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + (int)hungerIndicatorWidth + 5, contentFirstLine);
 
             SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 37);
         }
@@ -124,7 +124,7 @@ namespace Escapade.src.gui
         /// </summary>
         public static void DisplayGameLevel()
         {
-            SwinGame.DrawText("Level: " + gameLevel.PrintLevel(), Color.White, GlobalConstants.WORLD_WIDTH - 150, contentFirstLine);
+            SwinGame.DrawText("Level: " + GameLevel.PrintLevel(), Color.White, GlobalConstants.WORLD_WIDTH - 150, contentFirstLine);
         }
 
         public static void DisplayAmmunitionLevel(Weapon weapon)
@@ -151,13 +151,10 @@ namespace Escapade.src.gui
             }
         }
 
-        public static void DisplayExistingEnemies(List<Enemy> existingEnemies)
+        public static void DisplayEnemiesInfo(List<Enemy> existingEnemies, List<Enemy> enemiesHit)
         {
             SwinGame.DrawText("Red Enemies: " + existingEnemies.Count.ToString(), Color.Yellow, contentRightAlign, 35);
-        }
 
-        public static void DisplayEnemyHitCount(List<Enemy> enemiesHit)
-        {
             SwinGame.DrawText("Successful hits: " + enemiesHit.Count.ToString(), Color.Yellow, contentRightAlign, 15);
         }
 
