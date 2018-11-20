@@ -350,10 +350,10 @@ namespace Escapade
             helpList.Add("inventory frame");
             helpList.Add(" ");
             helpList.Add("~ Mouse Controls ~");
-            helpList.Add("Left: On air tile - move here");
-			helpList.Add("F(P1), I(P2): On rock tile - dig rock");
-			helpList.Add("G(P1), O(P2): On air - place rock");
-            helpList.Add(" ");
+			helpList.Add("B, LShift+B(P1), P, P+J(P2): Buy Weapon");
+			helpList.Add("F(P1), K(P2): On rock tile - dig rock");
+			helpList.Add("G(P1), L(P2): On air - place rock");
+			helpList.Add("V(P1), O(P2): Shoot ");
             helpList.Add("~ Keyboard controls ~");
             helpList.Add("E - Generate new minerals");
 			helpList.Add("M - Generate a new map(removed)");
@@ -699,7 +699,7 @@ namespace Escapade
 
 			//PLAYER 2 MINE/BUILD ROCKS INPUT
 	  	//mine rocks/minerals right
-			if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyReleased(KeyCode.IKey)) 
+			if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 								GetEnvironment();
@@ -739,7 +739,7 @@ namespace Escapade
 	 		}
 
 			//mine left
-			if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyReleased(KeyCode.IKey)) 
+			if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -779,7 +779,7 @@ namespace Escapade
 			}
 
 			//mine top
-			if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyReleased(KeyCode.IKey)) 
+			if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -819,7 +819,7 @@ namespace Escapade
 			}
 
 			//mine bottom
-			if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyReleased(KeyCode.IKey)) 
+			if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyReleased(KeyCode.KKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -859,7 +859,7 @@ namespace Escapade
 			}
 
 			//build rock right
-			if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyDown(KeyCode.OKey)) 
+			if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyDown(KeyCode.LKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -877,7 +877,7 @@ namespace Escapade
 	 	   }
 
 			//build rock left
-			if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyDown(KeyCode.OKey)) 
+			if (SwinGame.KeyDown(KeyCode.LeftKey) && SwinGame.KeyDown(KeyCode.LKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -895,7 +895,7 @@ namespace Escapade
 	 	   }
 
 			//build rock up
-			if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyDown(KeyCode.OKey)) 
+			if (SwinGame.KeyDown(KeyCode.UpKey) && SwinGame.KeyDown(KeyCode.LKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -913,7 +913,7 @@ namespace Escapade
 	 	   }
 
 			//build rock down
-			if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyDown(KeyCode.OKey)) 
+			if (SwinGame.KeyDown(KeyCode.DownKey) && SwinGame.KeyDown(KeyCode.LKey)) 
 			{
 				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
 				GetEnvironment();
@@ -1017,7 +1017,7 @@ namespace Escapade
       }
       
 			//PLAYER 2 MOVEMENT/WEAPON KEY INPUT
-			if (SwinGame.KeyDown (KeyCode.LKey) && SwinGame.KeyDown (KeyCode.UpKey))
+			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.UpKey))
       {
                 if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0)
                 {
@@ -1029,7 +1029,7 @@ namespace Escapade
         _player2.Location.Y -= 1;
       }
 
-			if (SwinGame.KeyDown (KeyCode.LKey) && SwinGame.KeyDown (KeyCode.DownKey))
+			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.DownKey))
       {
         if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0) {
           _player2.DeployWeapon (AttackDirection.Down);
@@ -1040,7 +1040,7 @@ namespace Escapade
         _player2.Location.Y += 1;
       } 
 
-			if (SwinGame.KeyDown (KeyCode.LKey) && SwinGame.KeyDown (KeyCode.LeftKey))
+			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.LeftKey))
       {
        if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0) {
           _player2.DeployWeapon (AttackDirection.Left);
@@ -1051,7 +1051,7 @@ namespace Escapade
         _player2.Location.X -= 1;
       }
 
-			if (SwinGame.KeyDown (KeyCode.LKey) && SwinGame.KeyDown (KeyCode.RightKey))
+			if (SwinGame.KeyDown (KeyCode.OKey) && SwinGame.KeyDown (KeyCode.RightKey))
       {
         if (_player2.Weapon != null && _player2.Weapon.Ammunition > 0) {
           _player2.DeployWeapon (AttackDirection.Right);
@@ -1062,13 +1062,13 @@ namespace Escapade
         _player2.Location.X += 1;
       }
 
-      if (SwinGame.KeyTyped (KeyCode.KKey)) 
+      if (SwinGame.KeyTyped (KeyCode.PKey)) 
       {
         _player2.BuyWeapon (_player2.Location,WeaponType.Normal);
         Objects.Add (_player2.Weapon);
       }
 
-			if (SwinGame.KeyTyped (KeyCode.KKey) && SwinGame.KeyDown(KeyCode.JKey)) 
+			if (SwinGame.KeyTyped (KeyCode.PKey) && SwinGame.KeyDown(KeyCode.JKey)) 
       {
         _player2.BuyWeapon (_player2.Location, WeaponType.Super);
         Objects.Add (_player2.Weapon);
