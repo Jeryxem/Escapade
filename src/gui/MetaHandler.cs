@@ -161,5 +161,27 @@ namespace Escapade.src.gui
             SwinGame.DrawText("Successful hits: " + enemiesHit.Count.ToString(), Color.Yellow, contentRightAlign, 15);
         }
 
+        public static void DisplayRate(double[] mineralWorth)
+        {
+            Font arial = SwinGame.LoadFont("arial", 14);
+            // IA - Make sure that the game is not already reading text.
+            if (SwinGame.ReadingText())
+            {
+                SwinGame.EndReadingText();
+            }
+
+            // IA - Display the total value of minerals while the game runs
+            SwinGame.DrawText("Diamond worth: " + mineralWorth[0].ToString(), Color.White, 810, 210);
+
+            // IA - Display the total value of minerals while the game runs
+            SwinGame.DrawText("Emerald worth: " + mineralWorth[1].ToString(), Color.White, 810, 230);
+
+            // IA - Display the total value of minerals while the game runs
+            SwinGame.DrawText("Ruby worth: " + mineralWorth[2].ToString(), Color.White, 810, 250);
+
+            // IA - Display the total value of minerals while the game runs
+            SwinGame.DrawText("Sapphire: " + mineralWorth[3].ToString(), Color.White, 810, 270);
+        }
+
     }
 }

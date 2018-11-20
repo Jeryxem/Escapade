@@ -1196,6 +1196,12 @@ namespace Escapade
             MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
             MetaHandler.DisplayEnemyHitCount(EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
             MetaHandler.DisplayExistingEnemies(SpawnedEnemies); // IA - Display how many enemies have been created.
+
+            // IA - Only display the worth of minerals while the game runs.
+            if (_gameStates.Peek() == GameState.SinglePlayerMode || _gameStates.Peek() == GameState.TwoPlayerMode)
+            {
+                MetaHandler.DisplayRate(GetPlayer().Inventory.GetTotalValue());
+            }
         }
     }
 }

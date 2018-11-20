@@ -240,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Countdown.cs" />
+    <Compile Include="Food.cs" />
     <Compile Include="GameLevel.cs" />
     <Compile Include="src\Entry.cs" />
     <Compile Include="src\gui\MetaHandler.cs" />

@@ -40,6 +40,11 @@ namespace Escapade
     	return _Music [music];
     }
 
+    public static void LoadFonts()
+        {
+            SwinGame.LoadFont("Arial", 20);
+        }
+
     public static void LoadImages ()
     {
       NewImage ("main_menu", "main_menu.png");
