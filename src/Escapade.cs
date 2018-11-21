@@ -1134,14 +1134,22 @@ namespace Escapade
 
 			if (SwinGame.KeyTyped(KeyCode.BKey))
 			{
-				_player.BuyWeapon(_player.Location, WeaponType.Normal);
-				Objects.Add(_player.Weapon);
+        if (GetPlayer ().Inventory.MineralPoints >= 20) 
+        {
+          _player.BuyWeapon (_player.Location, WeaponType.Normal);
+          Objects.Add (_player.Weapon);
+          _player.Inventory.DeductMineralPoints (20);
+        }
 			}
 
 			if (SwinGame.KeyTyped(KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey))
 			{
-				_player.BuyWeapon(_player.Location, WeaponType.Super);
-				Objects.Add(_player.Weapon);
+        if (GetPlayer ().Inventory.MineralPoints >= 30) 
+        {
+          _player.BuyWeapon (_player.Location, WeaponType.Super);
+          Objects.Add (_player.Weapon);
+          _player.Inventory.DeductMineralPoints (30);
+        }
 			}
 
 			if (_twoplayer == true)
@@ -1201,14 +1209,24 @@ namespace Escapade
 
 				if (SwinGame.KeyTyped(KeyCode.PKey))
 				{
-					_player2.BuyWeapon(_player2.Location, WeaponType.Normal);
-					Objects.Add(_player2.Weapon);
+
+          if (GetPlayer2 ().Inventory.MineralPoints >= 20) 
+          {
+            _player2.BuyWeapon (_player2.Location, WeaponType.Normal);
+            Objects.Add (_player2.Weapon);
+            _player2.Inventory.DeductMineralPoints (20);
+          }
 				}
 
 				if (SwinGame.KeyTyped(KeyCode.PKey) && SwinGame.KeyDown(KeyCode.JKey))
 				{
-					_player2.BuyWeapon(_player2.Location, WeaponType.Super);
-					Objects.Add(_player2.Weapon);
+
+          if (GetPlayer2 ().Inventory.MineralPoints >= 30) 
+          {
+            _player2.BuyWeapon (_player2.Location, WeaponType.Super);
+            Objects.Add (_player2.Weapon);
+            _player2.Inventory.DeductMineralPoints (30);
+          }
 				}
 
 			}
