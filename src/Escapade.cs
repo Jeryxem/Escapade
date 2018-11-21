@@ -91,18 +91,46 @@ namespace Escapade
         {
            if (_enemy == null)
             {
-                Location l = new Location(25, 20);
-                _enemy = new Enemy(0, "Boss Enemy", l, 1, 0); // to differentiate the enemy
+				Random r = new Random();
+				int morerandom = r.Next(0, 19);
+			  	if (morerandom < 10)
+				{
+					Location l = new Location(25, 20);
+					_enemy = new Enemy(0, "Boss Enemy", l, 0, 1); // to differentiate the enemy
+				}
+				else if (morerandom >= 10) 
+				{
+					Location l = new Location(25, 20);
+					_enemy = new Enemy(0, "Boss Enemy", l, 0, 2); // to differentiate the enemy
+				}
             }
             return _enemy;
         }
 
 		public static Enemy SpawnMoreEnemy()
 		{
-			
-			Location l = new Location(25, 20);
-			_spawnenemy = new Enemy(0, "Enemy", l, 1, 0);
-
+			Random r2 = new Random();
+			int morerandom2 = r2.Next(0, 39);
+			if (morerandom2 < 10)
+			{
+				Location l = new Location(25, 20);
+				_spawnenemy = new Enemy(0, "Enemy", l, 0, 1);
+			}
+			else if (morerandom2 >= 10 && morerandom2 < 20)
+			{
+				Location l = new Location(25, 20);
+				_spawnenemy = new Enemy(0, "Enemy", l, 0, 2);
+			}
+			else if (morerandom2 >= 20 && morerandom2 < 30)
+			{
+				Location l = new Location(25, 20);
+				_spawnenemy = new Enemy(0, "Enemy", l, 1, 0);
+			}
+			else if (morerandom2 >= 30 && morerandom2 < 40)
+			{
+				Location l = new Location(25, 20);
+				_spawnenemy = new Enemy(0, "Enemy", l, 2, 0);
+			}
 			return _spawnenemy;  
 		}
 
