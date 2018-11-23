@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Escapade.item;
 using SwinGameSDK;
 
 /// <summary>
@@ -167,10 +168,10 @@ namespace Escapade.src.gui
         {
             Font arial = SwinGame.LoadFont("arial", 14);
             // IA - Make sure that the game is not already reading text.
-            if (SwinGame.ReadingText())
+            /* if (SwinGame.ReadingText())
             {
                 SwinGame.EndReadingText();
-            }
+            } */
 
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("YOUR MINERAL POINTS", Color.White, contentRightAlign, 210);
@@ -186,6 +187,7 @@ namespace Escapade.src.gui
 
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Sapphire: " + mineralWorth[3].ToString(), Color.White, contentRightAlign, 315);
+            
         }
 
     }

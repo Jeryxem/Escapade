@@ -85,19 +85,22 @@ namespace Escapade
     private static void FreeImages ()
     {
     	foreach (Bitmap obj in _Images.Values) {
-    		SwinGame.FreeBitmap (obj);      }
+    		SwinGame.FreeBitmap (obj);
+      }
     }
 
     private static void FreeSounds ()
     {
     	foreach (SoundEffect obj in _Sounds.Values) {
-    		Audio.FreeSoundEffect (obj);      }
+    		Audio.FreeSoundEffect (obj);
+      }
     }
 
     private static void FreeMusic ()
     {
     	foreach (Music obj in _Music.Values) {
-    		Audio.FreeMusic (obj);      }
+    		Audio.FreeMusic (obj);
+      }
     }
 
     public static void FreeResources ()

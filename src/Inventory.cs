@@ -27,7 +27,7 @@ namespace Escapade.item
         {
             ItemList.Add(i);
             //JY- checks everytime it enters
-            CalculateMineralPoints ();
+            // CalculateMineralPoints ();
         }
 
         public void RemoveItem(Item i)

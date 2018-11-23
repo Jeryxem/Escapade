@@ -18,6 +18,7 @@ namespace Escapade
         static Enemy _enemy;
 		static Enemy _spawnenemy;
         public List<Entity> Objects;
+        public List<Mineral> Minerals = new List<Mineral>(); // IA - The list that will contain mined minerals
         public List<Projectile> ProjectilesToBeRemoved;
     public List<Enemy> EnemiesToBeRemoved;
     public List<Enemy> SpawnedEnemies;
@@ -603,170 +604,47 @@ namespace Escapade
 			}
 
 
-			/*if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
-			  GetEnvironment ().HandleGuiEvent (GuiEvent.MouseLeft, new Location ((int)SwinGame.MouseX (), (int)SwinGame.MouseY ()));
-			}*/
+            //PLAYER 1 MINE/BUILD ROCKS INPUT
+            //mine rocks/minerals right
+            if (SwinGame.KeyDown(KeyCode.FKey))
+            {
+                int x = _player.Location.X;
+                int y = _player.Location.Y;
+                if (SwinGame.KeyReleased(KeyCode.DKey))
+                {
+                    x += 1;
+                }
+                else if (SwinGame.KeyReleased(KeyCode.SKey))
+                {
+                    y += 1;
+                }
+                else if (SwinGame.KeyReleased(KeyCode.AKey))
+                {
+                    x -= 1;
+                }
+                else if (SwinGame.KeyReleased(KeyCode.WKey))
+                {
+                    y -= 1;
+                }
 
-			//PLAYER 1 MINE/BUILD ROCKS INPUT
-			//mine rocks/minerals right
-			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyReleased(KeyCode.FKey))
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player.Location.X + 1);
-				int y = (_player.Location.Y);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
-					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer().Inventory.AddItem(tile.Mineral);
-					}
-
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
-						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
-						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
-					}
-				}
-			}
-
-			//mine left
-			if (SwinGame.KeyDown(KeyCode.AKey) && SwinGame.KeyReleased(KeyCode.FKey))
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player.Location.X - 1);
-				int y = (_player.Location.Y);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
-					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer().Inventory.AddItem(tile.Mineral);
-					}
-
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
-						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
-						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
-					}
-				}
-			}
-
-			//mine top
-			if (SwinGame.KeyDown(KeyCode.WKey) && SwinGame.KeyReleased(KeyCode.FKey))
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player.Location.X);
-				int y = (_player.Location.Y - 1);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
-					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer().Inventory.AddItem(tile.Mineral);
-					}
-
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
-						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
-						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
-					}
-				}
-			}
-
-			//mine bottom
-			if (SwinGame.KeyDown(KeyCode.SKey) && SwinGame.KeyReleased(KeyCode.FKey))
-			{
-				//GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
-				GetEnvironment();
-				int x = (_player.Location.X);
-				int y = (_player.Location.Y + 1);
-				Frame f = GuiEnvironment.GetRenderer().GetActiveFrame(new Location(x, y));
-				if (f == null)
-				{
-					Tile tile = _world.Map[x, y];
-					if (tile.Type == TileType.Rock)
-					{
-						_world.Map[x, y] = new Tile(TileType.Air);
-						if (tile.Mineral != null)
-							GetPlayer().Inventory.AddItem(tile.Mineral);
-					}
-
-					Frame inv = GuiEnvironment.GetRenderer().GetFrame("inventory");
-					if (inv != null)
-					{
-						List<string> minerals = GetPlayer().Inventory.ItemList.Select(i => i.Name).ToList();
-						Dictionary<string, int> mineralCount = new Dictionary<string, int>();
-						foreach (string s in minerals)
-						{
-							if (mineralCount.ContainsKey(s))
-							{
-								mineralCount[s]++;
-							}
-							else
-							{
-								mineralCount[s] = 1;
-							}
-						}
-						minerals = mineralCount.Select(kvp => kvp.Key + " - " + kvp.Value).ToList();
-						inv.Content = minerals;
-					}
-				}
-			}
+                try
+                {
+                    if (_world.Map[x, y].Type == TileType.Rock)
+                    {
+                        _world.Map[x, y].Type = TileType.Air;
+                        if (_world.Map[x, y].Mineral != null)
+                        {
+                            GetPlayer().Inventory.AddItem(_world.Map[x, y].Mineral);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    // IA - in case of an exception, force the reassignment of x and y using the player's location.
+                    x = _player.Location.X;
+                    y = _player.Location.Y;
+                }
+            }
 
 			//build rock right
 			if (SwinGame.KeyDown(KeyCode.DKey) && SwinGame.KeyDown(KeyCode.GKey))
