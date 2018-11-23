@@ -25,16 +25,15 @@ namespace Escapade
       _weaponType = weaponType;
       _equipped = false;
       _owner = owner;
+            _ammunition = 0; // IA - No longer fixing a number of projectiles here. This is controlled in Escapade.cs to allow the player to purchase as much as they can afford with mineral points.
 
       if (_weaponType == WeaponType.Normal) {
         _name = NORMAL_NAME;
         _damage = NORMAL_DAMAGE;
-        _ammunition = 40;
         _projectileSpeed = NORMAL_PROJECTILE_SPEED;
       } else {
         _name = SUPER_NAME;
         _damage = SUPER_DAMAGE;
-        _ammunition = 20;
         _projectileSpeed = SUPER_PROJECTILE_SPEED;
       }
     }

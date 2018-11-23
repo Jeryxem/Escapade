@@ -6,22 +6,21 @@ namespace Escapade.item
     public class Inventory
     {
         List<Item> _itemlist;
-    List<Item> _itemToBeRemoved;
-    private int _mineralPoints = 0;
+        List<Item> _itemToBeRemoved;
 
-    public List<Item> ItemList
-    {
-        get
+        public List<Item> ItemList
         {
-            return _itemlist;
+            get
+            {
+                return _itemlist;
+            }
         }
-    }
 
-    public Inventory()
-    {
-      _itemlist = new List<Item>();
-      _itemToBeRemoved = new List<Item> ();
-    }
+        public Inventory()
+        {
+            _itemlist = new List<Item>();
+            _itemToBeRemoved = new List<Item>();
+        }
 
         public void AddItem(Item i)
         {
@@ -35,10 +34,18 @@ namespace Escapade.item
             ItemList.Remove(i);
         }
 
-    public int MineralPoints 
-    {
-      get { return _mineralPoints; }
-    }
+        /// <summary>
+        /// Return the total value of minerals.
+        /// </summary>
+        public double GetMineralPoints()
+        {
+            double mineralpoints = 0;
+            foreach (Mineral mineral in _itemlist)
+            {
+                mineralpoints += mineral.Value;
+            }
+            return mineralpoints;
+        }
 
         /// <summary>
         /// This method returns the total worth of minerals that the player has gathered - Added by Isaac
@@ -65,43 +72,63 @@ namespace Escapade.item
             return mineralTotalArray;
         }
 
-    // Added by JY- to calculate the mineral points 
-    public void CalculateMineralPoints ()
-    {
-      foreach (Mineral item in ItemList) 
-      {
-        if (item is Diamond) 
+        // Added by JY- to calculate the mineral points 
+        /*
+        public void CalculateMineralPoints ()
         {
-          _mineralPoints += 10;
-          _itemToBeRemoved.Add (item);
-        } 
-        else if (item is Emerald) 
-        {
-          _mineralPoints += 5;
-          _itemToBeRemoved.Add(item);
-        } 
-        else if (item is Ruby) 
-        {
-          _mineralPoints += 3;
-           _itemToBeRemoved.Add(item);
-        } 
-        else if (item is Sapphire) 
-        {
-          _mineralPoints += 1;
-           _itemToBeRemoved.Add(item);
+          foreach (Mineral item in ItemList) 
+          {
+            if (item is Diamond) 
+            {
+              _mineralPoints += 10;
+              _itemToBeRemoved.Add (item);
+            } 
+            else if (item is Emerald) 
+            {
+              _mineralPoints += 5;
+              _itemToBeRemoved.Add(item);
+            } 
+            else if (item is Ruby) 
+            {
+              _mineralPoints += 3;
+               _itemToBeRemoved.Add(item);
+            } 
+            else if (item is Sapphire) 
+            {
+              _mineralPoints += 1;
+               _itemToBeRemoved.Add(item);
+            }
+
+          }
+          foreach (Mineral mineral in _itemToBeRemoved) 
+          {
+            _itemlist.Remove (mineral);
+          }
         }
-        
-      }
-      foreach (Mineral mineral in _itemToBeRemoved) 
-      {
-        _itemlist.Remove (mineral);
-      }
+            */
+
+        public void DeductMineralPoints(WeaponType type)
+        {
+            int weaponCost = 0;
+            int payableAmount = 0;
+
+            if (type == WeaponType.Normal)
+            {
+                weaponCost = 30;
+            }
+            else if (type == WeaponType.Super)
+            {
+                weaponCost = 20;
+            }
+            
+            for (int i = 0; i < _itemlist.Count; i++)
+            {
+                payableAmount += ((Mineral)_itemlist[i]).Value; // IA - cast to a Mineral if necessary
+                _itemlist.RemoveAt(i); // IA - Remove the mineral in question
+                if (payableAmount >= weaponCost)
+                    break;
+            }
+        }
     }
 
-    public void DeductMineralPoints (int deduction)
-    {
-      _mineralPoints -= deduction;
-    }
-
-    }
 }

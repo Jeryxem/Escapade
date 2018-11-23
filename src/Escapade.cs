@@ -606,6 +606,7 @@ namespace Escapade
 
             //PLAYER 1 MINE/BUILD ROCKS INPUT
             //mine rocks/minerals right
+            // IA - Rewritten the mining logic for the single player
             if (SwinGame.KeyDown(KeyCode.FKey))
             {
                 int x = _player.Location.X;
@@ -1038,24 +1039,26 @@ namespace Escapade
 				_player.Location.X += 1;
 			}
 
-			if (SwinGame.KeyTyped(KeyCode.BKey))
-			{
-        if (GetPlayer ().Inventory.MineralPoints >= 20) 
-        {
-          _player.BuyWeapon (_player.Location, WeaponType.Normal);
-          Objects.Add (_player.Weapon);
-          _player.Inventory.DeductMineralPoints (20);
-        }
-			}
+            if (SwinGame.KeyTyped(KeyCode.BKey))
+            {
+                if (GetPlayer().Inventory.GetMineralPoints() >= 20)
+                {
+                    _player.BuyWeapon(_player.Location, WeaponType.Normal);
+                    _player.Weapon.Ammunition += 20;
+                    Objects.Add(_player.Weapon);
+                    _player.Inventory.DeductMineralPoints(WeaponType.Super);
+                }
+            }
 
 			if (SwinGame.KeyTyped(KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey))
 			{
-        if (GetPlayer ().Inventory.MineralPoints >= 30) 
-        {
-          _player.BuyWeapon (_player.Location, WeaponType.Super);
-          Objects.Add (_player.Weapon);
-          _player.Inventory.DeductMineralPoints (30);
-        }
+                if (GetPlayer().Inventory.GetMineralPoints() >= 30)
+                {
+                    _player.BuyWeapon(_player.Location, WeaponType.Super);
+                    _player.Weapon.Ammunition += 30;
+                    Objects.Add(_player.Weapon);
+                    _player.Inventory.DeductMineralPoints(WeaponType.Super);
+                }
 			}
 
 			if (_twoplayer == true)
@@ -1116,23 +1119,27 @@ namespace Escapade
 				if (SwinGame.KeyTyped(KeyCode.PKey))
 				{
 
+                    /*
           if (GetPlayer2 ().Inventory.MineralPoints >= 20) 
           {
             _player2.BuyWeapon (_player2.Location, WeaponType.Normal);
             Objects.Add (_player2.Weapon);
             _player2.Inventory.DeductMineralPoints (20);
           }
+          */
 				}
 
 				if (SwinGame.KeyTyped(KeyCode.PKey) && SwinGame.KeyDown(KeyCode.JKey))
 				{
 
-          if (GetPlayer2 ().Inventory.MineralPoints >= 30) 
+          /*
+           * if (GetPlayer2 ().Inventory.MineralPoints >= 30) 
           {
             _player2.BuyWeapon (_player2.Location, WeaponType.Super);
             Objects.Add (_player2.Weapon);
             _player2.Inventory.DeductMineralPoints (30);
           }
+          */
 				}
 
 			}
