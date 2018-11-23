@@ -1,4 +1,4 @@
-using Escapade.src.mineral.gemstone;
+using Escapade.src.mineral;
 using System.Collections.Generic;
 
 namespace Escapade.item

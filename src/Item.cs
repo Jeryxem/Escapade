@@ -2,12 +2,12 @@
 {
 	public abstract class Item
 	{
-		int _id;
+		string _id;
 		int _meta;
 		string _name;
 
 		#region Properties
-		public int Id {
+		public string Id {
 			get {
 				return _id;
 			}
@@ -33,9 +33,9 @@
 		}
 		#endregion Properties
 
-		protected Item (int id, int meta, string name)
+		protected Item (string id, int meta, string name)
 		{
-			Id = id;
+			_id = id;
 			Meta = meta;
 			Name = name;
 		}

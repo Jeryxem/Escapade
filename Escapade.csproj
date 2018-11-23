@@ -250,11 +250,10 @@
     <Compile Include="src\Entry.cs" />
     <Compile Include="src\gui\MetaHandler.cs" />
     <Compile Include="src\Location.cs" />
-    <Compile Include="src\mineral\gemstone\Sapphire.cs" />
-    <Compile Include="src\mineral\gemstone\Ruby.cs" />
-    <Compile Include="src\mineral\gemstone\Emerald.cs" />
-    <Compile Include="src\mineral\gemstone\Diamond.cs" />
-    <Compile Include="src\mineral\gemstone\Gemstone.cs" />
+    <Compile Include="src\mineral\Sapphire.cs" />
+    <Compile Include="src\mineral\Ruby.cs" />
+    <Compile Include="src\mineral\Emerald.cs" />
+    <Compile Include="src\mineral\Diamond.cs" />
     <Compile Include="src\mineral\Mineral.cs" />
     <Compile Include="src\MovableObject.cs" />
     <Compile Include="src\Entity.cs" />

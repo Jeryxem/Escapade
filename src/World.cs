@@ -1,6 +1,6 @@
 using System;
 using SwinGameSDK;
-using Escapade.src.mineral.gemstone;
+using Escapade.src.mineral;
 using Escapade.item;
 using System.Collections.Generic;
 

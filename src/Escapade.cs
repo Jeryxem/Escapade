@@ -1165,7 +1165,7 @@ namespace Escapade
             // IA - Only display the worth of minerals while the game runs.
             if (_gameStates.Peek() == GameState.SinglePlayerMode || _gameStates.Peek() == GameState.TwoPlayerMode)
             {
-                MetaHandler.DisplayRate(GetPlayer().Inventory.GetTotalValue());
+                MetaHandler.DisplayRate(GetPlayer().Inventory.GetTotalValue(), GetPlayer().Inventory);
             }
         }
     }

@@ -164,7 +164,7 @@ namespace Escapade.src.gui
             SwinGame.DrawText("Destroy " + (GameLevel.GetFormula() - enemiesHit.Count).ToString() + " more enemies.", Color.Yellow, contentRightAlign, 100);
         }
 
-        public static void DisplayRate(double[] mineralWorth)
+        public static void DisplayRate(double[] mineralWorth, Inventory inventory)
         {
             Font arial = SwinGame.LoadFont("arial", 14);
             // IA - Make sure that the game is not already reading text.
@@ -174,7 +174,7 @@ namespace Escapade.src.gui
             } */
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("YOUR MINERAL POINTS", Color.White, contentRightAlign, 210);
+            SwinGame.DrawText("YOUR MINERAL POINTS " + inventory.ItemList.Count.ToString(), Color.White, contentRightAlign, 210);
 
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Diamond worth: " + mineralWorth[0].ToString(), Color.White, contentRightAlign, 240);

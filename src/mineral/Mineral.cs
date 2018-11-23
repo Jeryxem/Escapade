@@ -27,7 +27,7 @@ namespace Escapade
     }
     #endregion Properties
 
-    protected Mineral(string name, int meta, Color colour) : base(10, meta, name)
+    protected Mineral(string name, int meta, Color colour) : base(name, meta, name)
     {
       Colour = colour;
     }
