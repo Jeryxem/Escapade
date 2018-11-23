@@ -62,6 +62,10 @@ namespace Escapade
       NewImage ("player_one_wins", "player_one_wins.png");
       NewImage ("player_two_wins", "player_two_wins.png");
       NewImage ("you_died", "you_died.png");
+      NewImage ("arrow_key_K", "Arrow Key K.png");
+      NewImage ("arrow_key_L", "Arrow Key L.png");
+      NewImage ("wasd_f_key", "WASD F Key.png");
+      NewImage ("wasd_g_key", "WASD G Key.png");
     }
 
     public static void LoadSounds ()
