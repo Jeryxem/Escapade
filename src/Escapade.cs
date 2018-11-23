@@ -209,9 +209,9 @@ namespace Escapade
     {
       bool commandChosen = false;
 
-			SwinGame.LoadMusic("Pixel-Island.mp3");
-			SwinGame.PlayMusic("Pixel-Island.mp3");
-      SwinGame.PlayMusic (GameResources.GameMusic ("main_menu_music"));
+			SwinGame.LoadMusic("Pixel-Island.wav");
+			SwinGame.PlayMusic("Pixel-Island.wav");
+      //SwinGame.PlayMusic (GameResources.GameMusic ("main_menu_music"));
 
         while (!commandChosen) {
           SwinGame.ClearScreen (Color.White);
@@ -481,7 +481,9 @@ namespace Escapade
         /// </summary>
         public void Run()
         {
-            SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
+			SwinGame.LoadMusic("A_Night_Of_Dizzy_Spells.wav");
+			SwinGame.PlayMusic("A_Night_Of_Dizzy_Spells.wav");
+           // SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
       while (!SwinGame.WindowCloseRequested() && _gameStates.Peek() != GameState.QuittingGame)
             {
                 
