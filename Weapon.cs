@@ -5,7 +5,6 @@ namespace Escapade
 {
   public class Weapon : Entity
   {
-    private bool _equipped;
     private int _damage, _projectileSpeed, _ammunition;
     private WeaponType _weaponType;
     private Projectile _projectile;
@@ -23,7 +22,6 @@ namespace Escapade
     public Weapon (Location location, WeaponType weaponType, string owner) : base (1, "Weapon", location)
     {
       _weaponType = weaponType;
-      _equipped = false;
       _owner = owner;
 
       if (_weaponType == WeaponType.Normal) {
@@ -57,10 +55,6 @@ namespace Escapade
       get { return _weaponType; }
     }
 
-    public bool Equipped {
-      get { return _equipped; }
-      set { _equipped = value; }
-    }
     #endregion Properties
 
     public void Attack (Location location, AttackDirection direction)
