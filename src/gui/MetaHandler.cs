@@ -174,19 +174,19 @@ namespace Escapade.src.gui
             } */
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("YOUR MINERAL POINTS " + inventory.ItemList.Count.ToString(), Color.White, contentRightAlign, 210);
+            SwinGame.DrawText("YOU HAVE " + inventory.ItemList.Count.ToString() + " MINERALS", Color.White, contentRightAlign, 210);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Diamond worth: " + mineralWorth[0].ToString(), Color.White, contentRightAlign, 240);
+            SwinGame.DrawText("Diamond points: " + mineralWorth[0].ToString(), Color.White, contentRightAlign, 240);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Emerald worth: " + mineralWorth[1].ToString(), Color.White, contentRightAlign, 265);
+            SwinGame.DrawText("Emerald points: " + mineralWorth[1].ToString(), Color.White, contentRightAlign, 265);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Ruby worth: " + mineralWorth[2].ToString(), Color.White, contentRightAlign, 290);
+            SwinGame.DrawText("Ruby points: " + mineralWorth[2].ToString(), Color.White, contentRightAlign, 290);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Sapphire: " + mineralWorth[3].ToString(), Color.White, contentRightAlign, 315);
+            SwinGame.DrawText("Sapphire points: " + mineralWorth[3].ToString(), Color.White, contentRightAlign, 315);
             
         }
 

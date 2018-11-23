@@ -9,10 +9,9 @@ namespace Escapade.src.mineral
 {
   public class Diamond : Mineral
   {
-    public Diamond() : base("Diamond", 1, Color.Aquamarine)
-    {
-            double random = new Random().NextDouble();
-            Value = (int)(4 + Math.Round(Meta * random));
+        public Diamond() : base("Diamond", 1, Color.Aquamarine)
+        {
+            Value = 10;
         }
   }
 }

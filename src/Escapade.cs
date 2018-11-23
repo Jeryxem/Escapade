@@ -1039,24 +1039,38 @@ namespace Escapade
 				_player.Location.X += 1;
 			}
 
-            if (SwinGame.KeyTyped(KeyCode.BKey))
+            if (SwinGame.KeyTyped(KeyCode.BKey) && !SwinGame.KeyDown(KeyCode.LeftShiftKey))
             {
                 if (GetPlayer().Inventory.GetMineralPoints() >= 20)
                 {
-                    _player.BuyWeapon(_player.Location, WeaponType.Normal);
+                    if (_player.Weapon == null)
+                    {
+                        _player.BuyWeapon(_player.Location, WeaponType.Normal);
+                    }
+                    if (_player.Weapon.Type == WeaponType.Super)
+                    {
+                        _player.BuyWeapon(_player.Location, WeaponType.Normal);
+                    }
                     _player.Weapon.Ammunition += 20;
-                    Objects.Add(_player.Weapon);
-                    _player.Inventory.DeductMineralPoints(WeaponType.Super);
+                    // Objects.Add(_player.Weapon);
+                    _player.Inventory.DeductMineralPoints(WeaponType.Normal);
                 }
             }
 
-			if (SwinGame.KeyTyped(KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey))
+            if (SwinGame.KeyTyped(KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey))
 			{
                 if (GetPlayer().Inventory.GetMineralPoints() >= 30)
                 {
-                    _player.BuyWeapon(_player.Location, WeaponType.Super);
-                    _player.Weapon.Ammunition += 30;
-                    Objects.Add(_player.Weapon);
+                    if (_player.Weapon == null)
+                    {
+                        _player.BuyWeapon(_player.Location, WeaponType.Super);
+                    }
+                    if (_player.Weapon.Type == WeaponType.Normal)
+                    {
+                        _player.BuyWeapon(_player.Location, WeaponType.Super);
+                    }
+                    _player.Weapon.Ammunition += 40;
+                    // Objects.Add(_player.Weapon);
                     _player.Inventory.DeductMineralPoints(WeaponType.Super);
                 }
 			}

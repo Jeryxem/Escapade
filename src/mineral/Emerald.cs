@@ -10,10 +10,9 @@ namespace Escapade.src.mineral
 {
   public class Emerald : Mineral
   {
-    public Emerald() : base("Emerald", 2, Color.DarkOliveGreen)
-    {
-            double random = new Random().NextDouble();
-            Value = (int) (6 + Math.Round(Meta * random));
-    }
+        public Emerald() : base("Emerald", 2, Color.DarkOliveGreen)
+        {
+            Value = 15;
+        }
   }
 }

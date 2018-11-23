@@ -11,8 +11,7 @@ namespace Escapade.src.mineral
   {
     public Sapphire() : base("Sapphire", 4, Color.DarkBlue)
     {
-            double random = new Random().NextDouble();
-            Value = (int)(10 + Math.Round(Meta * random));
+            Value = 25;
         }
   }
 }
