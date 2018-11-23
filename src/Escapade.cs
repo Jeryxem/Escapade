@@ -1039,16 +1039,16 @@ namespace Escapade
 				_player.Location.X += 1;
 			}
 
-            if (SwinGame.KeyTyped(KeyCode.BKey))
-            {
-                if (GetPlayer().Inventory.GetMineralPoints() >= 20)
-                {
-                    _player.BuyWeapon(_player.Location, WeaponType.Normal);
-                    _player.Weapon.Ammunition += 20;
-                    Objects.Add(_player.Weapon);
-                    _player.Inventory.DeductMineralPoints(WeaponType.Super);
-                }
-            }
+      if (SwinGame.KeyTyped(KeyCode.BKey))
+      {
+          if (GetPlayer().Inventory.GetMineralPoints() >= 20)
+           {
+              _player.BuyWeapon(_player.Location, WeaponType.Normal);
+              _player.Weapon.Ammunition += 20;
+              Objects.Add(_player.Weapon);
+              _player.Inventory.DeductMineralPoints (WeaponType.Normal);            
+           }
+      }
 
 			if (SwinGame.KeyTyped(KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey))
 			{
