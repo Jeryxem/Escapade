@@ -283,6 +283,8 @@
     </Compile>
     <Compile Include="GameState.cs" />
     <Compile Include="GameResources.cs" />
+    <Compile Include="WeaponTest.cs" />
+    <Compile Include="ProjectileTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\panels\Extra1.txt">

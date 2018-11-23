@@ -5,7 +5,6 @@ namespace Escapade
 {
   public class Weapon : Entity
   {
-    private bool _equipped;
     private int _damage, _projectileSpeed, _ammunition;
     private WeaponType _weaponType;
     private Projectile _projectile;
@@ -23,7 +22,6 @@ namespace Escapade
     public Weapon (Location location, WeaponType weaponType, string owner) : base (1, "Weapon", location)
     {
       _weaponType = weaponType;
-      _equipped = false;
       _owner = owner;
             _ammunition = 0; // IA - No longer fixing a number of projectiles here. This is controlled in Escapade.cs to allow the player to purchase as much as they can afford with mineral points.
 
@@ -56,10 +54,6 @@ namespace Escapade
       get { return _weaponType; }
     }
 
-    public bool Equipped {
-      get { return _equipped; }
-      set { _equipped = value; }
-    }
     #endregion Properties
 
     public void Attack (Location location, AttackDirection direction)
