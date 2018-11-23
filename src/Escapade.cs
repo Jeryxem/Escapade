@@ -209,6 +209,8 @@ namespace Escapade
     {
       bool commandChosen = false;
 
+			SwinGame.LoadMusic("Pixel-Island.mp3");
+			SwinGame.PlayMusic("Pixel-Island.mp3");
       SwinGame.PlayMusic (GameResources.GameMusic ("main_menu_music"));
 
         while (!commandChosen) {
