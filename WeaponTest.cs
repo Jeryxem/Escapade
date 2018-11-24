@@ -15,10 +15,10 @@ namespace Escapade
       player1.BuyWeapon (loc, WeaponType.Normal);
       player2.BuyWeapon (loc, WeaponType.Super);
 
-      Assert.AreEqual (40, player1.Weapon.Ammunition);
+      StringAssert.AreEqualIgnoringCase ("Player 1", player1.Weapon.Owner);
       Assert.IsTrue (player1.Weapon.Type == WeaponType.Normal);
 
-      Assert.AreEqual (20, player2.Weapon.Ammunition);
+      StringAssert.AreEqualIgnoringCase ("Player 2", player2.Weapon.Owner);
       Assert.IsTrue (player2.Weapon.Type == WeaponType.Super);
     }
 
@@ -30,18 +30,22 @@ namespace Escapade
       Weapon normalWeapon = new Weapon (loc, WeaponType.Normal,"player 1");
       Weapon superWeapon = new Weapon (loc, WeaponType.Super, "player 2");
 
+      //Attacked 3 times
       normalWeapon.Attack (loc, AttackDirection.Up);
       normalWeapon.Attack (loc, AttackDirection.Up);
       normalWeapon.Attack (loc, AttackDirection.Up);
 
-      Assert.AreEqual (37, normalWeapon.Ammunition);
+      //Ammunition decreases by 3
+      Assert.AreEqual (-3, normalWeapon.Ammunition);
 
+      //Attack 4 times
       superWeapon.Attack (loc, AttackDirection.Down);
       superWeapon.Attack (loc, AttackDirection.Down);
       superWeapon.Attack (loc, AttackDirection.Down);
       superWeapon.Attack (loc, AttackDirection.Down);
 
-      Assert.AreEqual (36, superWeapon.Ammunition);
+      //Ammunition decreases by 4
+      Assert.AreEqual (-4, superWeapon.Ammunition);
     }
   }
 }

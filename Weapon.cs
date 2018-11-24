@@ -54,6 +54,11 @@ namespace Escapade
       get { return _weaponType; }
     }
 
+    public string Owner 
+    {
+      get { return _owner; }
+    }
+
     #endregion Properties
 
     public void Attack (Location location, AttackDirection direction)
