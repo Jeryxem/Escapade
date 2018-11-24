@@ -35,11 +35,11 @@ namespace Escapade.item
         }
 
         /// <summary>
-        /// Return the total value of minerals.
+        /// Return the total value of all minerals gathered. This must not be confused with the number of minerals gathered. Only the total value (not the count) of minerals is returned.
         /// </summary>
-        public double GetMineralPoints()
+        public int GetMineralPoints()
         {
-            double mineralpoints = 0;
+            int mineralpoints = 0;
             foreach (Mineral mineral in _itemlist)
             {
                 mineralpoints += mineral.Value;
@@ -48,7 +48,7 @@ namespace Escapade.item
         }
 
         /// <summary>
-        /// This method returns the total worth of minerals that the player has gathered - Added by Isaac
+        /// This method returns the total worth of minerals that the player has gathered, and returns a Double array that the player can iterate through to get the exact amound of points accumulated per mineral type. - Added by Isaac
         /// </summary>
         /// <returns></returns>
         public double[] GetTotalValue()
@@ -72,41 +72,6 @@ namespace Escapade.item
             return mineralTotalArray;
         }
 
-        // Added by JY- to calculate the mineral points 
-        /*
-        public void CalculateMineralPoints ()
-        {
-          foreach (Mineral item in ItemList) 
-          {
-            if (item is Diamond) 
-            {
-              _mineralPoints += 10;
-              _itemToBeRemoved.Add (item);
-            } 
-            else if (item is Emerald) 
-            {
-              _mineralPoints += 5;
-              _itemToBeRemoved.Add(item);
-            } 
-            else if (item is Ruby) 
-            {
-              _mineralPoints += 3;
-               _itemToBeRemoved.Add(item);
-            } 
-            else if (item is Sapphire) 
-            {
-              _mineralPoints += 1;
-               _itemToBeRemoved.Add(item);
-            }
-
-          }
-          foreach (Mineral mineral in _itemToBeRemoved) 
-          {
-            _itemlist.Remove (mineral);
-          }
-        }
-            */
-
         public void DeductMineralPoints(WeaponType type)
         {
             int weaponCost = 0;
@@ -127,6 +92,36 @@ namespace Escapade.item
                 _itemlist.RemoveAt(i); // IA - Remove the mineral in question
                 if (payableAmount >= weaponCost)
                     break;
+            }
+        }
+
+        /// <summary>
+        /// This method handles the deduction of mineral points and balance transfer, anytime the player makes a food purchase.
+        /// </summary>
+        /// <param name="foodAmount"></param>
+        public void DeductMineralPoints(int foodAmount) // IA - Method overloading
+        {
+            int balance = 0;
+            int amount = 0;
+            if (GetMineralPoints() > 0)
+            {
+                if (foodAmount > 0)
+                {
+                    for (int i = 0; i < _itemlist.Count; i++)
+                    {
+                        amount += ((Mineral)_itemlist[i]).Value;
+                        _itemlist.RemoveAt(i); // Remove the mineral from the list once its value has been consumed for a purchase.
+                        if (foodAmount <= amount)
+                        {
+                            if ((amount - foodAmount) >= 1)
+                            {
+                                balance = amount - foodAmount;
+                                Food.SetBalance(balance); // Save the remaining points as balance for the player's next food purchase, if applicable.
+                            }
+                            break; // Exit once the food amount requested as been met;
+                        }
+                    }
+                }
             }
         }
     }

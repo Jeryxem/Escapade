@@ -16,6 +16,8 @@ namespace Escapade.src.gui
     /// </summary>
     public static class MetaHandler
     {
+        private static Rectangle _foodField = SwinGame.CreateRectangle(810, 500, 100, 40);
+        private static String _foodMessage = "Message";
 
         public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Panel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
         public static Panel enemiesPanel = SwinGame.LoadPanelNamed("Enemies Panel", "Extra1.txt");
@@ -166,12 +168,7 @@ namespace Escapade.src.gui
 
         public static void DisplayRate(double[] mineralWorth, Inventory inventory)
         {
-            Font arial = SwinGame.LoadFont("arial", 14);
-            // IA - Make sure that the game is not already reading text.
-            /* if (SwinGame.ReadingText())
-            {
-                SwinGame.EndReadingText();
-            } */
+            // Font arial = SwinGame.LoadFont("arial", 14);
 
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("YOU HAVE " + inventory.ItemList.Count.ToString() + " MINERALS", Color.White, contentRightAlign, 210);
@@ -188,6 +185,59 @@ namespace Escapade.src.gui
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Sapphire points: " + mineralWorth[3].ToString(), Color.White, contentRightAlign, 315);
             
+        }
+
+        public static void DisplayFoodExchange(Inventory inventory)
+        {
+            Font arial = SwinGame.LoadFont("arial", 14);
+
+            SwinGame.DrawText("How: ", Color.White, 810, 490);
+
+            // IA - Make sure that the game is not already reading text.
+
+            if (SwinGame.KeyTyped(KeyCode.SpaceKey))
+            {
+                if (SwinGame.ReadingText())
+                {
+                    SwinGame.EndReadingText();
+                }
+                Input.StartReadingText(Color.Black, 3, arial, _foodField);
+            }
+            
+            if (Input.ReadingText() && SwinGame.KeyTyped(KeyCode.TabKey))
+            {
+                try
+                {
+                    int requestedFoodAmount = Int32.Parse(Input.TextReadAsASCII());
+                    if (requestedFoodAmount == 0)
+                    {
+                        _foodMessage = "Buy 1kg or more.";
+                    }
+                    else if (inventory.GetMineralPoints() >= requestedFoodAmount && requestedFoodAmount > 0)
+                    {
+                        _foodMessage = Input.TextReadAsASCII() + "kg of food bought.";
+                        Food.PurchaseFood(inventory, requestedFoodAmount);
+                    }
+                    else
+                    {
+                        _foodMessage = "Not enough points.";
+                    }
+                } catch (Exception e)
+                {
+                    _foodMessage = "Invalid input.";
+                }
+            }
+        }
+
+        public static void DrawFoodField()
+        {
+            SwinGame.FillRectangle(Color.Yellow, _foodField);
+            if (SwinGame.PointInRect(SwinGame.MousePosition(), _foodField))
+            {
+                SwinGame.FillRectangle(Color.White, _foodField);
+            }
+
+            SwinGame.DrawText(_foodMessage, Color.White, 810, 560);
         }
 
     }

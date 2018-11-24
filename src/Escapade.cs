@@ -157,6 +157,8 @@ namespace Escapade
             if (EnemiesToBeRemoved.Count >= GameLevel.GetFormula())
             {
                 GameLevel.IncreaseLevel();
+                Food.IncreaseMineralValue(); // IA - Make food more expensive
+                Food.DecreaseEnergyValue(); // IA - Make the food conversion to energy less significant.
                 EnemiesToBeRemoved.Clear(); // IA - Reset the count of enemies destroyed at each level.
             }
         }
@@ -1176,7 +1178,8 @@ namespace Escapade
 
             // IA - After computing everything, determine when/if the level should be increased.
             ControlLevels();
-		}
+            MetaHandler.DisplayFoodExchange(GetPlayer().Inventory);
+        }
 
         /// <summary>
         /// Get the current renderer to draw the game
@@ -1191,6 +1194,7 @@ namespace Escapade
             MetaHandler.DisplayGameLevel(); // IA - Display the game level
             MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
             MetaHandler.DisplayEnemiesInfo(SpawnedEnemies, EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
+            MetaHandler.DrawFoodField();
 
             // IA - Only display the worth of minerals while the game runs.
             if (_gameStates.Peek() == GameState.SinglePlayerMode || _gameStates.Peek() == GameState.TwoPlayerMode)
