@@ -156,7 +156,7 @@ namespace Escapade
         {
             if (EnemiesToBeRemoved.Count >= GameLevel.GetFormula())
             {
-                GameLevel.IncreaseLevel();
+                GameLevel.IncreaseLevel(); // IA - move the next level if enough enemies have been destroyed
                 Food.IncreaseMineralValue(); // IA - Make food more expensive
                 Food.DecreaseEnergyValue(); // IA - Make the food conversion to energy less significant.
                 EnemiesToBeRemoved.Clear(); // IA - Reset the count of enemies destroyed at each level.

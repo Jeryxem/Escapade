@@ -38,6 +38,11 @@ namespace Escapade.src.gui
             return (int)Math.Ceiling(indicator / 1.5);
         }
 
+        public static int GetEnergyLevel()
+        {
+            return Map(hungerIndicatorWidth);
+        }
+
         public static void DecreaseEnergy()
         {
             hungerIndicatorWidth -= 0.02;
@@ -48,20 +53,23 @@ namespace Escapade.src.gui
             _foodMessage = message;
         }
 
-        public static void IncreaseEnergy()
+        public static void IncreaseEnergy(double convertedFood)
         {
-            hungerIndicatorWidth += 0.02;
+            double energyToAdd = Math.Ceiling(convertedFood * 1.5);
+            if (Food.EnergyNeededInPercentage() >= energyToAdd)
+            {
+                hungerIndicatorWidth += energyToAdd;
+            } else
+            {
+                hungerIndicatorWidth = 150;
+            }
         }
-
+        
         public static void ControlLevelDisplay()
         {
             if (hungerIndicatorWidth > 0)
             {
                 DecreaseEnergy();
-            }
-            else if ((SwinGame.KeyDown(KeyCode.LeftShiftKey) || SwinGame.KeyDown(KeyCode.RightShiftKey)) && hungerIndicatorWidth < 149)
-            {
-                IncreaseEnergy();
             }
 
             if (Map(hungerIndicatorWidth) < 80 && Map(hungerIndicatorWidth) >= 60)
@@ -119,13 +127,15 @@ namespace Escapade.src.gui
         {
             ControlLevelDisplay();
 
-            SwinGame.DrawText("Your energy levels: ", Color.White, 200, contentFirstLine);
+            SwinGame.DrawText("Your energy levels: ", Color.White, 250, contentFirstLine);
 
-            SwinGame.FillRectangle(hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 12, (int)hungerIndicatorWidth, 20);
+            SwinGame.FillRectangle(hungerIndicatorColor, 420, GlobalConstants.WORLD_HEIGHT + 12, (int)hungerIndicatorWidth, 20);
 
-            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 370 + (int)hungerIndicatorWidth + 5, contentFirstLine);
+            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 420 + (int)hungerIndicatorWidth + 5, contentFirstLine);
 
-            SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 370, GlobalConstants.WORLD_HEIGHT + 37);
+            SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 420, GlobalConstants.WORLD_HEIGHT + 37);
+
+            SwinGame.DrawText("About " + Food.FoodNeededInKG().ToString() + "kg more of food needed.", hungerIndicatorColor, 420, GlobalConstants.WORLD_HEIGHT + 50);
         }
 
         /// <summary>
@@ -222,7 +232,7 @@ namespace Escapade.src.gui
                     {
                         _foodMessage = "Buy 1kg or more.";
                     }
-                    else if (Food.GetMaximumFoodToPurchase(inventory) >= requestedAmount && requestedFoodValue > 0 && requestedFoodValue < 1000)
+                    else if (Food.GetMaximumFoodToPurchase(inventory) >= requestedAmount && requestedFoodValue > 0 && requestedFoodValue <= 300)
                     {
                         if (requestedFoodValue > 1)
                         {
@@ -236,9 +246,9 @@ namespace Escapade.src.gui
                     else if (inventory.GetMineralPoints() == 0 && requestedAmount >= 1 && requestedFoodValue < Food.GetBalance())
                     {
                         Food.PurchaseFoodFromBalance(requestedFoodValue);
-                    } else if (requestedAmount > 1000)
+                    } else if (requestedAmount > 300)
                     {
-                        _foodMessage = "Max. food amount is 300kg.";
+                        _foodMessage = "300kg max. at once";
                     }
                     else
                     {
