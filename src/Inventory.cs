@@ -1,3 +1,4 @@
+using Escapade.src.gui;
 using Escapade.src.mineral;
 using System.Collections.Generic;
 
@@ -83,9 +84,9 @@ namespace Escapade.item
             }
             else if (type == WeaponType.Super)
             {
-                weaponCost = 20;
+                weaponCost = 50;
             }
-            
+
             for (int i = 0; i < _itemlist.Count; i++)
             {
                 payableAmount += ((Mineral)_itemlist[i]).Value; // IA - cast to a Mineral if necessary
@@ -99,31 +100,27 @@ namespace Escapade.item
         /// This method handles the deduction of mineral points and balance transfer, anytime the player makes a food purchase.
         /// </summary>
         /// <param name="foodAmount"></param>
-        public void DeductMineralPoints(int foodAmount) // IA - Method overloading
+        public void DeductPointsForFood(int foodValue) // IA - Method overloading
         {
             int balance = 0;
             int amount = 0;
-            if (GetMineralPoints() > 0)
+
+            for (int i = _itemlist.Count - 1;  i >= 0; i--)
             {
-                if (foodAmount > 0)
+                if (amount < foodValue)
                 {
-                    for (int i = 0; i < _itemlist.Count; i++)
+                    amount += ((Mineral)_itemlist[i]).Value;
+                    _itemlist.RemoveAt(i); // Remove the mineral from the list once its value has been consumed for a purchase
+                } else
+                {
+                    if ((amount - foodValue) >= 1)
                     {
-                        amount += ((Mineral)_itemlist[i]).Value;
-                        _itemlist.RemoveAt(i); // Remove the mineral from the list once its value has been consumed for a purchase.
-                        if (foodAmount <= amount)
-                        {
-                            if ((amount - foodAmount) >= 1)
-                            {
-                                balance = amount - foodAmount;
-                                Food.SetBalance(balance); // Save the remaining points as balance for the player's next food purchase, if applicable.
-                            }
-                            break; // Exit once the food amount requested as been met;
-                        }
+                        balance = amount - foodValue;
+                        Food.SetBalance(balance); // Save the remaining points as balance for the player's next food purchase, if applicable.
                     }
+                    break; // Exit once the food amount requested as been met;
                 }
             }
         }
     }
-
 }
