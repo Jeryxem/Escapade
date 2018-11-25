@@ -15,8 +15,8 @@ namespace Escapade
     {
         private static double _mineralValue = 1;
         private static double _energyValue = 2;
-        private static int _maximumFoodToPurchase = 0;
         private static int _balance = 0;
+        private static int _foodPurchased = 0;
 
         public static double GetMineralValue()
         {
@@ -38,9 +38,15 @@ namespace Escapade
             _balance = balance;
         }
 
+        public static int GetMaximumFoodToPurchase(Inventory inventory)
+        {
+            // Take into account any available balance from previous food purchases.
+            return (int)Math.Floor((inventory.GetMineralPoints() + _balance) / _mineralValue);
+        }
+
         public static void IncreaseMineralValue()
         {
-            _mineralValue += GameLevel.GetLevel() / 2;
+            _mineralValue += GameLevel.GetLevel() / 1.5;
         }
 
         public static void DecreaseEnergyValue()
@@ -51,29 +57,33 @@ namespace Escapade
             }
         }
 
-        public static void UpdateFoodMaximum(Inventory inventory)
-        {
-            // Take into account any available balance from previous food purchases.
-            _maximumFoodToPurchase = (int) Math.Floor((inventory.GetMineralPoints() + _balance) / _mineralValue);
-        }
-
         /// <summary>
         /// This returns the amount of energy points that will be gained by converting the food purchased. It is recommended to always call the UpdateFoodMaximum() method before this one, to make sure that the value for the maximum amount of food that can be purchased with mineral points first is accurate. 
         /// </summary>
         /// <returns></returns>
         public static double FoodConvertableToEnergy()
         {
-            return _maximumFoodToPurchase / _energyValue;
+            return _foodPurchased / _energyValue;
         }
 
-        public static void PurchaseFood(Inventory inventory, int requestedAmount)
+        public static void PurchaseFood(Inventory inventory, int convertedAmount)
         {
-            UpdateFoodMaximum(inventory); // IA - verify how much food can be purchased first.
-            
-            if (_maximumFoodToPurchase > 0) // IA - if the player can purchase food
+            _foodPurchased = convertedAmount; // store the amount for conversion to energy
+            inventory.DeductPointsForFood(convertedAmount);
+        }
+
+        public static void PurchaseFoodFromBalance(int convertedAmount)
+        {
+            GetMineralValue();
+            // int foodKGAvailable = 0;
+            if (convertedAmount <= _balance)
             {
-                inventory.DeductMineralPoints(requestedAmount);
+               // foodKGAvailable =  (int) Math.Floor(_balance / convertedAmount);
+
+                _balance -= convertedAmount;
             }
         }
+
+
     }
 }

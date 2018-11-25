@@ -1077,6 +1077,7 @@ namespace Escapade
                     // Objects.Add(_player.Weapon);
                     _player.Inventory.DeductMineralPoints(WeaponType.Normal);
                 }
+                
             }
 
             if (SwinGame.KeyTyped(KeyCode.BKey) && SwinGame.KeyDown(KeyCode.LeftShiftKey))
@@ -1198,7 +1199,7 @@ namespace Escapade
             MetaHandler.DisplayGameLevel(); // IA - Display the game level
             MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
             MetaHandler.DisplayEnemiesInfo(SpawnedEnemies, EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
-            MetaHandler.DrawFoodField();
+            MetaHandler.DrawFoodField(GetPlayer().Inventory);
 
             // IA - Only display the worth of minerals while the game runs.
             if (_gameStates.Peek() == GameState.SinglePlayerMode || _gameStates.Peek() == GameState.TwoPlayerMode)

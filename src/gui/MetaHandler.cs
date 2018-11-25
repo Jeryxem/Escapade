@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,8 +17,8 @@ namespace Escapade.src.gui
     /// </summary>
     public static class MetaHandler
     {
-        private static Rectangle _foodField = SwinGame.CreateRectangle(810, 500, 100, 40);
-        private static String _foodMessage = "Message";
+        private static Rectangle _foodField = SwinGame.CreateRectangle(810, 550, 150, 30);
+        private static String _foodMessage;
 
         public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Panel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
         public static Panel enemiesPanel = SwinGame.LoadPanelNamed("Enemies Panel", "Extra1.txt");
@@ -40,6 +41,11 @@ namespace Escapade.src.gui
         public static void DecreaseEnergy()
         {
             hungerIndicatorWidth -= 0.02;
+        }
+
+        public static void SetFoodMessage(String message)
+        {
+            _foodMessage = message;
         }
 
         public static void IncreaseEnergy()
@@ -197,6 +203,7 @@ namespace Escapade.src.gui
 
             if (SwinGame.KeyTyped(KeyCode.SpaceKey))
             {
+                _foodMessage = "Enter amount & hit Tab.";
                 if (SwinGame.ReadingText())
                 {
                     SwinGame.EndReadingText();
@@ -208,36 +215,65 @@ namespace Escapade.src.gui
             {
                 try
                 {
-                    int requestedFoodAmount = Int32.Parse(Input.TextReadAsASCII());
-                    if (requestedFoodAmount == 0)
+                    int requestedAmount = int.Parse(Input.TextReadAsASCII()); // IA - The amount entered.
+
+                    int requestedFoodValue = (int) Math.Floor((requestedAmount * Food.GetMineralValue())); // IA - the cost of the food in mineral points.
+                    if (requestedAmount == 0)
                     {
                         _foodMessage = "Buy 1kg or more.";
                     }
-                    else if (inventory.GetMineralPoints() >= requestedFoodAmount && requestedFoodAmount > 0)
+                    else if (Food.GetMaximumFoodToPurchase(inventory) >= requestedAmount && requestedFoodValue > 0)
                     {
-                        _foodMessage = Input.TextReadAsASCII() + "kg of food bought.";
-                        Food.PurchaseFood(inventory, requestedFoodAmount);
+                        _foodMessage = "Cost: " + requestedFoodValue.ToString();
+                        // _foodMessage = Input.TextReadAsASCII() + "kg of food bought.";
+                        Food.PurchaseFood(inventory, requestedFoodValue);
+                    }
+                    /* else if (inventory.GetMineralPoints() == 0 && requestedAmount >= 1 && requestedFoodValue < Food.GetBalance())
+                    {
+                        Food.PurchaseFoodFromBalance(requestedFoodValue);
                     }
                     else
                     {
                         _foodMessage = "Not enough points.";
-                    }
+                    } */
                 } catch (Exception e)
                 {
-                    _foodMessage = "Invalid input.";
+
+                    Debug.WriteLine(e.ToString());
                 }
+            }
+
+            if (!Input.ReadingText())
+            {
+                _foodMessage = "Hit Space to buy food.";
             }
         }
 
-        public static void DrawFoodField()
+        public static void DrawFoodField(Inventory inventory)
         {
+            SwinGame.DrawText("FOOD EXCHANGE CENTER", Color.WhiteSmoke, contentRightAlign, 435);
+            
+            // IA - avoid grammar errors by knowing when to put the term "point" in plural form.
+            if (Food.GetMineralValue() == 1)
+            {
+                SwinGame.DrawText("1kg Food = " + Food.GetMineralValue().ToString() + " point", Color.Wheat, contentRightAlign, 460);
+            } else
+            {
+                SwinGame.DrawText("1kg Food = " + Food.GetMineralValue().ToString() + " points", Color.Wheat, contentRightAlign, 460);
+            }
+
+            SwinGame.DrawText("Available balance: " + Food.GetBalance().ToString(), Color.Wheat, contentRightAlign, 485);
+
+            SwinGame.DrawText("You can afford: " + Food.GetMaximumFoodToPurchase(inventory).ToString() + "kg", Color.Wheat, contentRightAlign, 535);
+            SwinGame.DrawText("Enter food amount (kg) to buy", Color.Wheat, contentRightAlign, 510);
+            
             SwinGame.FillRectangle(Color.Yellow, _foodField);
-            if (SwinGame.PointInRect(SwinGame.MousePosition(), _foodField))
+            if (SwinGame.PointInRect(SwinGame.MousePosition(), _foodField) || Input.ReadingText())
             {
                 SwinGame.FillRectangle(Color.White, _foodField);
             }
 
-            SwinGame.DrawText(_foodMessage, Color.White, 810, 560);
+            SwinGame.DrawText(_foodMessage, Color.White, contentRightAlign, 590);
         }
 
     }
