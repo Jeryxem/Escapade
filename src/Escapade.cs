@@ -1203,6 +1203,13 @@ namespace Escapade
             // IA - After computing everything, determine when/if the level should be increased.
             ControlLevels();
             MetaHandler.DisplayFoodExchange(GetPlayer().Inventory);
+
+            // IA - End the game when the player's energy level reaches 0.
+            if (MetaHandler.GetEnergyLevel() == 0)
+            {
+                EndGame("you_died");
+            }
+
         }
 
         /// <summary>
@@ -1236,8 +1243,8 @@ namespace Escapade
             if (_gameStates.Peek() == GameState.TwoPlayerMode)
             {
                 MetaHandler.DisplayTwoPlayersInstructions();
-                MetaHandler.DisplayRate(_player.Inventory.GetTotalValue(), _player.Inventory, "P1", -190, Color.Wheat);
-                MetaHandler.DisplayRate(_player2.Inventory.GetTotalValue(), _player2.Inventory, "P2", 10, Color.Yellow);
+                MetaHandler.DisplayRate(_player.Inventory.GetTotalValue(), _player.Inventory, "PLAYER 1", -190, Color.Wheat);
+                MetaHandler.DisplayRate(_player2.Inventory.GetTotalValue(), _player2.Inventory, "PLAYER 2", 10, Color.Yellow);
             }
         }
     }
