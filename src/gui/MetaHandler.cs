@@ -222,23 +222,31 @@ namespace Escapade.src.gui
                     {
                         _foodMessage = "Buy 1kg or more.";
                     }
-                    else if (Food.GetMaximumFoodToPurchase(inventory) >= requestedAmount && requestedFoodValue > 0)
+                    else if (Food.GetMaximumFoodToPurchase(inventory) >= requestedAmount && requestedFoodValue > 0 && requestedFoodValue < 1000)
                     {
-                        _foodMessage = "Cost: " + requestedFoodValue.ToString();
-                        // _foodMessage = Input.TextReadAsASCII() + "kg of food bought.";
+                        if (requestedFoodValue > 1)
+                        {
+                            _foodMessage = requestedAmount.ToString() + "kg food => " + requestedFoodValue.ToString() + " points";
+                        } else
+                        {
+                            _foodMessage = requestedAmount.ToString() + "kg food => " + requestedFoodValue.ToString() + " point"; // IA - no "s" after the word points.
+                        }
                         Food.PurchaseFood(inventory, requestedFoodValue);
                     }
-                    /* else if (inventory.GetMineralPoints() == 0 && requestedAmount >= 1 && requestedFoodValue < Food.GetBalance())
+                    else if (inventory.GetMineralPoints() == 0 && requestedAmount >= 1 && requestedFoodValue < Food.GetBalance())
                     {
                         Food.PurchaseFoodFromBalance(requestedFoodValue);
+                    } else if (requestedAmount > 1000)
+                    {
+                        _foodMessage = "Max. food amount is 300kg.";
                     }
                     else
                     {
                         _foodMessage = "Not enough points.";
-                    } */
+                    }
                 } catch (Exception e)
                 {
-
+                    _foodMessage = "Invalid input.";
                     Debug.WriteLine(e.ToString());
                 }
             }
@@ -259,13 +267,13 @@ namespace Escapade.src.gui
                 SwinGame.DrawText("1kg Food = " + Food.GetMineralValue().ToString() + " point", Color.Wheat, contentRightAlign, 460);
             } else
             {
-                SwinGame.DrawText("1kg Food = " + Food.GetMineralValue().ToString() + " points", Color.Wheat, contentRightAlign, 460);
+                SwinGame.DrawText("1kg Food = " + (Math.Round(Food.GetMineralValue(), 0)).ToString() + "+ points", Color.Wheat, contentRightAlign, 460);
             }
 
             SwinGame.DrawText("Available balance: " + Food.GetBalance().ToString(), Color.Wheat, contentRightAlign, 485);
 
             SwinGame.DrawText("You can afford: " + Food.GetMaximumFoodToPurchase(inventory).ToString() + "kg", Color.Wheat, contentRightAlign, 535);
-            SwinGame.DrawText("Enter food amount (kg) to buy", Color.Wheat, contentRightAlign, 510);
+            SwinGame.DrawText("Enter food amount in kg", Color.Wheat, contentRightAlign, 510);
             
             SwinGame.FillRectangle(Color.Yellow, _foodField);
             if (SwinGame.PointInRect(SwinGame.MousePosition(), _foodField) || Input.ReadingText())

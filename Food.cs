@@ -20,7 +20,7 @@ namespace Escapade
 
         public static double GetMineralValue()
         {
-            return _mineralValue;
+            return Math.Round(_mineralValue, 2);
         }
 
         public static double GetEnergyValue()
@@ -46,7 +46,10 @@ namespace Escapade
 
         public static void IncreaseMineralValue()
         {
-            _mineralValue += GameLevel.GetLevel() / 1.5;
+            if (_mineralValue < 15) // IA - Limit the maximum exchange rate to 15 points.
+            {
+                _mineralValue += GameLevel.GetLevel() / 1.5;
+            }
         }
 
         public static void DecreaseEnergyValue()
