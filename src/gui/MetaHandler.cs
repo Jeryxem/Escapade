@@ -257,10 +257,10 @@ namespace Escapade.src.gui
                     {
                         if (requestedFoodValue > 1)
                         {
-                            _foodMessage = requestedAmount.ToString() + "kg food => " + requestedFoodValue.ToString() + " points";
+                            _foodMessage = requestedAmount.ToString() + "kg food  =>  " + requestedFoodValue.ToString() + " points";
                         } else
                         {
-                            _foodMessage = requestedAmount.ToString() + "kg food => " + requestedFoodValue.ToString() + " point"; // IA - no "s" after the word points.
+                            _foodMessage = requestedAmount.ToString() + "kg food  =>  " + requestedFoodValue.ToString() + " point"; // IA - no "s" after the word points.
                         }
                         Food.PurchaseFood(inventory, requestedFoodValue);
                     }
@@ -298,18 +298,18 @@ namespace Escapade.src.gui
                 SwinGame.DrawText("1kg Food = " + Food.GetMineralValue().ToString() + " point", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 460);
             } else
             {
-                SwinGame.DrawText("1kg Food = " + (Math.Round(Food.GetMineralValue(), 0)).ToString() + "+ points", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 460);
+                SwinGame.DrawText("1kg Food  =  " + (Math.Round(Food.GetMineralValue(), 0)).ToString() + "+ points", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 460);
             }
 
             if (Food.GetBalance() <= 1)
             {
-                SwinGame.DrawText("Available balance: " + Food.GetBalance().ToString() + " point", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 485);
+                SwinGame.DrawText("Available balance:  " + Food.GetBalance().ToString() + " point", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 485);
             } else
             {
-                SwinGame.DrawText("Available balance: " + Food.GetBalance().ToString() + " points", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 485);
+                SwinGame.DrawText("Available balance:  " + Food.GetBalance().ToString() + " points", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 485);
             }
 
-            SwinGame.DrawText("You can afford: " + Food.GetMaximumFoodToPurchase(inventory).ToString() + "kg", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 510);
+            SwinGame.DrawText("You can afford:  " + Food.GetMaximumFoodToPurchase(inventory).ToString() + "kg", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 510);
 
             SwinGame.DrawText("Enter food amount in kg:", Color.Wheat, openSansExtraBoldItalicNormal, contentRightAlign, 535);
             

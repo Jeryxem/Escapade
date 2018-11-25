@@ -105,7 +105,7 @@ namespace Escapade.item
             int balance = 0;
             int amount = Food.GetBalance();
 
-            Food.DeductBalance(foodValue);
+            Food.DeductBalance(foodValue, this);
 
             for (int i = _itemlist.Count - 1;  i >= 0; i--)
             {

@@ -40,11 +40,16 @@ namespace Escapade
             _balance = balance;
         }
 
-        public static void DeductBalance(int foodValue)
+        public static void DeductBalance(int foodValue, Inventory inventory)
         {
             if (foodValue <= _balance)
             {
                 _balance -= foodValue;
+            }
+
+            if (foodValue == (inventory.GetMineralPoints() + _balance))
+            {
+                _balance = 0;
             }
         }
 
