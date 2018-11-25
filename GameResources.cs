@@ -75,8 +75,8 @@ namespace Escapade
 
     public static void LoadMusic ()
     {
-        NewMusic ("game_music","A_Night_Of_Dizzy_Spells.mp3");
-        NewMusic ("main_menu_music", "Pixel-Island.mp3");
+        NewMusic ("game_music","A_Night_Of_Dizzy_Spells.wav");
+        NewMusic ("main_menu_music", "Pixel-Island.wav");
     }
 
     public static void LoadResources ()
