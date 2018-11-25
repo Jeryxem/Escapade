@@ -203,6 +203,27 @@ namespace Escapade.src.gui
             
         }
 
+        public static void DisplayRate(double[] mineralWorth, Inventory inventory, String playerName, int Y, Color color)
+        {
+            // Font arial = SwinGame.LoadFont("arial", 14);
+
+            // IA - Display the total value of minerals while the game runs
+            SwinGame.DrawText(playerName + " HAS " + inventory.ItemList.Count.ToString() + " MINERALS", color, contentRightAlign, 210 + Y);
+
+            SwinGame.DrawText("Diamond points: " + mineralWorth[0].ToString(), color, contentRightAlign, 240 + Y);
+
+            SwinGame.DrawText("Emerald points: " + mineralWorth[1].ToString(), color, contentRightAlign, 265 + Y);
+
+            SwinGame.DrawText("Ruby points: " + mineralWorth[2].ToString(), color, contentRightAlign, 290 + Y);
+
+            SwinGame.DrawText("Sapphire points: " + mineralWorth[3].ToString(), color, contentRightAlign, 315 + Y);
+
+            SwinGame.DrawText("Sapphire points: " + mineralWorth[3].ToString(), color, contentRightAlign, 315 + Y);
+
+            SwinGame.DrawText("Total points: " + inventory.GetMineralPoints(), color, contentRightAlign, 360 + Y);
+
+        }
+
         public static void DisplayFoodExchange(Inventory inventory)
         {
             Font arial = SwinGame.LoadFont("arial", 14);
@@ -292,6 +313,11 @@ namespace Escapade.src.gui
             }
 
             SwinGame.DrawText(_foodMessage, Color.White, contentRightAlign, 590);
+        }
+
+        public static void DisplayTwoPlayersInstructions()
+        {
+            SwinGame.DrawText("Outlast your opponent and collect the most minerals points without getting killed!", Color.White, 20, contentFirstLine);
         }
 
     }

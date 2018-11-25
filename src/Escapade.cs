@@ -1213,6 +1213,7 @@ namespace Escapade
             GuiEnvironment.GetRenderer().RenderWindow();
 
             MetaHandler.ShowPanels(); // IA - Make the panel visible
+
             // IA - Single Player Mode only.
             if (_gameStates.Peek() == GameState.SinglePlayerMode)
             {
@@ -1226,9 +1227,17 @@ namespace Escapade
             }
 
             // IA - Only display the worth of minerals while the game runs.
-            if (_gameStates.Peek() == GameState.SinglePlayerMode || _gameStates.Peek() == GameState.TwoPlayerMode)
+            if (_gameStates.Peek() == GameState.SinglePlayerMode)
             {
                 MetaHandler.DisplayRate(GetPlayer().Inventory.GetTotalValue(), GetPlayer().Inventory);
+            }
+
+            // IA - Two Players Mode only.
+            if (_gameStates.Peek() == GameState.TwoPlayerMode)
+            {
+                MetaHandler.DisplayTwoPlayersInstructions();
+                MetaHandler.DisplayRate(_player.Inventory.GetTotalValue(), _player.Inventory, "P1", -190, Color.Wheat);
+                MetaHandler.DisplayRate(_player2.Inventory.GetTotalValue(), _player2.Inventory, "P2", 10, Color.Yellow);
             }
         }
     }
