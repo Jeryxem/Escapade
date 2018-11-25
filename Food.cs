@@ -38,6 +38,14 @@ namespace Escapade
             _balance = balance;
         }
 
+        public static void DeductBalance(int foodValue)
+        {
+            if (foodValue <= _balance)
+            {
+                _balance -= foodValue;
+            }
+        }
+
         public static int GetMaximumFoodToPurchase(Inventory inventory)
         {
             // Take into account any available balance from previous food purchases.

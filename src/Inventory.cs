@@ -103,7 +103,9 @@ namespace Escapade.item
         public void DeductPointsForFood(int foodValue) // IA - Method overloading
         {
             int balance = 0;
-            int amount = 0;
+            int amount = Food.GetBalance();
+
+            Food.DeductBalance(foodValue);
 
             for (int i = _itemlist.Count - 1;  i >= 0; i--)
             {
