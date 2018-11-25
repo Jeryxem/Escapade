@@ -302,6 +302,7 @@
     <Compile Include="GameResources.cs" />
     <Compile Include="WeaponTest.cs" />
     <Compile Include="ProjectileTest.cs" />
+    <Compile Include="CollisionAndDirectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\panels\Extra1.txt">
