@@ -1159,33 +1159,46 @@ namespace Escapade
 					_player2.Location.X += 1;
 				}
 
-				if (SwinGame.KeyTyped(KeyCode.PKey))
-				{
+                // Player 2 buys a weapon
+                if (SwinGame.KeyTyped(KeyCode.PKey) && !SwinGame.KeyDown(KeyCode.JKey))
+                {
+                    if (_player2.Inventory.GetMineralPoints() >= 20)
+                    {
+                        if (_player2.Weapon == null)
+                        {
+                            _player2.BuyWeapon(_player.Location, WeaponType.Normal);
+                        }
+                        if (_player2.Weapon.Type == WeaponType.Super)
+                        {
+                            _player2.BuyWeapon(_player.Location, WeaponType.Normal);
+                        }
+                        _player2.Weapon.Ammunition += 20;
+                        // Objects.Add(_player.Weapon);
+                        _player2.Inventory.DeductMineralPoints(WeaponType.Normal);
+                    }
 
-                    /*
-          if (GetPlayer2 ().Inventory.MineralPoints >= 20) 
-          {
-            _player2.BuyWeapon (_player2.Location, WeaponType.Normal);
-            Objects.Add (_player2.Weapon);
-            _player2.Inventory.DeductMineralPoints (20);
-          }
-          */
-				}
+                }
 
-				if (SwinGame.KeyTyped(KeyCode.PKey) && SwinGame.KeyDown(KeyCode.JKey))
-				{
 
-          /*
-           * if (GetPlayer2 ().Inventory.MineralPoints >= 30) 
-          {
-            _player2.BuyWeapon (_player2.Location, WeaponType.Super);
-            Objects.Add (_player2.Weapon);
-            _player2.Inventory.DeductMineralPoints (30);
-          }
-          */
-				}
+                if (SwinGame.KeyTyped(KeyCode.PKey) && SwinGame.KeyDown(KeyCode.JKey))
+                {
+                    if (_player2.Inventory.GetMineralPoints() >= 30)
+                    {
+                        if (_player2.Weapon == null)
+                        {
+                            _player2.BuyWeapon(_player.Location, WeaponType.Super);
+                        }
+                        if (_player2.Weapon.Type == WeaponType.Normal)
+                        {
+                            _player2.BuyWeapon(_player.Location, WeaponType.Super);
+                        }
+                        _player2.Weapon.Ammunition += 40;
+                        // Objects.Add(_player.Weapon);
+                        _player2.Inventory.DeductMineralPoints(WeaponType.Super);
+                    }
+                }
 
-			}
+            }
 
             // IA - After computing everything, determine when/if the level should be increased.
             ControlLevels();
@@ -1200,12 +1213,17 @@ namespace Escapade
             GuiEnvironment.GetRenderer().RenderWindow();
 
             MetaHandler.ShowPanels(); // IA - Make the panel visible
-            MetaHandler.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
-            MetaHandler.DisplayTimer(); // IA - Make the timer visible
-            MetaHandler.DisplayGameLevel(); // IA - Display the game level
-            MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
-            MetaHandler.DisplayEnemiesInfo(SpawnedEnemies, EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
-            MetaHandler.DrawFoodField(GetPlayer().Inventory);
+            // IA - Single Player Mode only.
+            if (_gameStates.Peek() == GameState.SinglePlayerMode)
+            {
+                
+                MetaHandler.DisplayHungerInformation(); // IA - Show the hunger level progress bar and messages
+                MetaHandler.DisplayTimer(); // IA - Make the timer visible
+                MetaHandler.DisplayGameLevel(); // IA - Display the game level
+                MetaHandler.DisplayAmmunitionLevel(_player.Weapon); // IA - Display info about amminutions (type and amount)
+                MetaHandler.DisplayEnemiesInfo(SpawnedEnemies, EnemiesToBeRemoved); // IA - Display how many enemies have been destroyed.
+                MetaHandler.DrawFoodField(GetPlayer().Inventory);
+            }
 
             // IA - Only display the worth of minerals while the game runs.
             if (_gameStates.Peek() == GameState.SinglePlayerMode || _gameStates.Peek() == GameState.TwoPlayerMode)
