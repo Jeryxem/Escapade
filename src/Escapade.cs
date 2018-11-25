@@ -202,6 +202,7 @@ namespace Escapade
     {
       SwinGame.OpenGraphicsWindow ("Escapade", GetWorld ().Width * GetWorld ().Size + 200, GetWorld ().Height * GetWorld ().Size + 80); // IA - Changed the height of the window to allow for the display of the bottom panel
       GameResources.LoadResources ();
+			SwinGame.PlayMusic (GameResources.GameMusic ("main_menu_music"));
       _gameStates = new Stack<GameState> ();
       _gameStates.Push (GameState.ViewingMainMenu);
       ControlGameState ();
@@ -210,9 +211,9 @@ namespace Escapade
     public void MainMenu ()
     {
       bool commandChosen = false;
-
-			SwinGame.LoadMusic("Pixel-Island.wav");
-			SwinGame.PlayMusic("Pixel-Island.wav");
+			SwinGame.ResumeMusic();
+			//SwinGame.LoadMusic("Pixel-Island.wav");
+			//SwinGame.PlayMusic("Pixel-Island.wav");
       //SwinGame.PlayMusic (GameResources.GameMusic ("main_menu_music"));
 
         while (!commandChosen) {
@@ -238,12 +239,13 @@ namespace Escapade
         SwinGame.RefreshScreen (60);
         }
       SwinGame.ClearScreen (Color.White);
-      SwinGame.StopMusic ();
+			SwinGame.PauseMusic ();
       ControlGameState ();
     }
 
     public void Instructions ()
     {
+			SwinGame.ResumeMusic();
       int page = 1;
 
       while (page <= 2) 
@@ -257,6 +259,7 @@ namespace Escapade
             page++;
           SwinGame.RefreshScreen (60);
       }
+			SwinGame.PauseMusic();
       _gameStates.Push (GameState.ViewingMainMenu);
       ControlGameState ();
     }
@@ -310,6 +313,7 @@ namespace Escapade
 
     public void SinglePlayerMode ()
     {
+			SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
       if (!firstGame) 
       {
           _player.Location.X = 7;
@@ -328,6 +332,7 @@ namespace Escapade
 		bool _twoplayer = false;//if false, player 2 object wont be created - jeremy toh
     public void TwoPlayerMode ()
     {
+			SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
 			_twoplayer = true;
 
       if (!firstGame) 
@@ -348,6 +353,7 @@ namespace Escapade
 
     public void EndGame (string status)
     {
+			SwinGame.PlayMusic (GameResources.GameMusic ("main_menu_music"));
       bool proceed = false;
 
       while (!proceed) 
@@ -483,9 +489,9 @@ namespace Escapade
         /// </summary>
         public void Run()
         {
-			SwinGame.LoadMusic("A_Night_Of_Dizzy_Spells.wav");
-			SwinGame.PlayMusic("A_Night_Of_Dizzy_Spells.wav");
-           // SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
+			//SwinGame.LoadMusic("A_Night_Of_Dizzy_Spells.wav");
+			//SwinGame.PlayMusic("A_Night_Of_Dizzy_Spells.wav");
+            //SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
       while (!SwinGame.WindowCloseRequested() && _gameStates.Peek() != GameState.QuittingGame)
             {
                 
