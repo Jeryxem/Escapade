@@ -17,8 +17,14 @@ namespace Escapade.src.gui
     /// </summary>
     public static class MetaHandler
     {
-        private static Rectangle _foodField = SwinGame.CreateRectangle(810, 550, 150, 30);
+        private static Rectangle _foodField = SwinGame.CreateRectangle(810, 560, 150, 30);
         private static String _foodMessage;
+        private static Font openSansExtraBoldLarge = SwinGame.LoadFont("OpenSans-ExtraBold", 14);
+        private static Font openSansExtraBoldNormal = SwinGame.LoadFont("OpenSans-ExtraBold", 12);
+        private static Font openSansExtraBoldSmall = SwinGame.LoadFont("OpenSans-ExtraBold", 10);
+        private static Font openSansExtraBoldItalicNormal = SwinGame.LoadFont("OpenSans-ExtraBoldItalic", 12);
+        private static Font openSansBoldLarge = SwinGame.LoadFont("OpenSans-Bold", 20);
+        private static Font openSansBoldItalicNormal = SwinGame.LoadFont("OpenSans-BoldItalic", 12);
 
         public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Panel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
         public static Panel enemiesPanel = SwinGame.LoadPanelNamed("Enemies Panel", "Extra1.txt");
@@ -120,22 +126,22 @@ namespace Escapade.src.gui
         /// </summary>
         public static void DisplayTimer()
         {
-            SwinGame.DrawText("Time: " + timer.ShowTime(), Color.White, 20, contentFirstLine);
+            SwinGame.DrawText("Time: " + timer.ShowTime(), Color.White, openSansExtraBoldLarge, 20, contentFirstLine);
         }
 
         public static void DisplayHungerInformation()
         {
             ControlLevelDisplay();
 
-            SwinGame.DrawText("Your energy levels: ", Color.White, 250, contentFirstLine);
+            SwinGame.DrawText("Your energy levels: ", Color.White, openSansExtraBoldNormal, 290, contentFirstLine - 3);
 
             SwinGame.FillRectangle(hungerIndicatorColor, 420, GlobalConstants.WORLD_HEIGHT + 12, (int)hungerIndicatorWidth, 20);
 
-            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, 420 + (int)hungerIndicatorWidth + 5, contentFirstLine);
+            SwinGame.DrawText(Map(hungerIndicatorWidth).ToString() + "% ", hungerIndicatorColor, openSansExtraBoldNormal, 420 + (int)hungerIndicatorWidth + 5, contentFirstLine);
 
-            SwinGame.DrawText(hungerIndication, hungerIndicatorColor, 420, GlobalConstants.WORLD_HEIGHT + 37);
+            SwinGame.DrawText(hungerIndication, hungerIndicatorColor, openSansExtraBoldNormal, 420, GlobalConstants.WORLD_HEIGHT + 37);
 
-            SwinGame.DrawText("About " + Food.FoodNeededInKG().ToString() + "kg more of food needed.", hungerIndicatorColor, 420, GlobalConstants.WORLD_HEIGHT + 50);
+            SwinGame.DrawText("About " + Food.FoodNeededInKG().ToString() + "kg more of food needed.", Color.White, openSansBoldItalicNormal, 420, GlobalConstants.WORLD_HEIGHT + 55);
         }
 
         /// <summary>
@@ -143,8 +149,7 @@ namespace Escapade.src.gui
         /// </summary>
         public static void DisplayGameLevel()
         {
-            Font arial = SwinGame.LoadFont("arial", 20);
-            SwinGame.DrawText("Level: " + GameLevel.PrintLevel(), Color.White, arial, GlobalConstants.WORLD_WIDTH - 150, contentFirstLine);
+            SwinGame.DrawText("Level: " + GameLevel.PrintLevel(), Color.White, openSansBoldLarge, GlobalConstants.WORLD_WIDTH - 120, contentFirstLine);
         }
 
         public static void DisplayAmmunitionLevel(Weapon weapon)
@@ -154,32 +159,32 @@ namespace Escapade.src.gui
                 if (weapon.Ammunition > 0)
                 {
                     {
-                        SwinGame.DrawText("AMMUNITION AVAILABLE: " + weapon.Ammunition.ToString(), Color.Yellow, 20, contentSecondLine);
+                        SwinGame.DrawText("AMMUNITION AVAILABLE: " + weapon.Ammunition.ToString(), Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine);
 
-                        SwinGame.DrawText("AMMUNITION TYPE: " + weapon.Type.ToString(), Color.Yellow, 20, contentSecondLine + 15);
+                        SwinGame.DrawText("AMMUNITION TYPE: " + weapon.Type.ToString(), Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine + 15);
                     }
                 } else
                 {
-                    SwinGame.DrawText("You've ran out of ammo!", Color.Yellow, 20, contentSecondLine);
+                    SwinGame.DrawText("You've ran out of ammo!", Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine);
 
-                    SwinGame.DrawText("Gather minerals to buy more weapons!", Color.Yellow, 20, contentSecondLine + 15);
+                    SwinGame.DrawText("Gather minerals to buy more weapons!", Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine + 15);
                 }
             }
             else
             {
-                SwinGame.DrawText("Press B or Shift + B to buy weapons.", Color.Yellow, 20, contentSecondLine);
+                SwinGame.DrawText("Press B or Shift + B to buy weapons.", Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine);
             }
         }
 
         public static void DisplayEnemiesInfo(List<Enemy> existingEnemies, List<Enemy> enemiesHit)
         {
-            SwinGame.DrawText("ENEMIES IN THIS LEVEL", Color.Yellow, contentRightAlign, 15);
+            SwinGame.DrawText("ENEMIES IN THIS LEVEL", Color.Yellow, openSansExtraBoldLarge, contentRightAlign, 15);
 
-            SwinGame.DrawText("Red Enemies: " + existingEnemies.Count.ToString(), Color.Yellow, contentRightAlign, 45);
+            SwinGame.DrawText("Red Enemies: " + existingEnemies.Count.ToString(), Color.Yellow, openSansExtraBoldNormal, contentRightAlign, 45);
 
-            SwinGame.DrawText("Successful hits: " + enemiesHit.Count.ToString(), Color.Yellow, contentRightAlign, 70);
+            SwinGame.DrawText("Successful hits: " + enemiesHit.Count.ToString(), Color.Yellow, openSansExtraBoldNormal, contentRightAlign, 70);
 
-            SwinGame.DrawText("Destroy " + (GameLevel.GetFormula() - enemiesHit.Count).ToString() + " more enemies.", Color.Yellow, contentRightAlign, 100);
+            SwinGame.DrawText("Destroy " + (GameLevel.GetFormula() - enemiesHit.Count).ToString() + " more enemies.", Color.Yellow, openSansExtraBoldNormal, contentRightAlign, 100);
         }
 
         public static void DisplayRate(double[] mineralWorth, Inventory inventory)
@@ -187,19 +192,19 @@ namespace Escapade.src.gui
             // Font arial = SwinGame.LoadFont("arial", 14);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("YOU HAVE " + inventory.ItemList.Count.ToString() + " MINERALS", Color.White, contentRightAlign, 210);
+            SwinGame.DrawText("YOU HAVE " + inventory.ItemList.Count.ToString() + " MINERALS", Color.White, openSansExtraBoldLarge, contentRightAlign, 210);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Diamond points: " + mineralWorth[0].ToString(), Color.White, contentRightAlign, 240);
+            SwinGame.DrawText("Diamond points:  " + mineralWorth[0].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 240);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Emerald points: " + mineralWorth[1].ToString(), Color.White, contentRightAlign, 265);
+            SwinGame.DrawText("Emerald points:  " + mineralWorth[1].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 265);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Ruby points: " + mineralWorth[2].ToString(), Color.White, contentRightAlign, 290);
+            SwinGame.DrawText("Ruby points:  " + mineralWorth[2].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 290);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText("Sapphire points: " + mineralWorth[3].ToString(), Color.White, contentRightAlign, 315);
+            SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 315);
             
         }
 
@@ -208,29 +213,24 @@ namespace Escapade.src.gui
             // Font arial = SwinGame.LoadFont("arial", 14);
 
             // IA - Display the total value of minerals while the game runs
-            SwinGame.DrawText(playerName + " HAS " + inventory.ItemList.Count.ToString() + " MINERALS", color, contentRightAlign, 210 + Y);
+            SwinGame.DrawText(playerName + " HAS " + inventory.ItemList.Count.ToString() + " MINERALS", color, openSansExtraBoldNormal, contentRightAlign, 210 + Y);
 
-            SwinGame.DrawText("Diamond points: " + mineralWorth[0].ToString(), color, contentRightAlign, 240 + Y);
+            SwinGame.DrawText("Diamond points:  " + mineralWorth[0].ToString(), color, openSansExtraBoldNormal, contentRightAlign, 240 + Y);
 
-            SwinGame.DrawText("Emerald points: " + mineralWorth[1].ToString(), color, contentRightAlign, 265 + Y);
+            SwinGame.DrawText("Emerald points:  " + mineralWorth[1].ToString(), color, openSansExtraBoldNormal, contentRightAlign, 265 + Y);
 
-            SwinGame.DrawText("Ruby points: " + mineralWorth[2].ToString(), color, contentRightAlign, 290 + Y);
+            SwinGame.DrawText("Ruby points:  " + mineralWorth[2].ToString(), color, openSansExtraBoldNormal, contentRightAlign, 290 + Y);
 
-            SwinGame.DrawText("Sapphire points: " + mineralWorth[3].ToString(), color, contentRightAlign, 315 + Y);
+            SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), color, openSansExtraBoldNormal, contentRightAlign, 315 + Y);
 
-            SwinGame.DrawText("Sapphire points: " + mineralWorth[3].ToString(), color, contentRightAlign, 315 + Y);
+            SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), color, openSansExtraBoldNormal, contentRightAlign, 315 + Y);
 
-            SwinGame.DrawText("Total points: " + inventory.GetMineralPoints(), color, contentRightAlign, 360 + Y);
+            SwinGame.DrawText("Total points:  " + inventory.GetMineralPoints(), color, openSansExtraBoldNormal, contentRightAlign, 360 + Y);
 
         }
 
         public static void DisplayFoodExchange(Inventory inventory)
         {
-            Font arial = SwinGame.LoadFont("arial", 14);
-
-            SwinGame.DrawText("How: ", Color.White, 810, 490);
-
-            // IA - Make sure that the game is not already reading text.
 
             if (SwinGame.KeyTyped(KeyCode.SpaceKey))
             {
@@ -239,7 +239,7 @@ namespace Escapade.src.gui
                 {
                     SwinGame.EndReadingText();
                 }
-                Input.StartReadingText(Color.Black, 3, arial, _foodField);
+                Input.StartReadingText(Color.Black, 3, openSansBoldLarge, _foodField);
             }
             
             if (Input.ReadingText() && SwinGame.KeyTyped(KeyCode.TabKey))
@@ -284,27 +284,34 @@ namespace Escapade.src.gui
 
             if (!Input.ReadingText())
             {
-                _foodMessage = "Hit Space to buy food.";
+                _foodMessage = "Hit Space to enter amount.";
             }
         }
 
         public static void DrawFoodField(Inventory inventory)
         {
-            SwinGame.DrawText("FOOD EXCHANGE CENTER", Color.WhiteSmoke, contentRightAlign, 435);
+            SwinGame.DrawText("FOOD EXCHANGE CENTER", Color.WhiteSmoke, openSansExtraBoldLarge, contentRightAlign, 435);
             
             // IA - avoid grammar errors by knowing when to put the term "point" in plural form.
             if (Food.GetMineralValue() == 1)
             {
-                SwinGame.DrawText("1kg Food = " + Food.GetMineralValue().ToString() + " point", Color.Wheat, contentRightAlign, 460);
+                SwinGame.DrawText("1kg Food = " + Food.GetMineralValue().ToString() + " point", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 460);
             } else
             {
-                SwinGame.DrawText("1kg Food = " + (Math.Round(Food.GetMineralValue(), 0)).ToString() + "+ points", Color.Wheat, contentRightAlign, 460);
+                SwinGame.DrawText("1kg Food = " + (Math.Round(Food.GetMineralValue(), 0)).ToString() + "+ points", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 460);
             }
 
-            SwinGame.DrawText("Available balance: " + Food.GetBalance().ToString(), Color.Wheat, contentRightAlign, 485);
+            if (Food.GetBalance() <= 1)
+            {
+                SwinGame.DrawText("Available balance: " + Food.GetBalance().ToString() + " point", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 485);
+            } else
+            {
+                SwinGame.DrawText("Available balance: " + Food.GetBalance().ToString() + " points", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 485);
+            }
 
-            SwinGame.DrawText("You can afford: " + Food.GetMaximumFoodToPurchase(inventory).ToString() + "kg", Color.Wheat, contentRightAlign, 535);
-            SwinGame.DrawText("Enter food amount in kg", Color.Wheat, contentRightAlign, 510);
+            SwinGame.DrawText("You can afford: " + Food.GetMaximumFoodToPurchase(inventory).ToString() + "kg", Color.Wheat, openSansExtraBoldNormal, contentRightAlign, 510);
+
+            SwinGame.DrawText("Enter food amount in kg:", Color.Wheat, openSansExtraBoldItalicNormal, contentRightAlign, 535);
             
             SwinGame.FillRectangle(Color.Yellow, _foodField);
             if (SwinGame.PointInRect(SwinGame.MousePosition(), _foodField) || Input.ReadingText())
@@ -312,12 +319,12 @@ namespace Escapade.src.gui
                 SwinGame.FillRectangle(Color.White, _foodField);
             }
 
-            SwinGame.DrawText(_foodMessage, Color.White, contentRightAlign, 590);
+            SwinGame.DrawText(_foodMessage, Color.White, openSansExtraBoldNormal, contentRightAlign, 600);
         }
 
         public static void DisplayTwoPlayersInstructions()
         {
-            SwinGame.DrawText("Outlast your opponent and collect the most minerals points without getting killed!", Color.White, 20, contentFirstLine);
+            SwinGame.DrawText("Outlast your opponent and collect the most mineral points without getting killed!", Color.White, openSansExtraBoldLarge, 20, contentFirstLine);
         }
 
     }
