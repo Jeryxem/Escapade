@@ -66,8 +66,8 @@ namespace Escapade.src.gui
 
         public static void IncreaseEnergy(double convertedFood)
         {
-            double energyToAdd = Math.Ceiling(convertedFood * 1.5);
-            if (Food.EnergyNeededInPercentage() >= energyToAdd)
+            double energyToAdd = Math.Floor(convertedFood * 1.5); // Transfer the energy into width for the hunger progress bar.
+            if (Food.EnergyNeededInPercentage() * 1.5 >= energyToAdd)
             {
                 hungerIndicatorWidth += energyToAdd;
             } else
@@ -212,6 +212,8 @@ namespace Escapade.src.gui
             SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 315);
 
             SwinGame.DrawText("Total points:  " + inventory.GetMineralPoints(), Color.White, openSansExtraBoldNormal, contentRightAlign, 360);
+
+            SwinGame.DrawText("(Balance not included)", Color.White, openSansBoldItalicNormal, contentRightAlign, 385);
 
         }
 

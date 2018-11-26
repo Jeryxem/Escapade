@@ -76,7 +76,7 @@ namespace Escapade
             }
         }
 
-        public static void DecreaseEnergyValue()
+        public static void IncreaseEnergyValue()
         {
             if (_energyValue <= 10)
             {
@@ -116,7 +116,7 @@ namespace Escapade
 
         public static int FoodNeededInKG()
         {
-            return (int) Math.Ceiling(EnergyNeededInMineralPoints() / _mineralValue);
+            return (int) Math.Round(EnergyNeededInPercentage() * _energyValue / _mineralValue);
         }
 
         public static void PurchaseFood(Inventory inventory, int convertedAmount)
