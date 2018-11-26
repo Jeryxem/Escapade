@@ -35,6 +35,11 @@ namespace Escapade.item
             ItemList.Remove(i);
         }
 
+        public void ClearInventory()
+        {
+            _itemlist.Clear();
+        }
+
         /// <summary>
         /// Return the total value of all minerals gathered. This must not be confused with the number of minerals gathered. Only the total value (not the count) of minerals is returned.
         /// </summary>
@@ -105,7 +110,7 @@ namespace Escapade.item
             int balance = 0;
             int amount = Food.GetBalance();
 
-            Food.DeductBalance(foodValue);
+            Food.DeductBalance(foodValue, this);
 
             for (int i = _itemlist.Count - 1;  i >= 0; i--)
             {

@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Escapade;
 using Escapade.item;
+using Escapade.src.gui;
 
 namespace Escapade
 {
     /// <summary>
-    /// This class contains all the method required to purchase food with mineral points, which can then be converted to energy levels.
+    /// This class contains all the method required to purchase food with mineral points, which can then be converted to energy levels. Added by Isaac Asante.
     /// </summary>
     public static class Food
     {
-        private static double _mineralValue = 1;
-        private static double _energyValue = 2;
-        private static int _balance = 0;
-        private static int _foodPurchased = 0;
+        private static double _mineralValue = 1; // The mineral value of 1KG of food.
+        private static double _energyValue = 2; // The mineral value of 1% of energy.
+        private static int _balance = 0; // The field that will store remaining points from food transactions.
+        private static int _foodPurchased = 0; // The mineral points spent in the last transaction.
 
         public static double GetMineralValue()
         {
@@ -38,11 +39,26 @@ namespace Escapade
             _balance = balance;
         }
 
-        public static void DeductBalance(int foodValue)
+        public static int GetFoodPurchased()
+        {
+            return _foodPurchased;
+        }
+
+        public static void ResetFoodPurchased()
+        {
+            _foodPurchased = 0;
+        }
+
+        public static void DeductBalance(int foodValue, Inventory inventory)
         {
             if (foodValue <= _balance)
             {
                 _balance -= foodValue;
+            }
+
+            if (foodValue == (inventory.GetMineralPoints() + _balance))
+            {
+                _balance = 0;
             }
         }
 
@@ -60,27 +76,57 @@ namespace Escapade
             }
         }
 
-        public static void DecreaseEnergyValue()
+        public static void IncreaseEnergyValue()
         {
-            if (_energyValue >= 0.1)
+            if (_energyValue <= 10)
             {
-                _energyValue -= _mineralValue - GameLevel.GetLevel();
+                _energyValue += _mineralValue - GameLevel.GetLevel();
             }
         }
 
         /// <summary>
-        /// This returns the amount of energy points that will be gained by converting the food purchased. It is recommended to always call the UpdateFoodMaximum() method before this one, to make sure that the value for the maximum amount of food that can be purchased with mineral points first is accurate. 
+        /// This returns the amount of energy in percentages that will be gained by converting the food purchased.
         /// </summary>
         /// <returns></returns>
         public static double FoodConvertableToEnergy()
         {
             return _foodPurchased / _energyValue;
+            // IA - the _foodPurchased value is measured in mineral points.
+        }
+
+        /// <summary>
+        /// This method returns the amount of energy in percentages needed to reach the full energy level of 100%. 
+        /// </summary>
+        /// <returns></returns>
+        public static int EnergyNeededInPercentage()
+        {
+            int max = 100 - MetaHandler.GetEnergyLevel(); // IA - Current energy levels in % + what the player purchased.
+
+            return max;
+        }
+
+        /// <summary>
+        /// This method returns the amount of mineral points required to reach the maximum energy level of 100%.
+        /// </summary>
+        /// <returns></returns>
+        public static double EnergyNeededInMineralPoints()
+        {
+            return EnergyNeededInPercentage() * _energyValue;
+        }
+
+        public static int FoodNeededInKG()
+        {
+            return (int) Math.Round(EnergyNeededInPercentage() * _energyValue / _mineralValue);
         }
 
         public static void PurchaseFood(Inventory inventory, int convertedAmount)
         {
             _foodPurchased = convertedAmount; // store the amount for conversion to energy
             inventory.DeductPointsForFood(convertedAmount);
+
+            double validPercentage = FoodConvertableToEnergy();
+            MetaHandler.IncreaseEnergy(validPercentage);
+
         }
 
         public static void PurchaseFoodFromBalance(int convertedAmount)
