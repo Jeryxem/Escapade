@@ -262,7 +262,7 @@ namespace Escapade.src.gui
                     {
                         _foodMessage = "Buy 1kg or more.";
                     }
-                    else if (Food.GetMaximumFoodToPurchase(inventory) >= requestedAmount && requestedFoodValue > 0 && requestedFoodValue <= 300)
+                    else if (Food.GetMaximumFoodToPurchase(inventory) >= requestedAmount && requestedFoodValue > 0 && requestedAmount <= 300)
                     {
                         if (requestedFoodValue > 1)
                         {
