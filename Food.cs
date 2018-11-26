@@ -40,6 +40,16 @@ namespace Escapade
             _balance = balance;
         }
 
+        public static int GetFoodPurchased()
+        {
+            return _foodPurchased;
+        }
+
+        public static void ResetFoodPurchased()
+        {
+            _foodPurchased = 0;
+        }
+
         public static void DeductBalance(int foodValue, Inventory inventory)
         {
             if (foodValue <= _balance)

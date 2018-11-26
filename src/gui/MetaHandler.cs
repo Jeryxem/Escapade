@@ -54,6 +54,11 @@ namespace Escapade.src.gui
             hungerIndicatorWidth -= 0.02;
         }
 
+        public static void ResetEnergyLevels()
+        {
+            hungerIndicatorWidth = 150;
+        }
+
         public static void SetFoodMessage(String message)
         {
             _foodMessage = message;
@@ -141,7 +146,7 @@ namespace Escapade.src.gui
 
             SwinGame.DrawText(hungerIndication, hungerIndicatorColor, openSansExtraBoldNormal, 420, GlobalConstants.WORLD_HEIGHT + 37);
 
-            SwinGame.DrawText("About " + Food.FoodNeededInKG().ToString() + "kg more of food needed.", Color.White, openSansBoldItalicNormal, 420, GlobalConstants.WORLD_HEIGHT + 55);
+            SwinGame.DrawText("Up to " + Food.FoodNeededInKG().ToString() + "kg of food needed for top energy.", Color.White, openSansBoldItalicNormal, 420, GlobalConstants.WORLD_HEIGHT + 55);
         }
 
         /// <summary>

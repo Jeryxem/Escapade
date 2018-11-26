@@ -35,6 +35,11 @@ namespace Escapade.item
             ItemList.Remove(i);
         }
 
+        public void ClearInventory()
+        {
+            _itemlist.Clear();
+        }
+
         /// <summary>
         /// Return the total value of all minerals gathered. This must not be confused with the number of minerals gathered. Only the total value (not the count) of minerals is returned.
         /// </summary>
