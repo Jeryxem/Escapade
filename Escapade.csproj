@@ -53,34 +53,34 @@
     <None Include="Resources\images\instructions.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\Arrow Key O.png">
+    <None Include="Resources\images\ArrowKeyO.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\B Key.png">
+    <None Include="Resources\images\BKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\J P Key.png">
+    <None Include="Resources\images\JPKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\O Key.png">
+    <None Include="Resources\images\OKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\P Key.png">
+    <None Include="Resources\images\PKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\Shift B Key.png">
+    <None Include="Resources\images\ShiftBKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\V Key.png">
+    <None Include="Resources\images\VKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\images\WASD.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\Arrow Key.png">
+    <None Include="Resources\images\ArrowKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\WASD V Key.png">
+    <None Include="Resources\images\WASD_VKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\images\player_one_wins.png">
@@ -93,16 +93,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Resources\images\Arrow Key K.png">
+    <None Include="Resources\images\ArrowKeyK.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\Arrow Key L.png">
+    <None Include="Resources\images\ArrowKeyL.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\WASD F Key.png">
+    <None Include="Resources\images\WASD_FKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\images\WASD G Key.png">
+    <None Include="Resources\images\WASD_GKey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\sounds\A_Night_Of_Dizzy_Spells.wav">

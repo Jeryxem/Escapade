@@ -50,22 +50,22 @@ namespace Escapade
       NewImage ("main_menu", "main_menu.png");
       NewImage("instructions","instructions.png");
       NewImage ("wasd", "WASD.png");
-      NewImage ("arrow_key", "Arrow Key.png");
-      NewImage ("arrow_key_O", "Arrow Key O.png");
-      NewImage ("b_key", "B Key.png");
-      NewImage ("j_p_key", "J P Key.png");
-      NewImage ("o_key", "O Key.png");
-      NewImage ("p_key", "P Key.png");
-      NewImage ("shift_b_key", "Shift B Key.png");
-      NewImage ("v_key", "V Key.png");
-      NewImage ("wasd_v_key", "WASD V Key.png");
+      NewImage ("arrow_key", "ArrowKey.png");
+      NewImage ("arrow_key_O", "ArrowKeyO.png");
+      NewImage ("b_key", "BKey.png");
+      NewImage ("j_p_key", "JPKey.png");
+      NewImage ("o_key", "OKey.png");
+      NewImage ("p_key", "PKey.png");
+      NewImage ("shift_b_key", "ShiftBKey.png");
+      NewImage ("v_key", "VKey.png");
+      NewImage ("wasd_v_key", "WASD_VKey.png");
       NewImage ("player_one_wins", "player_one_wins.png");
       NewImage ("player_two_wins", "player_two_wins.png");
       NewImage ("you_died", "you_died.png");
-      NewImage ("arrow_key_K", "Arrow Key K.png");
-      NewImage ("arrow_key_L", "Arrow Key L.png");
-      NewImage ("wasd_f_key", "WASD F Key.png");
-      NewImage ("wasd_g_key", "WASD G Key.png");
+      NewImage ("arrow_key_K", "ArrowKeyK.png");
+      NewImage ("arrow_key_L", "ArrowKeyL.png");
+      NewImage ("wasd_f_key", "WASD_FKey.png");
+      NewImage ("wasd_g_key", "WASD_GKey.png");
     }
 
     public static void LoadSounds ()
