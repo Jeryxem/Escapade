@@ -367,6 +367,12 @@ namespace Escapade
             GameLevel.SetLevel(1);
             EnemiesToBeRemoved.Clear();
 
+            // IA - Clear the input field from the Food Exchange Center
+            if (Input.ReadingText())
+            {
+                Input.EndReadingText();
+            }
+
 
             GetPlayer().Inventory.ClearInventory();
             if (_twoplayer == true)

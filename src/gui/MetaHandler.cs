@@ -210,7 +210,9 @@ namespace Escapade.src.gui
 
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 315);
-            
+
+            SwinGame.DrawText("Total points:  " + inventory.GetMineralPoints(), Color.White, openSansExtraBoldNormal, contentRightAlign, 360);
+
         }
 
         public static void DisplayRate(double[] mineralWorth, Inventory inventory, String playerName, int Y, Color color)
