@@ -18,7 +18,6 @@ namespace Escapade
         private static double _energyValue = 2; // The mineral value of 1% of energy.
         private static int _balance = 0; // The field that will store remaining points from food transactions.
         private static int _foodPurchased = 0; // The mineral points spent in the last transaction.
-        private static int _wastedFoodEnergy = 0;
 
         public static double GetMineralValue()
         {
@@ -79,9 +78,9 @@ namespace Escapade
 
         public static void DecreaseEnergyValue()
         {
-            if (_energyValue >= 0.1)
+            if (_energyValue <= 10)
             {
-                _energyValue -= _mineralValue - GameLevel.GetLevel();
+                _energyValue += _mineralValue - GameLevel.GetLevel();
             }
         }
 
