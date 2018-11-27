@@ -545,31 +545,10 @@ namespace Escapade
         /// </summary>
         public void Update()
         {
+			randomhit++;
 
-            // click button M to change map to check collision
-            // collision on left right up down, some part of edge no collision if look carefully - jeremy
-            if (_world.Map[_enemy.Location.X + 1, _enemy.Location.Y].Type == TileType.Rock)
-            {
-                randomhit++;
-            }
-            if (_world.Map[_enemy.Location.X - 1, _enemy.Location.Y].Type == TileType.Rock)
-            {
-                randomhit++;
-            }
-
-            if (_world.Map[_enemy.Location.X, _enemy.Location.Y + 1].Type == TileType.Rock)
-            {
-                randomhit++;
-            }
-
-            if (_world.Map[_enemy.Location.X, _enemy.Location.Y - 1].Type == TileType.Rock)
-            {
-                randomhit++;
-            }
-
-
-            //spawn rate - jeremy
-            if (randomhit >= 20)
+            //spawn rate - jeremy 
+            if (randomhit >= 200)
             {
                 Init();
                 randomhit = 0;
