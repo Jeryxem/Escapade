@@ -160,6 +160,7 @@ namespace Escapade
                 Food.IncreaseMineralValue(); // IA - Make food more expensive
                 Food.IncreaseEnergyValue(); // IA - Make the food conversion to energy less significant.
                 EnemiesToBeRemoved.Clear(); // IA - Reset the count of enemies destroyed at each level.
+                GetWorld().PutMinerals(); //jeremy - for every new level, new minerals added to game
             }
         }
 
@@ -362,6 +363,8 @@ namespace Escapade
             // IA - Reset minerals, game levels, food purchased and energy levels.
             Food.SetBalance(0);
             Food.ResetFoodPurchased();
+            Food.ResetMineralValue();
+            Food.ResetEnergyValue();
             MetaHandler.ResetEnergyLevels();
             MetaHandler.SetFoodMessage("Hit Space to enter amount.");
             GameLevel.SetLevel(1);
@@ -378,8 +381,17 @@ namespace Escapade
             if (_twoplayer == true)
             {
                 _player2.Inventory.ClearInventory();
+                if (_player2.Weapon != null)
+                {
+                    _player2.Weapon.ResetAmmunition();
+                }
             }
 
+            if (_player.Weapon != null)
+            {
+                _player.Weapon.ResetAmmunition();
+            }
+            
 
 
             while (!proceed)

@@ -49,6 +49,16 @@ namespace Escapade
             _foodPurchased = 0;
         }
 
+        public static void ResetMineralValue()
+        {
+            _mineralValue = 1;
+        }
+
+        public static void ResetEnergyValue()
+        {
+            _energyValue = 2;
+        }
+
         public static void DeductBalance(int foodValue, Inventory inventory)
         {
             if (foodValue <= _balance)
@@ -116,7 +126,7 @@ namespace Escapade
 
         public static int FoodNeededInKG()
         {
-            return (int) Math.Round(EnergyNeededInPercentage() * _energyValue / _mineralValue);
+            return (int)Math.Round(EnergyNeededInPercentage() * _energyValue / _mineralValue);
         }
 
         public static void PurchaseFood(Inventory inventory, int convertedAmount)
@@ -135,7 +145,7 @@ namespace Escapade
             // int foodKGAvailable = 0;
             if (convertedAmount <= _balance)
             {
-               // foodKGAvailable =  (int) Math.Floor(_balance / convertedAmount);
+                // foodKGAvailable =  (int) Math.Floor(_balance / convertedAmount);
 
                 _balance -= convertedAmount;
             }
