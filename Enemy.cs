@@ -114,7 +114,7 @@ namespace Escapade
 
 			//map edge, due to random direction and frame, need to put 2 statements to make sure enemy stays inside map 
 			//in case direction push it out of the map on certain frames
-			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock || Location.X == 51 || Location.X == 50)
+			if (_world.Map[_location.X+1, _location.Y].Type == TileType.Rock)
 			{
 				_directionX = 2;
 				Random y = new Random();
@@ -129,7 +129,7 @@ namespace Escapade
 				}
 			}
 
-			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock || Location.X == 1 || Location.X == 2)
+			if (_world.Map[_location.X-1, _location.Y].Type == TileType.Rock)
 			{
 				_directionX = 1;
 				Random y = new Random();
@@ -145,7 +145,7 @@ namespace Escapade
 			}
 
 			//up down
-			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock || Location.Y == 35 || Location.Y == 34)
+			if (_world.Map[_location.X, _location.Y+1].Type == TileType.Rock)
 			{
 				_directionY = 2;
 				Random y = new Random();
@@ -160,7 +160,7 @@ namespace Escapade
 				}
 			}
 
-			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock || Location.Y == 1 || Location.Y == 2)
+			if (_world.Map[_location.X, _location.Y-1].Type == TileType.Rock)
 			{
 				_directionY = 1;
 				Random y = new Random();

@@ -684,7 +684,7 @@ namespace Escapade
 
                 try
                 {
-                    if (_world.Map[x, y].Type == TileType.Rock)
+					if (_world.Map[x, y].Type == TileType.Rock && x != 0 && y != 0 && x != 52 && y != 36)
                     {
                         _world.Map[x, y].Type = TileType.Air;
                         if (_world.Map[x, y].Mineral != null)
@@ -777,6 +777,48 @@ namespace Escapade
             {
                 //PLAYER 2 MINE/BUILD ROCKS INPUT
                 //mine rocks/minerals right
+				 if (SwinGame.KeyDown(KeyCode.KKey))
+           	 	{
+                int i = _player2.Location.X;
+				int j = _player2.Location.Y;
+					if (SwinGame.KeyReleased(KeyCode.RightKey))
+                {
+                    i += 1;
+                }
+					else if (SwinGame.KeyReleased(KeyCode.DownKey))
+                {
+                    j += 1;
+                }
+					else if (SwinGame.KeyReleased(KeyCode.LeftKey))
+                {
+                    i -= 1;
+                }
+					else if (SwinGame.KeyReleased(KeyCode.UpKey))
+                {
+                    j -= 1;
+                }
+
+                try
+                {
+					if (_world.Map[i, j].Type == TileType.Rock && i != 0 && j != 0 && i != 52 && j != 36)
+                    {
+                        _world.Map[i, j].Type = TileType.Air;
+                        if (_world.Map[i, j].Mineral != null)
+                        {
+
+							GetPlayer().Inventory.AddItem(_world.Map[i, j].Mineral);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    // IA - in case of an exception, force the reassignment of x and y using the player's location.
+                    i = _player2.Location.X;
+                    j = _player2.Location.Y;
+                }
+            }
+
+				/*
                 if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyReleased(KeyCode.KKey))
                 {
                     //GetEnvironment ().HandleGuiEvent (GuiEvent.MouseRight, new Location (_player.Location.X+1, _player.Location.Y));
@@ -934,7 +976,7 @@ namespace Escapade
                             inv.Content = minerals;
                         }
                     }
-                }
+                }*/
 
                 //build rock right
                 if (SwinGame.KeyDown(KeyCode.RightKey) && SwinGame.KeyDown(KeyCode.LKey))
