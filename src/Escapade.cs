@@ -1052,7 +1052,7 @@ namespace Escapade
             }
 
 
-            if (SwinGame.KeyTyped(KeyCode.QKey))
+            /*if (SwinGame.KeyTyped(KeyCode.QKey))
             {
                 GuiEnvironment.GetRenderer().ToggleFrame("inventory");
             }
@@ -1067,7 +1067,7 @@ namespace Escapade
                 GetWorld().PutMinerals();
             }
 
-            /*if (SwinGame.KeyTyped (KeyCode.MKey)) {
+            if (SwinGame.KeyTyped (KeyCode.MKey)) {
 			  GetWorld ().GenerateMap ();
 			}*/
 

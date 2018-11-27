@@ -27,6 +27,7 @@ namespace Escapade
         public static void IncreaseLevel()
         {
             _levelNo++;
+            Escapade.GetWorld().PutMinerals(); //jeremy - for every new level, new minerals added to game
         }
 
         public static void ResetLevel()
