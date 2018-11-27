@@ -812,7 +812,7 @@ namespace Escapade
                         if (_world.Map[i, j].Mineral != null)
                         {
 
-							GetPlayer().Inventory.AddItem(_world.Map[i, j].Mineral);
+							_player2.Inventory.AddItem(_world.Map[i, j].Mineral);
                         }
                     }
                 }
@@ -1066,13 +1066,14 @@ namespace Escapade
             if (SwinGame.KeyTyped(KeyCode.HKey))
             {
                 GuiEnvironment.GetRenderer().ToggleFrame("help");
-            }
+            } */
 
             if (SwinGame.KeyTyped(KeyCode.EKey))
             {
                 GetWorld().PutMinerals();
             }
 
+            /*
             if (SwinGame.KeyTyped (KeyCode.MKey)) {
 			  GetWorld ().GenerateMap ();
 			}*/
@@ -1317,6 +1318,8 @@ namespace Escapade
             if (_gameStates.Peek() == GameState.TwoPlayerMode)
             {
                 MetaHandler.DisplayTwoPlayersInstructions();
+                MetaHandler.DisplaySinglePlayerWeaponInfo(_player, "Player 1", 15);
+                MetaHandler.DisplaySinglePlayerWeaponInfo(_player2, "Player 2", 85);
                 MetaHandler.DisplayRate(_player.Inventory.GetTotalValue(), _player.Inventory, "PLAYER 1", -190, Color.Wheat);
                 MetaHandler.DisplayRate(_player2.Inventory.GetTotalValue(), _player2.Inventory, "PLAYER 2", 10, Color.Yellow);
             }

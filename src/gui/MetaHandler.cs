@@ -205,6 +205,16 @@ namespace Escapade.src.gui
             SwinGame.DrawText(_ammunitionMessage2, Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine + 15);
         }
 
+        public static void DisplaySinglePlayerWeaponInfo(Player player, String playerName, int Y)
+        {
+            if (player.Weapon != null)
+            {
+                SwinGame.DrawText(playerName, Color.White, openSansExtraBoldLarge, contentRightAlign, 450 + Y);
+
+                SwinGame.DrawText("Projectiles left: " + player.Weapon.Ammunition.ToString(), Color.WhiteSmoke, openSansExtraBoldNormal, contentRightAlign, 470 + Y);
+            }
+        }
+
         public static void DisplayEnemiesInfo(List<Enemy> existingEnemies, List<Enemy> enemiesHit)
         {
             SwinGame.DrawText("ENEMIES IN THIS LEVEL", Color.Yellow, openSansExtraBoldLarge, contentRightAlign, 15);
