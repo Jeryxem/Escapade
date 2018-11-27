@@ -223,23 +223,28 @@ namespace Escapade
                 SwinGame.DrawBitmap(GameResources.GameImage("main_menu"), 0, 0);
                 SwinGame.ProcessEvents();
 
-                if (SwinGame.MouseClicked(MouseButton.LeftButton))
-                {
-                    if (SwinGame.PointInRect(SwinGame.PointAt(SwinGame.MouseX(), SwinGame.MouseY()), (float)GlobalConstants.SINGLE_PLAYER_BUTTON_X, (float)GlobalConstants.SINGLE_PLAYER_BUTTON_Y, (float)GlobalConstants.SINGLE_PLAYER_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
-                        _gameStates.Push(GameState.SinglePlayerMode);
-                    else if (SwinGame.PointInRect(SwinGame.PointAt(SwinGame.MouseX(), SwinGame.MouseY()), (float)GlobalConstants.TWO_PLAYER_BUTTON_X, (float)GlobalConstants.TWO_PLAYER_BUTTON_Y, (float)GlobalConstants.TWO_PLAYER_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
-                        _gameStates.Push(GameState.TwoPlayerMode);
-                    else if (SwinGame.PointInRect(SwinGame.PointAt(SwinGame.MouseX(), SwinGame.MouseY()), (float)GlobalConstants.INSTRUCTIONS_BUTTON_X, (float)GlobalConstants.INSTRUCTIONS_BUTTON_Y, (float)GlobalConstants.INSTRUCTIONS_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
-                        _gameStates.Push(GameState.ViewingInstructions);
-                    else if (SwinGame.PointInRect(SwinGame.PointAt(SwinGame.MouseX(), SwinGame.MouseY()), (float)GlobalConstants.QUIT_BUTTON_X, (float)GlobalConstants.QUIT_BUTTON_Y, (float)GlobalConstants.QUIT_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
-                        _gameStates.Push(GameState.QuittingGame);
+            if (SwinGame.MouseClicked (MouseButton.LeftButton)) {
+              if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.SINGLE_PLAYER_BUTTON_X, (float)GlobalConstants.SINGLE_PLAYER_BUTTON_Y, (float)GlobalConstants.SINGLE_PLAYER_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+                _gameStates.Push (GameState.SinglePlayerMode);
+              else if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.TWO_PLAYER_BUTTON_X, (float)GlobalConstants.TWO_PLAYER_BUTTON_Y, (float)GlobalConstants.TWO_PLAYER_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+                _gameStates.Push (GameState.TwoPlayerMode);
+              else if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.INSTRUCTIONS_BUTTON_X, (float)GlobalConstants.INSTRUCTIONS_BUTTON_Y, (float)GlobalConstants.INSTRUCTIONS_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+                _gameStates.Push (GameState.ViewingInstructions);
+              else if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.QUIT_BUTTON_X, (float)GlobalConstants.QUIT_BUTTON_Y, (float)GlobalConstants.QUIT_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
+                _gameStates.Push (GameState.QuittingGame);
 
-                    commandChosen = true;
-                }
 
-                //SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
-                //SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
-                SwinGame.RefreshScreen(60);
+              commandChosen = true;
+            } 
+            else if (SwinGame.WindowCloseRequested ()) 
+            {
+              _gameStates.Push (GameState.QuittingGame);
+              commandChosen = true;
+            }
+
+          //SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
+          //SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
+          SwinGame.RefreshScreen(60);
             }
             SwinGame.ClearScreen(Color.White);
             SwinGame.PauseMusic();
