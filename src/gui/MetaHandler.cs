@@ -19,6 +19,8 @@ namespace Escapade.src.gui
     {
         private static Rectangle _foodField = SwinGame.CreateRectangle(810, 560, 150, 30);
         private static String _foodMessage;
+        private static String _ammunitionMessage1;
+        private static String _ammunitionMessage2;
         private static Font openSansExtraBoldLarge = SwinGame.LoadFont("OpenSans-ExtraBold", 14);
         private static Font openSansExtraBoldNormal = SwinGame.LoadFont("OpenSans-ExtraBold", 12);
         private static Font openSansExtraBoldSmall = SwinGame.LoadFont("OpenSans-ExtraBold", 10);
@@ -38,6 +40,26 @@ namespace Escapade.src.gui
         public static String hungerIndication;
         public static double hungerIndicatorWidth = 150;
         public static Color hungerIndicatorColor;
+
+        public static string GetAmmunitionMessage1()
+        {
+            return _ammunitionMessage1;
+        }
+
+        public static void ResetAmmunitionMessage1()
+        {
+            _ammunitionMessage1 = "Press B or Shift + B to buy weapons.";
+        }
+
+        public static string GetAmmunitionMessage2()
+        {
+            return _ammunitionMessage2;
+        }
+
+        public static void ResetAmmunitionMessage2()
+        {
+            _ammunitionMessage2 = "";
+        }
 
         public static int Map(double indicator)
         {
@@ -164,21 +186,23 @@ namespace Escapade.src.gui
                 if (weapon.Ammunition > 0)
                 {
                     {
-                        SwinGame.DrawText("AMMUNITION AVAILABLE: " + weapon.Ammunition.ToString(), Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine);
-
-                        SwinGame.DrawText("AMMUNITION TYPE: " + weapon.Type.ToString(), Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine + 15);
+                        _ammunitionMessage1 = "AMMUNITION AVAILABLE: " + weapon.Ammunition.ToString();
+                        _ammunitionMessage2 = "AMMUNITION TYPE: " + weapon.Type.ToString();
                     }
                 } else
                 {
-                    SwinGame.DrawText("You've ran out of ammo!", Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine);
-
-                    SwinGame.DrawText("Gather minerals to buy more weapons!", Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine + 15);
+                    _ammunitionMessage1 = "You've ran out of ammo!";
+                    _ammunitionMessage2 = "Gather minerals to buy more weapons!";
                 }
             }
             else
             {
-                SwinGame.DrawText("Press B or Shift + B to buy weapons.", Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine);
+                ResetAmmunitionMessage1();
+                ResetAmmunitionMessage2();
             }
+
+            SwinGame.DrawText(_ammunitionMessage1, Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine);
+            SwinGame.DrawText(_ammunitionMessage2, Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine + 15);
         }
 
         public static void DisplayEnemiesInfo(List<Enemy> existingEnemies, List<Enemy> enemiesHit)

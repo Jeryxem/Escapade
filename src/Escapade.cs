@@ -367,8 +367,11 @@ namespace Escapade
             Food.ResetEnergyValue();
             MetaHandler.ResetEnergyLevels();
             MetaHandler.SetFoodMessage("Hit Space to enter amount.");
+            MetaHandler.ResetAmmunitionMessage1();
+            MetaHandler.ResetAmmunitionMessage2();
             GameLevel.SetLevel(1);
             EnemiesToBeRemoved.Clear();
+            GetPlayer().DestroyWeapon();
 
             // IA - Clear the input field from the Food Exchange Center
             if (Input.ReadingText())
@@ -381,18 +384,9 @@ namespace Escapade
             if (_twoplayer == true)
             {
                 _player2.Inventory.ClearInventory();
-                if (_player2.Weapon != null)
-                {
-                    _player2.Weapon.ResetAmmunition();
-                }
-            }
-
-            if (_player.Weapon != null)
-            {
-                _player.Weapon.ResetAmmunition();
+                _player2.DestroyWeapon();
             }
             
-
 
             while (!proceed)
             {
