@@ -214,6 +214,7 @@ namespace Escapade
         public void Start()
         {
             SwinGame.OpenGraphicsWindow("Escapade", GetWorld().Width * GetWorld().Size + 200, GetWorld().Height * GetWorld().Size + 80); // IA - Changed the height of the window to allow for the display of the bottom panel
+			SwinGame.ToggleFullScreen();
             GameResources.LoadResources();
             SwinGame.PlayMusic(GameResources.GameMusic("main_menu_music"));
             _gameStates = new Stack<GameState>();
