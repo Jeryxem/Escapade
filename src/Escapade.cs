@@ -76,6 +76,10 @@ namespace Escapade
         }
 
         //player 2 -jeremy toh
+		/// <summary>
+		/// Gets the player2.
+		/// </summary>
+		/// <returns>The player2.</returns>
         public static Player GetPlayer2()
         {
             if (_player2 == null)
@@ -88,6 +92,10 @@ namespace Escapade
 
 
         //  enemy spawn point - Jeremy Toh
+		/// <summary>
+		/// Gets the enemy and set spawnpoint
+		/// </summary>
+		/// <returns>The enemy.</returns>
         public static Enemy GetEnemy()
         {
             if (_enemy == null)
@@ -108,6 +116,10 @@ namespace Escapade
             return _enemy;
         }
 
+		/// <summary>
+		/// Spawns more enemy and set their spawn point
+		/// </summary>
+		/// <returns>The more enemy.</returns>
         public static Enemy SpawnMoreEnemy()
         {
             Random r2 = new Random();
