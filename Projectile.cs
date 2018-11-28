@@ -41,28 +41,48 @@ namespace Escapade
           
     }
 
+    /// <summary>
+    /// Gets a value indicating whether this <see cref="T:Escapade.Projectile"/> is horizontal.
+    /// </summary>
+    /// <value><c>true</c> if horizontal; otherwise, <c>false</c>.</value>
     public bool Horizontal 
     {
       get { return horizontal; }
     }
 
+    /// <summary>
+    /// Gets the type of weapon the projectile belongs to
+    /// </summary>
+    /// <value>The type.</value>
     public WeaponType Type 
     {
       get { return _weaponType; }
     }
 
+    /// <summary>
+    /// Gets or sets the owner of the weapon that fired this projectile
+    /// </summary>
+    /// <value>The owner.</value>
     public string Owner 
     {
       get { return _owner; }
       set { _owner = value; }
     }
 
+    /// <summary>
+    /// Gets or sets the projectile's x coordinate
+    /// </summary>
+    /// <value>The projectile location x.</value>
     public int ProjectileLocationX 
     {
       get { return projectileLocationX; }
       set { projectileLocationX = value; }
     }
 
+    /// <summary>
+    /// Gets or sets the projectile's y coordinate
+    /// </summary>
+    /// <value>The projectile location y.</value>
     public int ProjectileLocationY 
     {
     	get { return projectileLocationY; }

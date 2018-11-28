@@ -222,6 +222,9 @@ namespace Escapade
             ControlGameState();
         }
 
+        /// <summary>
+        /// The main menu screen
+        /// </summary>
         public void MainMenu()
         {
             bool commandChosen = false;
@@ -245,18 +248,17 @@ namespace Escapade
                 _gameStates.Push (GameState.ViewingInstructions);
               else if (SwinGame.PointInRect (SwinGame.PointAt (SwinGame.MouseX (), SwinGame.MouseY ()), (float)GlobalConstants.QUIT_BUTTON_X, (float)GlobalConstants.QUIT_BUTTON_Y, (float)GlobalConstants.QUIT_BUTTON_WIDTH, (float)GlobalConstants.BUTTON_HEIGHT))
                 _gameStates.Push (GameState.QuittingGame);
-
-
+             
               commandChosen = true;
             } 
-            else if (SwinGame.WindowCloseRequested ()) 
+            /*else if (SwinGame.WindowCloseRequested ()) 
             {
               _gameStates.Push (GameState.QuittingGame);
               commandChosen = true;
-            }
+            }*/
+           SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
+           SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
 
-          //SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
-          //SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
           SwinGame.RefreshScreen(60);
             }
             SwinGame.ClearScreen(Color.White);
@@ -264,6 +266,9 @@ namespace Escapade
             ControlGameState();
         }
 
+        /// <summary>
+        /// Displays the instructions of the game
+        /// </summary>
         public void Instructions()
         {
             SwinGame.ResumeMusic();
@@ -285,6 +290,10 @@ namespace Escapade
             ControlGameState();
         }
 
+        /// <summary>
+        /// Displays the content of the instructions.
+        /// </summary>
+        /// <param name="page">Page.</param>
         public void DisplayInstructionsContent(int page)
         {
             int textSpacing = 10, textSpacingIncrementer = 10;

@@ -46,26 +46,46 @@ namespace Escapade
         }
 
         #region Properties
+        /// <summary>
+        /// Gets the damage.
+        /// </summary>
+        /// <value>The damage.</value>
         public int Damage
         {
             get { return _damage; }
         }
 
+        /// <summary>
+        /// Gets the projectile.
+        /// </summary>
+        /// <value>The projectile.</value>
         public Projectile Projectile
         {
             get { return _projectile; }
         }
 
+        /// <summary>
+        /// Gets the projectile speed.
+        /// </summary>
+        /// <value>The projectile speed.</value>
         public int ProjectileSpeed
         {
             get { return _projectileSpeed; }
         }
 
+        /// <summary>
+        /// Gets the type of weapon
+        /// </summary>
+        /// <value>The type.</value>
         public WeaponType Type
         {
             get { return _weaponType; }
         }
 
+        /// <summary>
+        /// Gets the owner of the weapon
+        /// </summary>
+        /// <value>The owner.</value>
         public string Owner
         {
             get { return _owner; }
@@ -94,6 +114,10 @@ namespace Escapade
 
         }
 
+        /// <summary>
+        /// Gets or sets the ammunition.
+        /// </summary>
+        /// <value>The ammunition.</value>
         public int Ammunition
         {
             get { return _ammunition; }
