@@ -529,11 +529,15 @@ namespace Escapade
             //SwinGame.LoadMusic("A_Night_Of_Dizzy_Spells.wav");
             //SwinGame.PlayMusic("A_Night_Of_Dizzy_Spells.wav");
             //SwinGame.PlayMusic (GameResources.GameMusic ("game_music"));
+        
             while (!SwinGame.WindowCloseRequested() && _gameStates.Peek() != GameState.QuittingGame)
             {
 
                 SwinGame.ClearScreen(Color.White);
                 SwinGame.ProcessEvents();
+
+                if (SwinGame.KeyTyped (KeyCode.EscapeKey))
+                  break;
 
                 Update();
                 Draw();
@@ -1138,7 +1142,7 @@ namespace Escapade
                     {
                         _player.BuyWeapon(_player.Location, WeaponType.Normal);
                     }
-                    _player.Weapon.Ammunition += 20;
+                    _player.Weapon.Ammunition += 30;
                     // Objects.Add(_player.Weapon);
                     _player.Inventory.DeductMineralPoints(WeaponType.Normal);
                 }
@@ -1157,7 +1161,7 @@ namespace Escapade
                     {
                         _player.BuyWeapon(_player.Location, WeaponType.Super);
                     }
-                    _player.Weapon.Ammunition += 40;
+                    _player.Weapon.Ammunition += 30;
                     // Objects.Add(_player.Weapon);
                     _player.Inventory.DeductMineralPoints(WeaponType.Super);
                 }
