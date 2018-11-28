@@ -26,6 +26,11 @@ namespace Escapade
 		}
 
     // JY- added to help the enemy detect if it is hit
+	/// <summary>
+	/// Checks the hit.
+	/// </summary>
+	/// <returns><c>true</c>, if hit was checked, <c>false</c> otherwise.</returns>
+	/// <param name="projectile">Projectile.</param>
     public bool CheckHit (Projectile projectile)
     {
       int enemyX = Location.X * GlobalConstants.SIZE, enemyY = Location.Y * GlobalConstants.SIZE;
@@ -60,7 +65,9 @@ namespace Escapade
       }
     }
     
-	
+		/// <summary>
+		/// Enemies the movement.
+		/// </summary>
 		public void enemyMovement()
 		{
 			//direction X, 1 go right
@@ -203,6 +210,9 @@ namespace Escapade
 		}
 
 		int randomcounter = 0;
+		/// <summary>
+		/// Randoms the direction.
+		/// </summary>
 		public void RandomDirection()
 		{
 			if (randomcounter < 13) //change this to increase/decrease direction change frequency - jeremy
@@ -462,17 +472,28 @@ namespace Escapade
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the direction x.
+		/// </summary>
+		/// <value>The direction x.</value>
 		public int DirectionX 
 		{
 			get { return _directionX;} set { _directionX = value;}
 		}
 
+		/// <summary>
+		/// Gets or sets the direction y.
+		/// </summary>
+		/// <value>The direction y.</value>
 		public int DirectionY
 		{
 			get { return _directionY; }
 			set { _directionY = value; } 
 		}
 
+		/// <summary>
+		/// Draw this instance.
+		/// </summary>
 		public override void Draw()
 		{
 				int size = Escapade.GetWorld().Size;
@@ -481,7 +502,7 @@ namespace Escapade
 		}
 
 		/// <summary>
-		/// Update the player on game tick by moving it towards the target
+		/// Update this instance.
 		/// </summary>
 		public override void Update()
 		{
