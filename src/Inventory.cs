@@ -4,11 +4,19 @@ using System.Collections.Generic;
 
 namespace Escapade.item
 {
+	/// <summary>
+	/// This class holds all the fields and methods for the player's inventory, which holds items, including enemies and minerals.
+	/// [Reworked on by Isaac]
+	/// </summary>
     public class Inventory
     {
         List<Item> _itemlist;
         List<Item> _itemToBeRemoved;
 
+		/// <summary>
+		/// Gets the item list containing minerals.
+		/// </summary>
+		/// <value>The item list containing minerals.</value>
         public List<Item> ItemList
         {
             get
@@ -17,12 +25,19 @@ namespace Escapade.item
             }
         }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Escapade.item.Inventory"/> class containing two intialized Lists of Items.
+		/// </summary>
         public Inventory()
         {
             _itemlist = new List<Item>();
             _itemToBeRemoved = new List<Item>();
         }
 
+		/// <summary>
+		/// Adds an Item object to the list containing minerals.
+		/// </summary>
+		/// <param name="i">The Item object to add to the list.</param>
         public void AddItem(Item i)
         {
             ItemList.Add(i);
@@ -30,18 +45,26 @@ namespace Escapade.item
             // CalculateMineralPoints ();
         }
 
+		/// <summary>
+		/// Removes and Item object from the list containing minerals.
+		/// </summary>
+		/// <param name="i">The Item object to remove from the list.</param>
         public void RemoveItem(Item i)
         {
             ItemList.Remove(i);
         }
 
+		/// <summary>
+		/// Clears the inventory's list of mineral items.
+		/// </summary>
         public void ClearInventory()
         {
             _itemlist.Clear();
         }
 
         /// <summary>
-        /// Return the total value of all minerals gathered. This must not be confused with the number of minerals gathered. Only the total value (not the count) of minerals is returned.
+        /// Return the total value of all minerals gathered. This must not be confused with the number of minerals gathered. 
+		/// Only the total value (not the count) of minerals is returned.
         /// </summary>
         public int GetMineralPoints()
         {
@@ -54,9 +77,9 @@ namespace Escapade.item
         }
 
         /// <summary>
-        /// This method returns the total worth of minerals that the player has gathered, and returns a Double array that the player can iterate through to get the exact amound of points accumulated per mineral type. - Added by Isaac
+        /// This method returns the total worth of minerals that the player has gathered, as a double array.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A double array that the player can iterate through to get the exact amound of points accumulated per mineral type.</returns>
         public double[] GetTotalValue()
         {
             double diamondTotal, emeraldTotal, rubyTotal, sapphireTotal;
@@ -78,6 +101,10 @@ namespace Escapade.item
             return mineralTotalArray;
         }
 
+		/// <summary>
+		/// Deducts available mineral points previously accumulated, to purchase a type of Weapon.
+		/// </summary>
+		/// <param name="type">The type of Weapon to purchase (must be of type WeaponType)</param>
         public void DeductMineralPoints(WeaponType type)
         {
             int weaponCost = 0;
@@ -104,7 +131,7 @@ namespace Escapade.item
         /// <summary>
         /// This method handles the deduction of mineral points and balance transfer, anytime the player makes a food purchase.
         /// </summary>
-        /// <param name="foodAmount"></param>
+		/// <param name="foodValue">The food volume (in kg) converted into mineral points.</param>
         public void DeductPointsForFood(int foodValue) // IA - Method overloading
         {
             int balance = 0;

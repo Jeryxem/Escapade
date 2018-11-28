@@ -324,6 +324,10 @@
     <Compile Include="WeaponTest.cs" />
     <Compile Include="ProjectileTest.cs" />
     <Compile Include="CollisionAndDirectionTest.cs" />
+    <Compile Include="CountdownTest.cs" />
+    <Compile Include="GameLevelTest.cs" />
+    <Compile Include="FoodTest.cs" />
+    <Compile Include="src\InventoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\panels\Extra1.txt">
