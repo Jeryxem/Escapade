@@ -105,7 +105,7 @@ namespace Escapade
 					boss1._world.Map[x, y] = new Tile(TileType.Air);
 			}
 
-			Assert.AreEqual(TileType.Air, boss1._world.Map[player1.Location.X, player1.Location.Y + 1].Type);
+			Assert.AreEqual(TileType.Rock, boss1._world.Map[player1.Location.X, player1.Location.Y + 1].Type);
 
 			//build rock bottom, logic used in Main 1 line code below is the method's logic
 			boss1._world.Map[player1.Location.X, player1.Location.Y+1] = new Tile(TileType.Rock);
