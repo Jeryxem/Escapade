@@ -60,6 +60,10 @@ namespace Escapade
             _weapon = new Weapon(_location, weaponType, _name);
         }
 
+        /// <summary>
+        /// Deploys the weapon.
+        /// </summary>
+        /// <param name="attackDirection">Attack direction.</param>
         public void DeployWeapon(AttackDirection attackDirection) //JY- player uses weapon
         {
             if (_weapon != null)
@@ -67,7 +71,11 @@ namespace Escapade
             MetaHandler.DisplayAmmunitionLevel(_weapon);
         }
 
-        //JY- added to check if the player is hit by a projectile
+        /// <summary>
+        /// Players hit by projectile
+        /// </summary>
+        /// <returns><c>true</c>, if player is hit by projectile, <c>false</c> otherwise.</returns>
+        /// <param name="projectile">Projectile.</param>
         public bool PlayerHitbyProjectile(Projectile projectile)
         {
             int playerX = Location.X * GlobalConstants.SIZE, playerY = Location.Y * GlobalConstants.SIZE;
@@ -123,7 +131,11 @@ namespace Escapade
             }
         }
 
-        //JY- added this to check if the player is hit by an enemy
+       /// <summary>
+       /// Players hit by enemy
+       /// </summary>
+       /// <returns><c>true</c>, if enemy hits player, <c>false</c> otherwise.</returns>
+       /// <param name="e">E.</param>
         public bool PlayerHitbyEnemy(Enemy e)
         {
             int playerX = Location.X * GlobalConstants.SIZE, playerY = Location.Y * GlobalConstants.SIZE;

@@ -17,6 +17,14 @@ namespace Escapade
 
     private const int PROJECTILE_LENGTH = 10;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="T:Escapade.Projectile"/> class.
+    /// </summary>
+    /// <param name="weaponType">Weapon type.</param>
+    /// <param name="projectileSpeed">Projectile speed.</param>
+    /// <param name="direction">Direction.</param>
+    /// <param name="location">Location.</param>
+    /// <param name="owner">Owner.</param>
     public Projectile (WeaponType weaponType, int projectileSpeed, AttackDirection direction,Location location, string owner) : base(2, "Projectile", location)
     {
       _projectileSpeed = projectileSpeed;
@@ -61,6 +69,9 @@ namespace Escapade
     	set { projectileLocationY = value; }
         }
 
+    /// <summary>
+    /// Updates the position of the projectile
+    /// </summary>
     public override void Update ()
     {
        if (_direction == AttackDirection.Left || _direction == AttackDirection.Right) 
@@ -84,6 +95,9 @@ namespace Escapade
        } 
     }
 
+    /// <summary>
+    /// Draw the projectile
+    /// </summary>
     public override void Draw ()
     {
     	if (_weaponType == WeaponType.Normal) {
@@ -100,6 +114,12 @@ namespace Escapade
     	}
     }
 
+    /// <summary>
+    /// Checks the object hit.
+    /// </summary>
+    /// <returns><c>true</c>, if object hit was checked, <c>false</c> otherwise.</returns>
+    /// <param name="world">World.</param>
+    /// <param name="enemy">Enemy.</param>
     public bool CheckObjectHit (World world, Enemy enemy) // JY- collision works
     {
     	int enemyX = enemy.Location.X * GlobalConstants.SIZE, enemyY = enemy.Location.Y * GlobalConstants.SIZE;

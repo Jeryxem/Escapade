@@ -19,6 +19,12 @@ namespace Escapade
         private const string NORMAL_NAME = "Rusted Harpoon";
         private const string SUPER_NAME = "Golden Harpoon";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Escapade.Weapon"/> class.
+        /// </summary>
+        /// <param name="location">Location.</param>
+        /// <param name="weaponType">Weapon type.</param>
+        /// <param name="owner">Owner.</param>
         public Weapon(Location location, WeaponType weaponType, string owner) : base(1, "Weapon", location)
         {
             _weaponType = weaponType;
@@ -67,6 +73,12 @@ namespace Escapade
 
         #endregion Properties
 
+        /// <summary>
+        /// Attack the specified location and direction.
+        /// </summary>
+        /// <returns>The attack.</returns>
+        /// <param name="location">Location.</param>
+        /// <param name="direction">Direction.</param>
         public void Attack(Location location, AttackDirection direction)
         {
             _projectile = new Projectile(_weaponType, _projectileSpeed, direction, location, _owner);
@@ -88,6 +100,9 @@ namespace Escapade
             set { _ammunition = value; }
         }
 
+        /// <summary>
+        /// Resets the ammunition.
+        /// </summary>
         public void ResetAmmunition()
         {
             _ammunition = 0;
