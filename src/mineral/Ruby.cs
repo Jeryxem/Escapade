@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace Escapade.src.mineral
 {
-  public class Ruby : Mineral
-  {
-        public Ruby() : base("Ruby", 3, Color.DarkRed)
-        {
-            Value = 20;
-        }
-  }
+	/// <summary>
+	/// This Ruby class holds the value of Ruby minerals in the game.
+	/// </summary>
+	public class Ruby : Mineral
+	{
+		public Ruby() : base("Ruby", 3, Color.DarkRed)
+		{
+			Value = 20;
+		}
+	}
 }

@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace Escapade.src.mineral
 {
-  public class Emerald : Mineral
-  {
-        public Emerald() : base("Emerald", 2, Color.DarkOliveGreen)
-        {
-            Value = 15;
-        }
-  }
+	/// <summary>
+	/// This Emerald class holds the value of Emerald minerals in the game.
+	/// </summary>
+	public class Emerald : Mineral
+	{
+		public Emerald() : base("Emerald", 2, Color.DarkOliveGreen)
+		{
+			Value = 15;
+		}
+	}
 }

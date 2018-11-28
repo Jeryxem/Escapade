@@ -13,14 +13,22 @@ using SwinGameSDK;
 namespace Escapade.src.gui
 {
     /// <summary>
-    /// This class takes care of the bottom panel at the bottom of the screen, which shows the timer and the game's level [by Isaac]
+    /// This class takes care of everything that is displayed on the screen, on panels, around the game. 
+	/// This includes the bottom pannel which shows the timer, ammunition messages, energy progress bar and tips, and game the game level. 
+	/// It also includes the sidebar panels showing information on enemies left to destroy in a level, mineral points, and the Food Exchange Center components.
+	/// [Added by Isaac]
     /// </summary>
     public static class MetaHandler
     {
+		// Preparing for the input field and output messages in the Food Exchange Center
         private static Rectangle _foodField = SwinGame.CreateRectangle(810, 560, 150, 30);
         private static String _foodMessage;
+
+		//Prepare ammunition messages
         private static String _ammunitionMessage1;
         private static String _ammunitionMessage2;
+
+		// Load fonts
         private static Font openSansExtraBoldLarge = SwinGame.LoadFont("OpenSans-ExtraBold", 14);
         private static Font openSansExtraBoldNormal = SwinGame.LoadFont("OpenSans-ExtraBold", 12);
         private static Font openSansExtraBoldSmall = SwinGame.LoadFont("OpenSans-ExtraBold", 10);
@@ -28,29 +36,46 @@ namespace Escapade.src.gui
         private static Font openSansBoldLarge = SwinGame.LoadFont("OpenSans-Bold", 20);
         private static Font openSansBoldItalicNormal = SwinGame.LoadFont("OpenSans-BoldItalic", 12);
 
+		// Load panels
         public static Panel bottomPanel = SwinGame.LoadPanelNamed("Bottom Panel", "Meta.txt"); // IA - this will hold the panel resource (meta.txt)
         public static Panel enemiesPanel = SwinGame.LoadPanelNamed("Enemies Panel", "Extra1.txt");
         public static Panel inventoryPanel = SwinGame.LoadPanelNamed("Inventory Panel", "Extra2.txt");
         public static Panel foodPanel = SwinGame.LoadPanelNamed("Food Panel", "Extra3.txt");
+
+		// Define common positions of text in the panels
         private static int contentFirstLine = GlobalConstants.WORLD_HEIGHT + 18;
         private static int contentSecondLine = GlobalConstants.WORLD_HEIGHT + 48;
         private static int contentRightAlign = GlobalConstants.WORLD_WIDTH + 5;
+
+		// Create the timer
         public static Countdown timer = new Countdown();
 
+		// Prepare for the display of the energy progress bar and its additional messages
         public static String hungerIndication;
         public static double hungerIndicatorWidth = 150;
         public static Color hungerIndicatorColor;
 
+		/// <summary>
+		/// Gets the first ammunition message to display.
+		/// </summary>
+		/// <returns>The first ammunition message as a string.</returns>
         public static string GetAmmunitionMessage1()
         {
             return _ammunitionMessage1;
         }
 
+		/// <summary>
+		/// Resets the first ammunition message to what should be its default string value.
+		/// </summary>
         public static void ResetAmmunitionMessage1()
         {
             _ammunitionMessage1 = "Press B or Shift + B to buy weapons.";
         }
 
+		/// <summary>
+		/// Gets the second ammunition message to display.
+		/// </summary>
+		/// <returns>The second ammunition message as a string.</returns>
         public static string GetAmmunitionMessage2()
         {
             return _ammunitionMessage2;
@@ -61,31 +86,54 @@ namespace Escapade.src.gui
             _ammunitionMessage2 = "";
         }
 
+		/// <summary>
+		/// This method serves to convert the width of the energy progress bar into energy levels measured in percentages.
+		/// </summary>
+		/// <returns>An integer corresponding to the percentage of energy value corresponding to the passed width value.</returns>
+		/// <param name="indicator">The width of the progress bar, also called the hunger indicator.</param>
         public static int Map(double indicator)
         {
             return (int)Math.Ceiling(indicator / 1.5);
         }
 
+		/// <summary>
+		/// Gets the player's energy level as an integer corresponding to the percentage of energy left.
+		/// </summary>
+		/// <returns>The player's energy level in percentages.</returns>
         public static int GetEnergyLevel()
         {
             return Map(hungerIndicatorWidth);
         }
 
+		/// <summary>
+		/// Decreases the player's energy level, very slowly.
+		/// </summary>
         public static void DecreaseEnergy()
         {
             hungerIndicatorWidth -= 0.02;
         }
 
+		/// <summary>
+		/// Resets the player's energy levels to 100%.
+		/// </summary>
         public static void ResetEnergyLevels()
         {
             hungerIndicatorWidth = 150;
         }
 
+		/// <summary>
+		/// Sets the output message in the Food Exchange Center's panel.
+		/// </summary>
+		/// <param name="message">Message.</param>
         public static void SetFoodMessage(String message)
         {
             _foodMessage = message;
         }
 
+		/// <summary>
+		/// Increases the player's energy based on the value passed as a parameter.
+		/// </summary>
+		/// <param name="convertedFood">Converted food.</param>
         public static void IncreaseEnergy(double convertedFood)
         {
             double energyToAdd = Math.Floor(convertedFood * 1.5); // Transfer the energy into width for the hunger progress bar.
@@ -98,6 +146,9 @@ namespace Escapade.src.gui
             }
         }
         
+		/// <summary>
+		/// Controls the informative messages educating the player on their hunger level.
+		/// </summary>
         public static void ControlLevelDisplay()
         {
             if (hungerIndicatorWidth > 0)
@@ -136,7 +187,7 @@ namespace Escapade.src.gui
         }
 
         /// <summary>
-        /// This method calls all the required methods to make the panel visible on the screen with the intended background color.
+        /// This method calls all the methods required to make the panels visible on the screen with the intended background color.
         /// </summary>
         public static void ShowPanels()
         {
@@ -149,13 +200,16 @@ namespace Escapade.src.gui
         }
 
         /// <summary>
-        /// In the next update, this method will pull the timer info from a Countdown object.
+		/// This method pulls the running time information from the Countdown object.
         /// </summary>
         public static void DisplayTimer()
         {
             SwinGame.DrawText("Time: " + timer.ShowTime(), Color.White, openSansExtraBoldLarge, 20, contentFirstLine);
         }
 
+		/// <summary>
+		/// Displays the information about the player's energy levels, which are connected to their hunger, and also the amount of food to purchase.
+		/// </summary>
         public static void DisplayHungerInformation()
         {
             ControlLevelDisplay();
@@ -172,13 +226,17 @@ namespace Escapade.src.gui
         }
 
         /// <summary>
-        /// In the next update, this method will pull the level info from a GameLevel object.
+        /// Displays the game's actual level.
         /// </summary>
         public static void DisplayGameLevel()
         {
             SwinGame.DrawText("Level: " + GameLevel.PrintLevel(), Color.White, openSansBoldLarge, GlobalConstants.WORLD_WIDTH - 120, contentFirstLine);
         }
 
+		/// <summary>
+		/// Displays the relevant ammunition messages, based on the player's Weapon state.
+		/// </summary>
+		/// <param name="weapon">Weapon.</param>
         public static void DisplayAmmunitionLevel(Weapon weapon)
         {
             if (weapon != null)
@@ -205,6 +263,12 @@ namespace Escapade.src.gui
             SwinGame.DrawText(_ammunitionMessage2, Color.Yellow, openSansExtraBoldNormal, 20, contentSecondLine + 15);
         }
 
+		/// <summary>
+		/// Displaies weapon/ammunition messages for a single player. This method should be used in Two Player Mode.
+		/// </summary>
+		/// <param name="player">The player for which the information should be displayed. It must be a Player object.</param>
+		/// <param name="playerName">The string referring to the player's name.</param>
+		/// <param name="Y">The additional space the messages should have above them.</param>
         public static void DisplaySinglePlayerWeaponInfo(Player player, String playerName, int Y)
         {
             if (player.Weapon != null)
@@ -215,6 +279,11 @@ namespace Escapade.src.gui
             }
         }
 
+		/// <summary>
+		/// Displays the number of red enemies roaming in real time, the number of successful hits, and the number left to destroy to move to the next level.
+		/// </summary>
+		/// <param name="existingEnemies">A list of Enemy objects, holding enemies available in the game.</param>
+		/// <param name="enemiesHit">A list of Enemy objects, holding enemies that have been destroyed.</param>
         public static void DisplayEnemiesInfo(List<Enemy> existingEnemies, List<Enemy> enemiesHit)
         {
             SwinGame.DrawText("ENEMIES IN THIS LEVEL", Color.Yellow, openSansExtraBoldLarge, contentRightAlign, 15);
@@ -226,23 +295,22 @@ namespace Escapade.src.gui
             SwinGame.DrawText("Destroy " + (GameLevel.GetFormula() - enemiesHit.Count).ToString() + " more enemies.", Color.Yellow, openSansExtraBoldNormal, contentRightAlign, 100);
         }
 
+		/// <summary>
+		/// Displays the amount of mineral points the player has in total, and also by type.
+		/// </summary>
+		/// <param name="mineralWorth">The player's mineral worth by type, as a double array.</param>
+		/// <param name="inventory">The player's inventory holding all collected minerals.</param>
         public static void DisplayRate(double[] mineralWorth, Inventory inventory)
         {
-            // Font arial = SwinGame.LoadFont("arial", 14);
-
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("YOU HAVE " + inventory.ItemList.Count.ToString() + " MINERALS", Color.White, openSansExtraBoldLarge, contentRightAlign, 210);
 
-            // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Diamond points:  " + mineralWorth[0].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 240);
 
-            // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Emerald points:  " + mineralWorth[1].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 265);
 
-            // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Ruby points:  " + mineralWorth[2].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 290);
 
-            // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), Color.White, openSansExtraBoldNormal, contentRightAlign, 315);
 
             SwinGame.DrawText("Total points:  " + inventory.GetMineralPoints(), Color.White, openSansExtraBoldNormal, contentRightAlign, 360);
@@ -251,9 +319,16 @@ namespace Escapade.src.gui
 
         }
 
+		/// <summary>
+		/// Displays the amount of mineral points a player has in total, with a player's name.
+		/// </summary>
+		/// <param name="mineralWorth">The player's mineral points by type, as a double array.</param>
+		/// <param name="inventory">The player's inventory holding all collected minerals.</param>
+		/// <param name="playerName">The player's name as a string.</param>
+		/// <param name="Y">The additional amount of space to have above the messages.</param>
+		/// <param name="color">The color of the messages.</param>
         public static void DisplayRate(double[] mineralWorth, Inventory inventory, String playerName, int Y, Color color)
         {
-            // Font arial = SwinGame.LoadFont("arial", 14);
 
             // IA - Display the total value of minerals while the game runs
             SwinGame.DrawText(playerName + " HAS " + inventory.ItemList.Count.ToString() + " MINERALS", color, openSansExtraBoldNormal, contentRightAlign, 210 + Y);
@@ -266,12 +341,14 @@ namespace Escapade.src.gui
 
             SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), color, openSansExtraBoldNormal, contentRightAlign, 315 + Y);
 
-            SwinGame.DrawText("Sapphire points:  " + mineralWorth[3].ToString(), color, openSansExtraBoldNormal, contentRightAlign, 315 + Y);
-
             SwinGame.DrawText("Total points:  " + inventory.GetMineralPoints(), color, openSansExtraBoldNormal, contentRightAlign, 360 + Y);
 
         }
 
+		/// <summary>
+		/// Displays output messages of minerals-to-food transactions.
+		/// </summary>
+		/// <param name="inventory">The player's inventory holding all collected minerals that will be used for minerals-to-food transactions.</param>
         public static void DisplayFoodExchange(Inventory inventory)
         {
 
@@ -331,6 +408,10 @@ namespace Escapade.src.gui
             }
         }
 
+		/// <summary>
+		/// Draws the input field for food transactions, and also shows information on the available balance and volume of food the player can afford.
+		/// </summary>
+		/// <param name="inventory">Inventory.</param>
         public static void DrawFoodField(Inventory inventory)
         {
             SwinGame.DrawText("FOOD EXCHANGE CENTER", Color.WhiteSmoke, openSansExtraBoldLarge, contentRightAlign, 435);
@@ -365,6 +446,9 @@ namespace Escapade.src.gui
             SwinGame.DrawText(_foodMessage, Color.White, openSansExtraBoldNormal, contentRightAlign, 600);
         }
 
+		/// <summary>
+		/// Displays the main instructions for the game in Two Players Mode.
+		/// </summary>
         public static void DisplayTwoPlayersInstructions()
         {
             SwinGame.DrawText("Outlast your opponent and collect the most mineral points without getting killed!", Color.White, openSansExtraBoldLarge, 20, contentFirstLine);

@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace Escapade.src.mineral
 {
-  public class Sapphire : Mineral
-  {
-    public Sapphire() : base("Sapphire", 4, Color.DarkBlue)
-    {
-            Value = 25;
-        }
-  }
+	/// <summary>
+	/// This Sapphire class holds the value of Sapphire minerals in the game.
+	/// </summary>
+	public class Sapphire : Mineral
+	{
+		public Sapphire() : base("Sapphire", 4, Color.DarkBlue)
+		{
+			Value = 25;
+		}
+	}
 }
