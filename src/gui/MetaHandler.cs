@@ -402,6 +402,10 @@ namespace Escapade.src.gui
                 }
             }
 
+			if (SwinGame.MouseClicked(MouseButton.LeftButton))
+			{
+				Input.EndReadingText();
+			}
             if (!Input.ReadingText())
             {
                 _foodMessage = "Hit Space to enter amount.";
