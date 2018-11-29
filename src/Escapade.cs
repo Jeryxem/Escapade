@@ -256,8 +256,8 @@ namespace Escapade
               _gameStates.Push (GameState.QuittingGame);
               commandChosen = true;
             }*/
-           SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
-           SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
+           //SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
+           //SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
 
           SwinGame.RefreshScreen(60);
             }
