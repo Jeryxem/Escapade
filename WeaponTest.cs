@@ -6,6 +6,9 @@ namespace Escapade
   [TestFixture()]
   public class WeaponTest
   {
+    /// <summary>
+    /// Test the weapon buying process
+    /// </summary>
     [Test()]
     public void BuyTest ()
     {
@@ -22,6 +25,9 @@ namespace Escapade
       Assert.IsTrue (player2.Weapon.Type == WeaponType.Super);
     }
 
+    /// <summary>
+    /// Test firing the weapon
+    /// </summary>
     [Test ()]
     public void AttackTest ()
     {

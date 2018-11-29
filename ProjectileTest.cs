@@ -6,6 +6,10 @@ namespace Escapade
   [TestFixture()]
   public class ProjectileTest
   {
+
+    /// <summary>
+    /// Test the properties of the projectiles
+    /// </summary>
     [Test()]
     public void PropertiesTest ()
     {

@@ -154,12 +154,7 @@ namespace Escapade
             int size = Escapade.GetWorld().Size;
             SwinGame.FillRectangle(_playerColor, Location.X * size, Location.Y * size, size, size);
             SwinGame.DrawRectangle(Color.White, Location.X * size, Location.Y * size, size, size);
-            /*  if (Path.TargetPath.Count > 0) {
-                foreach (Location loc in Path.TargetPath) {
-                  SwinGame.FillCircle(Color.LightPink, (loc.X * size) + (size / 2), (loc.Y * size) + (size / 2), size / 5);
-                  SwinGame.DrawRectangle(Color.White, loc.X* size, loc.Y* size, size, size);
-                }
-              }*/
+
         }
 
         /// <summary>
@@ -167,7 +162,6 @@ namespace Escapade
         /// </summary>
         public override void Update()
         {
-            // Move();
         }
     }
 }
