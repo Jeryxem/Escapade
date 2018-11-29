@@ -250,15 +250,12 @@ namespace Escapade
                 _gameStates.Push (GameState.QuittingGame);
              
               commandChosen = true;
-            } 
-            /*else if (SwinGame.WindowCloseRequested ()) 
-            {
-              _gameStates.Push (GameState.QuittingGame);
-              commandChosen = true;
-            }*/
-           //SwinGame.DrawText (SwinGame.MouseX ().ToString (),Color.Black, 100, 100);
-           //SwinGame.DrawText(SwinGame.MouseY().ToString (), Color.Black,100,110);
+            }
 
+          SwinGame.DrawText ("Original game by: FlareLine", Color.White, 700, 560);
+          SwinGame.DrawText ("Upgraded by: Jeremy Toh (101213618)", Color.White,700, 580);
+          SwinGame.DrawText ("             Jonathan Yap (100069580)", Color.White,700, 600);
+          SwinGame.DrawText ("             Isaac Asante (101208203)", Color.White,700, 620);
           SwinGame.RefreshScreen(60);
             }
             SwinGame.ClearScreen(Color.White);
