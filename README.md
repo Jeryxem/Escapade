@@ -8,9 +8,19 @@ To be able to test the game to its full potential and discover all of its featur
 
 The purpose of that feature is to allow the player to collect as many mineral points as possible to explore the potential of the Food Exchange Center and purchase more weapons to facilitate the progression to next levels, where some formulas (such as the calculation of food value or energy value) are recomputed.
 
+<<<<<<< HEAD
 To enable this mineral feature, simply uncomment `Lines 1097 - 1101` in the file `Escapade.cs`. The code should look like this:
 
 ``` if (SwinGame.KeyTyped(KeyCode.EKey)) { GetWorld().PutMinerals(); } ```
+=======
+To enable that mineral feature, simply uncomment `Lines 1097 - 1101` in the file `Escapade.cs`.
+
+```// Accept the spawning of minerals on demand - Useful for demonstration purposes only (to make it easier to collect mineral points, buy food, weapons, etc.)
+			/* if (SwinGame.KeyTyped(KeyCode.EKey))
+			{
+				GetWorld().PutMinerals();
+			}*/```
+>>>>>>> 7ed5060cbe47fb9ba5b9deddaee5c18a83a0b414
 
 ## Controls for Weapons
 
