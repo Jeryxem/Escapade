@@ -132,6 +132,7 @@
     <None Include="Resources\sounds\Pixel-Island.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">

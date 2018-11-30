@@ -1094,6 +1094,12 @@ namespace Escapade
 
             }
 
+			// Accept the spawning of minerals on demand - Useful for demonstration purposes only (to make it easier to collect mineral points, buy food, weapons, etc.)
+			/* if (SwinGame.KeyTyped(KeyCode.EKey))
+			{
+				GetWorld().PutMinerals();
+			}*/
+
             // IA - After computing everything, determine when/if the level should be increased.
             ControlLevels();
             MetaHandler.DisplayFoodExchange(GetPlayer().Inventory);
